@@ -1,0 +1,596 @@
+{
+  "balances": {
+    "285591759516336128": {
+      "userId": "285591759516336128",
+      "totalDkp": 66,
+      "lockedDkp": 0,
+      "eventsAttended": 2,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-12T02:18:33.327Z"
+    },
+    "273600843251712020": {
+      "userId": "273600843251712020",
+      "totalDkp": 86,
+      "lockedDkp": 0,
+      "eventsAttended": 3,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-12T02:18:33.323Z"
+    },
+    "570376636051095562": {
+      "userId": "570376636051095562",
+      "totalDkp": 77,
+      "lockedDkp": 0,
+      "eventsAttended": 3,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-12T02:18:33.321Z"
+    },
+    "293647077173493760": {
+      "userId": "293647077173493760",
+      "totalDkp": 36,
+      "lockedDkp": 0,
+      "eventsAttended": 1,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-12T02:14:41.931Z"
+    },
+    "458709154509488129": {
+      "userId": "458709154509488129",
+      "totalDkp": 83,
+      "lockedDkp": 0,
+      "eventsAttended": 2,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-12T02:18:33.315Z"
+    },
+    "1177008353927495710": {
+      "userId": "1177008353927495710",
+      "totalDkp": 30,
+      "lockedDkp": 0,
+      "eventsAttended": 1,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-12T02:18:33.318Z"
+    },
+    "134688155839365120": {
+      "userId": "134688155839365120",
+      "totalDkp": 45,
+      "lockedDkp": 0,
+      "eventsAttended": 2,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-12T02:18:33.326Z"
+    },
+    "1539332550261080106": {
+      "userId": "1539332550261080106",
+      "totalDkp": 76,
+      "lockedDkp": 0,
+      "eventsAttended": 2,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-12T02:18:33.332Z"
+    },
+    "163034833965023232": {
+      "userId": "163034833965023232",
+      "totalDkp": 0,
+      "lockedDkp": 0,
+      "eventsAttended": 0,
+      "lastEvent": null,
+      "lastDate": null
+    },
+    "557331568318742529": {
+      "userId": "557331568318742529",
+      "totalDkp": 48,
+      "lockedDkp": 0,
+      "eventsAttended": 2,
+      "lastEvent": "Geena 19:00",
+      "lastDate": "2026-11-11T22:03:16.103Z"
+    },
+    "714962181296226406": {
+      "userId": "714962181296226406",
+      "totalDkp": 0,
+      "lockedDkp": 0,
+      "eventsAttended": 0,
+      "lastEvent": null,
+      "lastDate": null
+    },
+    "985483640232366121": {
+      "userId": "985483640232366121",
+      "totalDkp": 24,
+      "lockedDkp": 0,
+      "eventsAttended": 1,
+      "lastEvent": "Geena 15:00",
+      "lastDate": "2026-11-11T18:09:53.621Z"
+    },
+    "258777573733957633": {
+      "userId": "258777573733957633",
+      "totalDkp": 64,
+      "lockedDkp": 0,
+      "eventsAttended": 2,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-12T02:18:33.329Z"
+    },
+    "275130088834727938": {
+      "userId": "275130088834727938",
+      "totalDkp": 17,
+      "lockedDkp": 0,
+      "eventsAttended": 1,
+      "lastEvent": "Geena 19:00",
+      "lastDate": "2026-11-11T22:03:16.101Z"
+    },
+    "909786062602272802": {
+      "userId": "909786062602272802",
+      "totalDkp": 50,
+      "lockedDkp": 0,
+      "eventsAttended": 2,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-12T02:18:33.317Z"
+    },
+    "425370511749545984": {
+      "userId": "425370511749545984",
+      "totalDkp": 60,
+      "lockedDkp": 0,
+      "eventsAttended": 2,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-12T02:18:33.324Z"
+    },
+    "773250841607667773": {
+      "userId": "773250841607667773",
+      "totalDkp": 35,
+      "lockedDkp": 0,
+      "eventsAttended": 1,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-12T02:18:33.331Z"
+    },
+    "248940648563081226": {
+      "userId": "248940648563081226",
+      "totalDkp": 34,
+      "lockedDkp": 0,
+      "eventsAttended": 1,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-12T02:18:33.320Z"
+    },
+    "299245685822455808": {
+      "userId": "299245685822455808",
+      "totalDkp": 26,
+      "lockedDkp": 0,
+      "eventsAttended": 1,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-12T02:18:33.328Z"
+    }
+  },
+  "history": [
+    {
+      "id": "dkp_1794449913332_201",
+      "userId": "1539332550261080106",
+      "amount": 38,
+      "newBalance": 76,
+      "reason": "Presença: Geena 23:00",
+      "meta": {
+        "isEvent": true,
+        "eventId": "evt_1794449913315",
+        "eventName": "Geena 23:00",
+        "baseDkp": 30,
+        "cp": 415122,
+        "level": 73,
+        "multCp": 1.25,
+        "multLvl": 1.01,
+        "finalDkp": 38,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-12T02:18:33.332Z"
+    },
+    {
+      "id": "dkp_1794449913331_119",
+      "userId": "773250841607667773",
+      "amount": 35,
+      "newBalance": 35,
+      "reason": "Presença: Geena 23:00",
+      "meta": {
+        "isEvent": true,
+        "eventId": "evt_1794449913315",
+        "eventName": "Geena 23:00",
+        "baseDkp": 30,
+        "cp": 381500,
+        "level": 72,
+        "multCp": 1.15,
+        "multLvl": 1,
+        "finalDkp": 35,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-12T02:18:33.331Z"
+    },
+    {
+      "id": "dkp_1794449913329_730",
+      "userId": "258777573733957633",
+      "amount": 32,
+      "newBalance": 64,
+      "reason": "Presença: Geena 23:00",
+      "meta": {
+        "isEvent": true,
+        "eventId": "evt_1794449913315",
+        "eventName": "Geena 23:00",
+        "baseDkp": 30,
+        "cp": 352645,
+        "level": 72,
+        "multCp": 1.07,
+        "multLvl": 1,
+        "finalDkp": 32,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-12T02:18:33.329Z"
+    },
+    {
+      "id": "dkp_1794449913328_345",
+      "userId": "299245685822455808",
+      "amount": 26,
+      "newBalance": 26,
+      "reason": "Presença: Geena 23:00",
+      "meta": {
+        "isEvent": true,
+        "eventId": "evt_1794449913315",
+        "eventName": "Geena 23:00",
+        "baseDkp": 30,
+        "cp": 294811,
+        "level": 71,
+        "multCp": 0.9,
+        "multLvl": 0.98,
+        "finalDkp": 26,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-12T02:18:33.328Z"
+    },
+    {
+      "id": "dkp_1794449913327_134",
+      "userId": "285591759516336128",
+      "amount": 33,
+      "newBalance": 66,
+      "reason": "Presença: Geena 23:00",
+      "meta": {
+        "isEvent": true,
+        "eventId": "evt_1794449913315",
+        "eventName": "Geena 23:00",
+        "baseDkp": 30,
+        "cp": 360168,
+        "level": 72,
+        "multCp": 1.09,
+        "multLvl": 1,
+        "finalDkp": 33,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-12T02:18:33.327Z"
+    },
+    {
+      "id": "dkp_1794449913326_485",
+      "userId": "134688155839365120",
+      "amount": 27,
+      "newBalance": 45,
+      "reason": "Presença: Geena 23:00",
+      "meta": {
+        "isEvent": true,
+        "eventId": "evt_1794449913315",
+        "eventName": "Geena 23:00",
+        "baseDkp": 30,
+        "cp": 305168,
+        "level": 71,
+        "multCp": 0.93,
+        "multLvl": 0.98,
+        "finalDkp": 27,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-12T02:18:33.326Z"
+    },
+    {
+      "id": "dkp_1794449913324_572",
+      "userId": "425370511749545984",
+      "amount": 36,
+      "newBalance": 60,
+      "reason": "Presença: Geena 23:00",
+      "meta": {
+        "isEvent": true,
+        "eventId": "evt_1794449913315",
+        "eventName": "Geena 23:00",
+        "baseDkp": 30,
+        "cp": 399000,
+        "level": 72,
+        "multCp": 1.2,
+        "multLvl": 1,
+        "finalDkp": 36,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-12T02:18:33.324Z"
+    },
+    {
+      "id": "dkp_1794449913323_759",
+      "userId": "273600843251712020",
+      "amount": 33,
+      "newBalance": 86,
+      "reason": "Presença: Geena 23:00",
+      "meta": {
+        "isEvent": true,
+        "eventId": "evt_1794449913315",
+        "eventName": "Geena 23:00",
+        "baseDkp": 30,
+        "cp": 360210,
+        "level": 72,
+        "multCp": 1.09,
+        "multLvl": 1,
+        "finalDkp": 33,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-12T02:18:33.323Z"
+    },
+    {
+      "id": "dkp_1794449913321_663",
+      "userId": "570376636051095562",
+      "amount": 29,
+      "newBalance": 77,
+      "reason": "Presença: Geena 23:00",
+      "meta": {
+        "isEvent": true,
+        "eventId": "evt_1794449913315",
+        "eventName": "Geena 23:00",
+        "baseDkp": 30,
+        "cp": 322000,
+        "level": 71,
+        "multCp": 0.98,
+        "multLvl": 0.98,
+        "finalDkp": 29,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-12T02:18:33.321Z"
+    },
+    {
+      "id": "dkp_1794449913320_579",
+      "userId": "248940648563081226",
+      "amount": 34,
+      "newBalance": 34,
+      "reason": "Presença: Geena 23:00",
+      "meta": {
+        "isEvent": true,
+        "eventId": "evt_1794449913315",
+        "eventName": "Geena 23:00",
+        "baseDkp": 30,
+        "cp": 377699,
+        "level": 71,
+        "multCp": 1.14,
+        "multLvl": 0.98,
+        "finalDkp": 34,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-12T02:18:33.320Z"
+    },
+    {
+      "id": "dkp_1794449913318_424",
+      "userId": "1177008353927495710",
+      "amount": 30,
+      "newBalance": 30,
+      "reason": "Presença: Geena 23:00",
+      "meta": {
+        "isEvent": true,
+        "eventId": "evt_1794449913315",
+        "eventName": "Geena 23:00",
+        "baseDkp": 30,
+        "cp": 335663,
+        "level": 72,
+        "multCp": 1.02,
+        "multLvl": 1,
+        "finalDkp": 30,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-12T02:18:33.318Z"
+    },
+    {
+      "id": "dkp_1794449913317_284",
+      "userId": "909786062602272802",
+      "amount": 30,
+      "newBalance": 50,
+      "reason": "Presença: Geena 23:00",
+      "meta": {
+        "isEvent": true,
+        "eventId": "evt_1794449913315",
+        "eventName": "Geena 23:00",
+        "baseDkp": 30,
+        "cp": 330482,
+        "level": 71,
+        "multCp": 1,
+        "multLvl": 0.98,
+        "finalDkp": 30,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-12T02:18:33.317Z"
+    },
+    {
+      "id": "dkp_1794449913315_516",
+      "userId": "458709154509488129",
+      "amount": 42,
+      "newBalance": 83,
+      "reason": "Presença: Geena 23:00",
+      "meta": {
+        "isEvent": true,
+        "eventId": "evt_1794449913315",
+        "eventName": "Geena 23:00",
+        "baseDkp": 30,
+        "cp": 451000,
+        "level": 74,
+        "multCp": 1.35,
+        "multLvl": 1.03,
+        "finalDkp": 42,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-12T02:18:33.315Z"
+    },
+    {
+      "id": "dkp_1794449681931_724",
+      "userId": "293647077173493760",
+      "amount": 36,
+      "newBalance": 36,
+      "reason": "Contestação Aprovada: Geena 23:00",
+      "meta": {
+        "isEvent": true,
+        "eventName": "Geena 23:00",
+        "eventKey": "geena_23",
+        "disputeId": "disp_1794449675193_640",
+        "baseDkp": 30,
+        "cp": 399075,
+        "level": 72,
+        "finalDkp": 36,
+        "approvedBy": "293647077173493760"
+      },
+      "date": "2026-11-12T02:14:41.931Z"
+    },
+    {
+      "id": "dkp_1794435445315_222",
+      "userId": "909786062602272802",
+      "amount": 20,
+      "newBalance": 20,
+      "reason": "Contestação Aprovada: Geena 19:00",
+      "meta": {
+        "isEvent": true,
+        "eventName": "Geena 19:00",
+        "eventKey": "geena_19",
+        "disputeId": "disp_1794435419103_286",
+        "baseDkp": 20,
+        "cp": 330482,
+        "level": 71,
+        "finalDkp": 20,
+        "approvedBy": "273600843251712020"
+      },
+      "date": "2026-11-11T22:17:25.315Z"
+    },
+    {
+      "id": "dkp_1794435412113_144",
+      "userId": "425370511749545984",
+      "amount": 24,
+      "newBalance": 24,
+      "reason": "Presença: Geena 19:00",
+      "meta": {
+        "isEvent": true,
+        "eventId": "evt_1794435412113",
+        "eventName": "Geena 19:00",
+        "baseDkp": 20,
+        "cp": 399000,
+        "level": 72,
+        "multCp": 1.2,
+        "multLvl": 1,
+        "finalDkp": 24,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-11T22:16:52.113Z"
+    },
+    {
+      "id": "dkp_1794434596105_568",
+      "userId": "134688155839365120",
+      "amount": 18,
+      "newBalance": 18,
+      "reason": "Presença: Geena 19:00",
+      "meta": {
+        "isEvent": true,
+        "eventId": "evt_1794434596098",
+        "eventName": "Geena 19:00",
+        "baseDkp": 20,
+        "cp": 305168,
+        "level": 71,
+        "multCp": 0.93,
+        "multLvl": 0.98,
+        "finalDkp": 18,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-11T22:03:16.105Z"
+    },
+    {
+      "id": "dkp_1794434596104_426",
+      "userId": "273600843251712020",
+      "amount": 22,
+      "newBalance": 53,
+      "reason": "Presença: Geena 19:00",
+      "meta": {
+        "isEvent": true,
+        "eventId": "evt_1794434596098",
+        "eventName": "Geena 19:00",
+        "baseDkp": 20,
+        "cp": 360210,
+        "level": 72,
+        "multCp": 1.09,
+        "multLvl": 1,
+        "finalDkp": 22,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-11T22:03:16.104Z"
+    },
+    {
+      "id": "dkp_1794434596103_227",
+      "userId": "557331568318742529",
+      "amount": 19,
+      "newBalance": 48,
+      "reason": "Presença: Geena 19:00",
+      "meta": {
+        "isEvent": true,
+        "eventId": "evt_1794434596098",
+        "eventName": "Geena 19:00",
+        "baseDkp": 20,
+        "cp": 318222,
+        "level": 71,
+        "multCp": 0.97,
+        "multLvl": 0.98,
+        "finalDkp": 19,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-11T22:03:16.103Z"
+    },
+    {
+      "id": "dkp_1794434596101_93",
+      "userId": "275130088834727938",
+      "amount": 17,
+      "newBalance": 17,
+      "reason": "Presença: Geena 19:00",
+      "meta": {
+        "isEvent": true,
+        "eventId": "evt_1794434596098",
+        "eventName": "Geena 19:00",
+        "baseDkp": 20,
+        "cp": 288000,
+        "level": 70,
+        "multCp": 0.88,
+        "multLvl": 0.97,
+        "finalDkp": 17,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-11T22:03:16.101Z"
+    },
+    {
+      "id": "dkp_1794434596099_110",
+      "userId": "570376636051095562",
+      "amount": 19,
+      "newBalance": 48,
+      "reason": "Presença: Geena 19:00",
+      "meta": {
+        "isEvent": true,
+        "eventId": "evt_1794434596098",
+        "eventName": "Geena 19:00",
+        "baseDkp": 20,
+        "cp": 322000,
+        "level": 71,
+        "multCp": 0.98,
+        "multLvl": 0.98,
+        "finalDkp": 19,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-11T22:03:16.099Z"
+    },
+    {
+      "id": "dkp_1794420593629_466",
+      "userId": "458709154509488129",
+      "amount": 41,
+      "newBalance": 41,
+      "reason": "Presença: Geena 15:00",
+      "meta": {
+        "cp": 443000,
+        "level": 73,
+        "multCp": 1.33,
+        "baseDkp": 30,
+        "eventId": "evt_1794420593616",
+        "isEvent": true,
+        "multLvl": 1.01,
+        "finalDkp": 41,
+        "eventName": "Geena 15:00",
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-11T18:09:53.629Z"
+    }
+  ]
+}

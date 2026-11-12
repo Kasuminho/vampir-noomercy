@@ -1,0 +1,697 @@
+{
+  "events": {
+    "evt_1794420593616": {
+      "eventKey": "geena_15",
+      "eventName": "Geena 15:00",
+      "registeredBy": "kasumo_",
+      "attendees": [],
+      "createdAt": "2026-11-11T18:09:53.655Z"
+    },
+    "evt_1794434596098": {
+      "eventId": "evt_1794434596098",
+      "eventKey": "geena_19",
+      "eventName": "Geena 19:00",
+      "baseDkp": 20,
+      "registeredBy": "kasumo_",
+      "registeredAt": "2026-11-11T22:03:16.106Z",
+      "totalMembers": 8,
+      "members": [
+        {
+          "userId": "425370511749545984",
+          "userTag": "425370511749545984",
+          "nick": null,
+          "classe": "N/A",
+          "cp": 0,
+          "level": 0,
+          "noCpApproved": true,
+          "calc": {
+            "baseDkp": 20,
+            "finalDkp": 0,
+            "multCp": 0,
+            "multLvl": 0,
+            "combinedMultiplier": 0,
+            "cutoffStatus": {
+              "isCut": true,
+              "details": {
+                "failedReason": "PROIBIDO: Sem CP/Nível aprovados pela Staff (Envie print em #atualizacao-cp)"
+              }
+            }
+          },
+          "newTotalDkp": 0
+        },
+        {
+          "userId": "369263021589266433",
+          "userTag": "369263021589266433",
+          "nick": null,
+          "classe": "N/A",
+          "cp": 0,
+          "level": 0,
+          "noCpApproved": true,
+          "calc": {
+            "baseDkp": 20,
+            "finalDkp": 0,
+            "multCp": 0,
+            "multLvl": 0,
+            "combinedMultiplier": 0,
+            "cutoffStatus": {
+              "isCut": true,
+              "details": {
+                "failedReason": "PROIBIDO: Sem CP/Nível aprovados pela Staff (Envie print em #atualizacao-cp)"
+              }
+            }
+          },
+          "newTotalDkp": 0
+        },
+        {
+          "userId": "570376636051095562",
+          "userTag": "douglasmr.",
+          "nick": "KinGZ",
+          "classe": "Carnage",
+          "cp": 322000,
+          "level": 71,
+          "noCpApproved": false,
+          "calc": {
+            "baseDkp": 20,
+            "cp": 322000,
+            "level": 71,
+            "multCp": 0.98,
+            "multLvl": 0.98,
+            "combinedMultiplier": 0.96,
+            "finalDkp": 19,
+            "cutoffStatus": {
+              "isCut": false,
+              "inGracePeriod": false
+            }
+          },
+          "newTotalDkp": 48
+        },
+        {
+          "userId": "275130088834727938",
+          "userTag": "eddielira",
+          "nick": "Lyrael",
+          "classe": "Carnage",
+          "cp": 288000,
+          "level": 70,
+          "noCpApproved": false,
+          "calc": {
+            "baseDkp": 20,
+            "cp": 288000,
+            "level": 70,
+            "multCp": 0.88,
+            "multLvl": 0.97,
+            "combinedMultiplier": 0.85,
+            "finalDkp": 17,
+            "cutoffStatus": {
+              "isCut": false,
+              "inGracePeriod": false
+            }
+          },
+          "newTotalDkp": 17
+        },
+        {
+          "userId": "557331568318742529",
+          "userTag": "jefahh",
+          "nick": "SaitamA",
+          "classe": "Carnage",
+          "cp": 318222,
+          "level": 71,
+          "noCpApproved": false,
+          "calc": {
+            "baseDkp": 20,
+            "cp": 318222,
+            "level": 71,
+            "multCp": 0.97,
+            "multLvl": 0.98,
+            "combinedMultiplier": 0.95,
+            "finalDkp": 19,
+            "cutoffStatus": {
+              "isCut": false,
+              "inGracePeriod": false
+            }
+          },
+          "newTotalDkp": 48
+        },
+        {
+          "userId": "1455647608696733778",
+          "userTag": "1455647608696733778",
+          "nick": null,
+          "classe": "N/A",
+          "cp": 0,
+          "level": 0,
+          "noCpApproved": true,
+          "calc": {
+            "baseDkp": 20,
+            "finalDkp": 0,
+            "multCp": 0,
+            "multLvl": 0,
+            "combinedMultiplier": 0,
+            "cutoffStatus": {
+              "isCut": true,
+              "details": {
+                "failedReason": "PROIBIDO: Sem CP/Nível aprovados pela Staff (Envie print em #atualizacao-cp)"
+              }
+            }
+          },
+          "newTotalDkp": 0
+        },
+        {
+          "userId": "273600843251712020",
+          "userTag": "kasumo_",
+          "nick": "llBellall",
+          "classe": "Carnage",
+          "cp": 360210,
+          "level": 72,
+          "noCpApproved": false,
+          "calc": {
+            "baseDkp": 20,
+            "cp": 360210,
+            "level": 72,
+            "multCp": 1.09,
+            "multLvl": 1,
+            "combinedMultiplier": 1.09,
+            "finalDkp": 22,
+            "cutoffStatus": {
+              "isCut": false,
+              "inGracePeriod": false
+            }
+          },
+          "newTotalDkp": 53
+        },
+        {
+          "userId": "134688155839365120",
+          "userTag": "mateus1260",
+          "nick": "Fergie",
+          "classe": "Viper",
+          "cp": 305168,
+          "level": 71,
+          "noCpApproved": false,
+          "calc": {
+            "baseDkp": 20,
+            "cp": 305168,
+            "level": 71,
+            "multCp": 0.93,
+            "multLvl": 0.98,
+            "combinedMultiplier": 0.91,
+            "finalDkp": 18,
+            "cutoffStatus": {
+              "isCut": false,
+              "inGracePeriod": false
+            }
+          },
+          "newTotalDkp": 18
+        }
+      ]
+    },
+    "evt_1794435412113": {
+      "eventId": "evt_1794435412113",
+      "eventKey": "geena_19",
+      "eventName": "Geena 19:00",
+      "baseDkp": 20,
+      "registeredBy": "kasumo_",
+      "registeredAt": "2026-11-11T22:16:52.114Z",
+      "totalMembers": 1,
+      "members": [
+        {
+          "userId": "425370511749545984",
+          "userTag": "kakashii3337",
+          "nick": "Markin",
+          "classe": "Viper",
+          "cp": 399000,
+          "level": 72,
+          "noCpApproved": false,
+          "calc": {
+            "baseDkp": 20,
+            "cp": 399000,
+            "level": 72,
+            "multCp": 1.2,
+            "multLvl": 1,
+            "combinedMultiplier": 1.2,
+            "finalDkp": 24,
+            "cutoffStatus": {
+              "isCut": false,
+              "inGracePeriod": false
+            }
+          },
+          "newTotalDkp": 24
+        }
+      ]
+    },
+    "evt_1794449913315": {
+      "eventId": "evt_1794449913315",
+      "eventKey": "geena_23",
+      "eventName": "Geena 23:00",
+      "baseDkp": 30,
+      "registeredBy": "kasumo_",
+      "registeredAt": "2026-11-12T02:18:33.333Z",
+      "totalMembers": 18,
+      "members": [
+        {
+          "userId": "467938652299722752",
+          "userTag": "467938652299722752",
+          "nick": null,
+          "classe": "N/A",
+          "cp": 0,
+          "level": 0,
+          "noCpApproved": true,
+          "calc": {
+            "baseDkp": 30,
+            "finalDkp": 0,
+            "multCp": 0,
+            "multLvl": 0,
+            "combinedMultiplier": 0,
+            "cutoffStatus": {
+              "isCut": true,
+              "details": {
+                "failedReason": "PROIBIDO: Sem CP/Nível aprovados pela Staff (Envie print em #atualizacao-cp)"
+              }
+            }
+          },
+          "newTotalDkp": 0
+        },
+        {
+          "userId": "458709154509488129",
+          "userTag": "noogaard",
+          "nick": "zNogard",
+          "classe": "Bloodstained",
+          "cp": 451000,
+          "level": 74,
+          "noCpApproved": false,
+          "calc": {
+            "baseDkp": 30,
+            "cp": 451000,
+            "level": 74,
+            "multCp": 1.35,
+            "multLvl": 1.03,
+            "combinedMultiplier": 1.4,
+            "finalDkp": 42,
+            "cutoffStatus": {
+              "isCut": false,
+              "inGracePeriod": false
+            }
+          },
+          "newTotalDkp": 83
+        },
+        {
+          "userId": "909786062602272802",
+          "userTag": "vitorfreefireg",
+          "nick": "Sasuke",
+          "classe": "Viper",
+          "cp": 330482,
+          "level": 71,
+          "noCpApproved": false,
+          "calc": {
+            "baseDkp": 30,
+            "cp": 330482,
+            "level": 71,
+            "multCp": 1,
+            "multLvl": 0.98,
+            "combinedMultiplier": 0.99,
+            "finalDkp": 30,
+            "cutoffStatus": {
+              "isCut": false,
+              "inGracePeriod": false
+            }
+          },
+          "newTotalDkp": 50
+        },
+        {
+          "userId": "1177008353927495710",
+          "userTag": "jmacedx",
+          "nick": "JMX",
+          "classe": "Bloodstained",
+          "cp": 335663,
+          "level": 72,
+          "noCpApproved": false,
+          "calc": {
+            "baseDkp": 30,
+            "cp": 335663,
+            "level": 72,
+            "multCp": 1.02,
+            "multLvl": 1,
+            "combinedMultiplier": 1.02,
+            "finalDkp": 30,
+            "cutoffStatus": {
+              "isCut": false,
+              "inGracePeriod": false
+            }
+          },
+          "newTotalDkp": 30
+        },
+        {
+          "userId": "248940648563081226",
+          "userTag": "lprlucas",
+          "nick": "LpLucas",
+          "classe": "Carnage",
+          "cp": 377699,
+          "level": 71,
+          "noCpApproved": false,
+          "calc": {
+            "baseDkp": 30,
+            "cp": 377699,
+            "level": 71,
+            "multCp": 1.14,
+            "multLvl": 0.98,
+            "combinedMultiplier": 1.12,
+            "finalDkp": 34,
+            "cutoffStatus": {
+              "isCut": false,
+              "inGracePeriod": false
+            }
+          },
+          "newTotalDkp": 34
+        },
+        {
+          "userId": "221320510087102464",
+          "userTag": "221320510087102464",
+          "nick": null,
+          "classe": "N/A",
+          "cp": 0,
+          "level": 0,
+          "noCpApproved": true,
+          "calc": {
+            "baseDkp": 30,
+            "finalDkp": 0,
+            "multCp": 0,
+            "multLvl": 0,
+            "combinedMultiplier": 0,
+            "cutoffStatus": {
+              "isCut": true,
+              "details": {
+                "failedReason": "PROIBIDO: Sem CP/Nível aprovados pela Staff (Envie print em #atualizacao-cp)"
+              }
+            }
+          },
+          "newTotalDkp": 0
+        },
+        {
+          "userId": "570376636051095562",
+          "userTag": "douglasmr.",
+          "nick": "KinGZ",
+          "classe": "Carnage",
+          "cp": 322000,
+          "level": 71,
+          "noCpApproved": false,
+          "calc": {
+            "baseDkp": 30,
+            "cp": 322000,
+            "level": 71,
+            "multCp": 0.98,
+            "multLvl": 0.98,
+            "combinedMultiplier": 0.96,
+            "finalDkp": 29,
+            "cutoffStatus": {
+              "isCut": false,
+              "inGracePeriod": false
+            }
+          },
+          "newTotalDkp": 77
+        },
+        {
+          "userId": "1184234338334822440",
+          "userTag": "1184234338334822440",
+          "nick": null,
+          "classe": "N/A",
+          "cp": 0,
+          "level": 0,
+          "noCpApproved": true,
+          "calc": {
+            "baseDkp": 30,
+            "finalDkp": 0,
+            "multCp": 0,
+            "multLvl": 0,
+            "combinedMultiplier": 0,
+            "cutoffStatus": {
+              "isCut": true,
+              "details": {
+                "failedReason": "PROIBIDO: Sem CP/Nível aprovados pela Staff (Envie print em #atualizacao-cp)"
+              }
+            }
+          },
+          "newTotalDkp": 0
+        },
+        {
+          "userId": "273600843251712020",
+          "userTag": "kasumo_",
+          "nick": "llBellall",
+          "classe": "Carnage",
+          "cp": 360210,
+          "level": 72,
+          "noCpApproved": false,
+          "calc": {
+            "baseDkp": 30,
+            "cp": 360210,
+            "level": 72,
+            "multCp": 1.09,
+            "multLvl": 1,
+            "combinedMultiplier": 1.09,
+            "finalDkp": 33,
+            "cutoffStatus": {
+              "isCut": false,
+              "inGracePeriod": false
+            }
+          },
+          "newTotalDkp": 86
+        },
+        {
+          "userId": "425370511749545984",
+          "userTag": "kakashii3337",
+          "nick": "Markin",
+          "classe": "Viper",
+          "cp": 399000,
+          "level": 72,
+          "noCpApproved": false,
+          "calc": {
+            "baseDkp": 30,
+            "cp": 399000,
+            "level": 72,
+            "multCp": 1.2,
+            "multLvl": 1,
+            "combinedMultiplier": 1.2,
+            "finalDkp": 36,
+            "cutoffStatus": {
+              "isCut": false,
+              "inGracePeriod": false
+            }
+          },
+          "newTotalDkp": 60
+        },
+        {
+          "userId": "134688155839365120",
+          "userTag": "mateus1260",
+          "nick": "Fergie",
+          "classe": "Viper",
+          "cp": 305168,
+          "level": 71,
+          "noCpApproved": false,
+          "calc": {
+            "baseDkp": 30,
+            "cp": 305168,
+            "level": 71,
+            "multCp": 0.93,
+            "multLvl": 0.98,
+            "combinedMultiplier": 0.91,
+            "finalDkp": 27,
+            "cutoffStatus": {
+              "isCut": false,
+              "inGracePeriod": false
+            }
+          },
+          "newTotalDkp": 45
+        },
+        {
+          "userId": "285591759516336128",
+          "userTag": "_eduardo_",
+          "nick": "BixaPreta",
+          "classe": "Viper",
+          "cp": 360168,
+          "level": 72,
+          "noCpApproved": false,
+          "calc": {
+            "baseDkp": 30,
+            "cp": 360168,
+            "level": 72,
+            "multCp": 1.09,
+            "multLvl": 1,
+            "combinedMultiplier": 1.09,
+            "finalDkp": 33,
+            "cutoffStatus": {
+              "isCut": false,
+              "inGracePeriod": false
+            }
+          },
+          "newTotalDkp": 66
+        },
+        {
+          "userId": "299245685822455808",
+          "userTag": "omegared3000",
+          "nick": "OmegaRed3000",
+          "classe": "Carnage",
+          "cp": 294811,
+          "level": 71,
+          "noCpApproved": false,
+          "calc": {
+            "baseDkp": 30,
+            "cp": 294811,
+            "level": 71,
+            "multCp": 0.9,
+            "multLvl": 0.98,
+            "combinedMultiplier": 0.88,
+            "finalDkp": 26,
+            "cutoffStatus": {
+              "isCut": false,
+              "inGracePeriod": false
+            }
+          },
+          "newTotalDkp": 26
+        },
+        {
+          "userId": "1455647608696733778",
+          "userTag": "1455647608696733778",
+          "nick": null,
+          "classe": "N/A",
+          "cp": 0,
+          "level": 0,
+          "noCpApproved": true,
+          "calc": {
+            "baseDkp": 30,
+            "finalDkp": 0,
+            "multCp": 0,
+            "multLvl": 0,
+            "combinedMultiplier": 0,
+            "cutoffStatus": {
+              "isCut": true,
+              "details": {
+                "failedReason": "PROIBIDO: Sem CP/Nível aprovados pela Staff (Envie print em #atualizacao-cp)"
+              }
+            }
+          },
+          "newTotalDkp": 0
+        },
+        {
+          "userId": "258777573733957633",
+          "userTag": "diton89",
+          "nick": "DESGRAÇADO",
+          "classe": "Bloodstained",
+          "cp": 352645,
+          "level": 72,
+          "noCpApproved": false,
+          "calc": {
+            "baseDkp": 30,
+            "cp": 352645,
+            "level": 72,
+            "multCp": 1.07,
+            "multLvl": 1,
+            "combinedMultiplier": 1.07,
+            "finalDkp": 32,
+            "cutoffStatus": {
+              "isCut": false,
+              "inGracePeriod": false
+            }
+          },
+          "newTotalDkp": 64
+        },
+        {
+          "userId": "773250841607667773",
+          "userTag": "sololeveling5091",
+          "nick": "nagi",
+          "classe": "Viper",
+          "cp": 381500,
+          "level": 72,
+          "noCpApproved": false,
+          "calc": {
+            "baseDkp": 30,
+            "cp": 381500,
+            "level": 72,
+            "multCp": 1.15,
+            "multLvl": 1,
+            "combinedMultiplier": 1.15,
+            "finalDkp": 35,
+            "cutoffStatus": {
+              "isCut": false,
+              "inGracePeriod": false
+            }
+          },
+          "newTotalDkp": 35
+        },
+        {
+          "userId": "369263021589266433",
+          "userTag": "369263021589266433",
+          "nick": null,
+          "classe": "N/A",
+          "cp": 0,
+          "level": 0,
+          "noCpApproved": true,
+          "calc": {
+            "baseDkp": 30,
+            "finalDkp": 0,
+            "multCp": 0,
+            "multLvl": 0,
+            "combinedMultiplier": 0,
+            "cutoffStatus": {
+              "isCut": true,
+              "details": {
+                "failedReason": "PROIBIDO: Sem CP/Nível aprovados pela Staff (Envie print em #atualizacao-cp)"
+              }
+            }
+          },
+          "newTotalDkp": 0
+        },
+        {
+          "userId": "1539332550261080106",
+          "userTag": "dpizinnalt.",
+          "nick": "BrancaSafada",
+          "classe": "Viper",
+          "cp": 415122,
+          "level": 73,
+          "noCpApproved": false,
+          "calc": {
+            "baseDkp": 30,
+            "cp": 415122,
+            "level": 73,
+            "multCp": 1.25,
+            "multLvl": 1.01,
+            "combinedMultiplier": 1.27,
+            "finalDkp": 38,
+            "cutoffStatus": {
+              "isCut": false,
+              "inGracePeriod": false
+            }
+          },
+          "newTotalDkp": 76
+        }
+      ]
+    }
+  },
+  "disputes": {
+    "disp_1794435419103_286": {
+      "disputeId": "disp_1794435419103_286",
+      "userId": "909786062602272802",
+      "userTag": "vitorfreefireg",
+      "eventKey": "geena_19",
+      "eventName": "Geena 19:00",
+      "baseDkp": 20,
+      "printUrl": "https://cdn.discordapp.com/attachments/1570199742506606744/1570199936987959336/Screenshot_20261111-190216.Chrome.png?ex=6af63a25&is=6af4e8a5&hm=741acec35279533aa42c011e7b6ea6331f57ebdc2f56f526d1a425fe5014b1b5&",
+      "note": "Sem observações",
+      "status": "approved",
+      "createdAt": "2026-11-11T22:16:59.103Z",
+      "approvedBy": "273600843251712020",
+      "approvedAt": "2026-11-11T22:17:25.317Z",
+      "awardedDkp": 20
+    },
+    "disp_1794449675193_640": {
+      "disputeId": "disp_1794449675193_640",
+      "userId": "293647077173493760",
+      "userTag": "dekox1",
+      "eventKey": "geena_23",
+      "eventName": "Geena 23:00",
+      "baseDkp": 30,
+      "printUrl": "https://cdn.discordapp.com/attachments/1570260152521850982/1570260186361364530/image.png?ex=6af67242&is=6af520c2&hm=d5f22ae745debf94c023eba048b1dd27a84134987caad1042d0ce5dd725b755f&",
+      "note": "Sem observações",
+      "status": "approved",
+      "createdAt": "2026-11-12T02:14:35.193Z",
+      "approvedBy": "293647077173493760",
+      "approvedAt": "2026-11-12T02:14:41.933Z",
+      "awardedDkp": 36
+    }
+  }
+}

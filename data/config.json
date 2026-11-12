@@ -1,0 +1,88 @@
+{
+  "classes": [
+    "Bloodstained",
+    "Carnage",
+    "Akasha",
+    "Viper",
+    "Grim Reaper"
+  ],
+  "announcementChannelId": "1566503321416507573",
+  "events": {
+    "geena_15": {
+      "key": "geena_15",
+      "name": "Geena 15:00",
+      "baseDkp": 30
+    },
+    "geena_19": {
+      "key": "geena_19",
+      "name": "Geena 19:00",
+      "baseDkp": 20
+    },
+    "geena_23": {
+      "key": "geena_23",
+      "name": "Geena 23:00",
+      "baseDkp": 30
+    },
+    "guerra_ocupacao": {
+      "key": "guerra_ocupacao",
+      "name": "Guerra de Ocupação (Sábado)",
+      "baseDkp": 50
+    },
+    "defesa_reliquia": {
+      "key": "defesa_reliquia",
+      "name": "Defesa da Relíquia (Domingo)",
+      "baseDkp": 40
+    },
+    "missao_guilda": {
+      "key": "missao_guilda",
+      "name": "Missão da Guilda (Domingo)",
+      "baseDkp": 30
+    },
+    "evento_especial": {
+      "key": "evento_especial",
+      "name": "Evento Especial Staff",
+      "baseDkp": 35
+    }
+  },
+  "cutoffs": [
+    {
+      "id": "cut_initial",
+      "minCp": 280000,
+      "minLevel": 65,
+      "createdAt": "2026-11-09T21:00:00.000Z",
+      "deadline": "2026-11-16T21:00:00.000Z",
+      "deadlineTimestamp": 1794868800000,
+      "setBy": "Staff Inicial"
+    }
+  ],
+  "cpCalculation": {
+    "enabled": true,
+    "minCp": 280000,
+    "baseCp": 330000,
+    "cpStep": 30000,
+    "stepBonusPercent": 8.8,
+    "minMultiplier": 0.65,
+    "maxMultiplier": 1.8
+  },
+  "levelCalculation": {
+    "enabled": true,
+    "minLevel": 65,
+    "baseLevel": 72,
+    "levelStep": 1,
+    "stepBonusPercent": 1.5,
+    "minMultiplier": 0.85,
+    "maxMultiplier": 1.15
+  },
+  "decay": {
+    "enabled": true,
+    "retentionPercent": 20,
+    "dayOfMonth": 1,
+    "hour": 0,
+    "minute": 0
+  },
+  "auction": {
+    "antiSnipingThresholdSeconds": 60,
+    "antiSnipingExtensionSeconds": 120,
+    "minBidIncrement": 5
+  }
+}

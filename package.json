@@ -1,0 +1,26 @@
+{
+  "name": "vampir-noomercy",
+  "version": "1.0.0",
+  "description": "Bot de Presença, CP, DKP Lock e Leilões da Guild NooMercy",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "publish-panels": "node src/publish_panels.js",
+    "register-commands": "node src/commands/registerCommands.js"
+  },
+  "keywords": [
+    "discord",
+    "dkp",
+    "guild",
+    "raven2",
+    "noomercy"
+  ],
+  "author": "Antigravity",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.18.0",
+    "dotenv": "^16.4.7",
+    "node-cron": "^3.0.3",
+    "pg": "^8.23.1"
+  }
+}
