@@ -19,6 +19,7 @@ const {
   getStaffOverviewData,
   buildStaffOverviewEmbed,
   buildOverdueEmbed,
+  buildZeroPresenceEmbed,
   buildRosterPageEmbed,
   buildMemberDetailEmbed,
   buildStaffPanelComponents
@@ -898,6 +899,13 @@ async function handleSlashCommand(interaction) {
       const data = await getStaffOverviewData(guild);
       const embed = buildOverdueEmbed(data);
       const components = buildStaffPanelComponents('overdue');
+      return interaction.reply({ embeds: [embed], components, flags: MessageFlags.Ephemeral });
+    }
+
+    if (sub === 'sem-presenca') {
+      const data = await getStaffOverviewData(guild);
+      const embed = buildZeroPresenceEmbed(data);
+      const components = buildStaffPanelComponents('zero_pres');
       return interaction.reply({ embeds: [embed], components, flags: MessageFlags.Ephemeral });
     }
 

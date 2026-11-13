@@ -17,6 +17,7 @@ async function getStaffOverviewData(guild = null) {
   const onTime = [];
   const overdue = [];
   const noCp = [];
+  const zeroPresence = [];
 
   let totalCp = 0;
   let totalLevel = 0;
@@ -58,6 +59,11 @@ async function getStaffOverviewData(guild = null) {
       totalCp += memberCp;
       totalLevel += memberLevel;
       classCounts[memberClass] = (classCounts[memberClass] || 0) + 1;
+
+      // Combatentes cadastrados que nunca foram em boss
+      if ((bal.eventsAttended || 0) === 0) {
+        zeroPresence.push(enriched);
+      }
     } else {
       noCp.push(enriched);
     }
@@ -88,6 +94,7 @@ async function getStaffOverviewData(guild = null) {
     onTime,
     overdue,
     noCp,
+    zeroPresence,
     unregistered,
     totalRegistered: validCount,
     totalMembersWithProfile: Object.keys(members).length,
@@ -112,6 +119,7 @@ function buildStaffOverviewEmbed(data) {
       `👥 **Combatentes Cadastrados:** \`${data.totalRegistered}\`\n` +
       `✅ **CP em Dia (≤ 7 dias):** \`${data.onTime.length}\` membros\n` +
       `⏳ **CP Atrasado (> 7 dias):** \`${data.overdue.length}\` membros\n` +
+      `💤 **Nunca Foram em Boss (0 presenças):** \`${data.zeroPresence.length}\` membros\n` +
       `❌ **Sem CP / Não Cadastrados:** \`${data.noCp.length + data.unregistered.length}\`\n` +
       `⚔️ **Média de CP da Guilda:** \`${data.avgCp.toLocaleString('pt-BR')} CP\` (Nv. Médio: \`${data.avgLevel}\`)\n` +
       `💰 **DKP Total em Circulação:** \`${data.totalDkp.toLocaleString('pt-BR')} pts\`\n\n` +
@@ -122,12 +130,35 @@ function buildStaffOverviewEmbed(data) {
         name: '📌 Ações Rápidas da Staff',
         value:
           '• **⚠️ Ver Atrasados / Sem CP:** Lista quem precisa ser cobrado.\n' +
+          '• **💤 Nunca Foi em Boss:** Lista quem nunca participou de nenhum boss.\n' +
           '• **📋 Roster Completo:** Exibe lista com CP, Presenças e DKP de todos.\n' +
           '• **🔍 Consultar Membro:** Ficha detalhada e histórico de um jogador.',
         inline: false
       }
     )
     .setFooter({ text: 'Painel Exclusivo da Staff • NooMercy' })
+    .setTimestamp();
+
+  return embed;
+}
+
+// 1.1 Embed de Combatentes que Nunca Foram em Boss (0 Presenças)
+function buildZeroPresenceEmbed(data) {
+  const sorted = [...data.zeroPresence].sort((a, b) => (b.cp || 0) - (a.cp || 0));
+
+  const lines = sorted.map((m, idx) =>
+    `\`#${idx + 1}\` <@${m.userId}> (\`${m.nick || m.userTag}\`) — **${m.classe}** (Nv. ${m.nivel}) • **${m.cp.toLocaleString('pt-BR')} CP**\n` +
+    `  *Saldo: \`${m.totalDkp} DKP\` • Cadastrado há ${m.daysSinceApproval ?? '?'} dias • 0 presenças em bosses*`
+  );
+
+  const embed = new EmbedBuilder()
+    .setTitle(`💤 COMBATENTES NUNCA PRESENTES EM BOSSES [${sorted.length}]`)
+    .setColor('#E74C3C')
+    .setDescription(
+      'Membros que possuem ficha cadastrada na guilda, mas **nunca compareceram a nenhum boss** (0 presenças registradas):\n\n' +
+      (lines.length > 0 ? lines.join('\n\n') : '✅ *Todos os combatentes cadastrados já participaram de pelo menos 1 boss!*')
+    )
+    .setFooter({ text: 'Auditoria de Assiduidade • NooMercy Staff' })
     .setTimestamp();
 
   return embed;
@@ -299,15 +330,19 @@ function buildStaffPanelComponents(view = 'overview', currentPage = 0, totalPage
       .setStyle(view === 'overview' ? ButtonStyle.Success : ButtonStyle.Secondary),
     new ButtonBuilder()
       .setCustomId('btn_staff_mem_overdue')
-      .setLabel('⚠️ CP Atrasado / Sem Envio')
+      .setLabel('⚠️ CP Atrasado')
       .setStyle(view === 'overdue' ? ButtonStyle.Primary : ButtonStyle.Secondary),
+    new ButtonBuilder()
+      .setCustomId('btn_staff_mem_zero_pres')
+      .setLabel('💤 0 Presenças')
+      .setStyle(view === 'zero_pres' ? ButtonStyle.Danger : ButtonStyle.Secondary),
     new ButtonBuilder()
       .setCustomId('btn_staff_mem_roster_main')
       .setLabel('📋 Roster Completo')
       .setStyle(view === 'roster' ? ButtonStyle.Primary : ButtonStyle.Secondary),
     new ButtonBuilder()
       .setCustomId('btn_staff_mem_lookup')
-      .setLabel('🔍 Consultar Membro')
+      .setLabel('🔍 Consultar')
       .setStyle(ButtonStyle.Secondary)
   );
 
@@ -345,6 +380,7 @@ module.exports = {
   getStaffOverviewData,
   buildStaffOverviewEmbed,
   buildOverdueEmbed,
+  buildZeroPresenceEmbed,
   buildRosterPageEmbed,
   buildMemberDetailEmbed,
   buildStaffPanelComponents

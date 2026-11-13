@@ -20,6 +20,7 @@ const {
   getStaffOverviewData,
   buildStaffOverviewEmbed,
   buildOverdueEmbed,
+  buildZeroPresenceEmbed,
   buildRosterPageEmbed,
   buildMemberDetailEmbed,
   buildStaffPanelComponents
@@ -614,6 +615,19 @@ async function handleButtonClick(interaction) {
     const data = await getStaffOverviewData(guild);
     const embed = buildOverdueEmbed(data);
     const components = buildStaffPanelComponents('overdue');
+
+    return interaction.update({ embeds: [embed], components });
+  }
+
+  // 16.1.1 Staff Ver Membros sem Presença em Boss (0 Presenças)
+  if (customId === 'btn_staff_mem_zero_pres') {
+    if (!isStaffMember(member)) {
+      return interaction.reply({ content: '❌ Acesso restrito à Staff!', flags: MessageFlags.Ephemeral });
+    }
+
+    const data = await getStaffOverviewData(guild);
+    const embed = buildZeroPresenceEmbed(data);
+    const components = buildStaffPanelComponents('zero_pres');
 
     return interaction.update({ embeds: [embed], components });
   }

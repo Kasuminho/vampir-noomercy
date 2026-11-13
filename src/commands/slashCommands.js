@@ -167,6 +167,10 @@ function getSlashCommands() {
           .setDescription('Lista membros com CP atrasado (> 7 dias) ou que ainda não enviaram CP.')
       )
       .addSubcommand(sub =>
+        sub.setName('sem-presenca')
+          .setDescription('Lista combatentes cadastrados que nunca compareceram a nenhum boss (0 presenças).')
+      )
+      .addSubcommand(sub =>
         sub.setName('roster')
           .setDescription('Exibe a lista completa de membros com CP, presenças e DKP.')
           .addIntegerOption(opt => opt.setName('pagina').setDescription('Número da página (padrão: 1)').setMinValue(1))
