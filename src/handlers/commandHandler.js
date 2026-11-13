@@ -888,14 +888,14 @@ async function handleSlashCommand(interaction) {
     const sub = options.getSubcommand();
 
     if (sub === 'visao-geral') {
-      const data = getStaffOverviewData(guild);
+      const data = await getStaffOverviewData(guild);
       const embed = buildStaffOverviewEmbed(data);
       const components = buildStaffPanelComponents('overview');
       return interaction.reply({ embeds: [embed], components, flags: MessageFlags.Ephemeral });
     }
 
     if (sub === 'atrasados') {
-      const data = getStaffOverviewData(guild);
+      const data = await getStaffOverviewData(guild);
       const embed = buildOverdueEmbed(data);
       const components = buildStaffPanelComponents('overdue');
       return interaction.reply({ embeds: [embed], components, flags: MessageFlags.Ephemeral });
@@ -903,7 +903,7 @@ async function handleSlashCommand(interaction) {
 
     if (sub === 'roster') {
       const pageNum = options.getInteger('pagina') || 1;
-      const data = getStaffOverviewData(guild);
+      const data = await getStaffOverviewData(guild);
       const { embed, currentPage, totalPages } = buildRosterPageEmbed(data, pageNum - 1);
       const components = buildStaffPanelComponents('roster', currentPage, totalPages);
       return interaction.reply({ embeds: [embed], components, flags: MessageFlags.Ephemeral });

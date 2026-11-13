@@ -594,7 +594,7 @@ async function handleButtonClick(interaction) {
       return interaction.reply({ content: '❌ Acesso restrito à Staff!', flags: MessageFlags.Ephemeral });
     }
 
-    const data = getStaffOverviewData(guild);
+    const data = await getStaffOverviewData(guild);
     const embed = buildStaffOverviewEmbed(data);
     const components = buildStaffPanelComponents('overview');
 
@@ -611,7 +611,7 @@ async function handleButtonClick(interaction) {
       return interaction.reply({ content: '❌ Acesso restrito à Staff!', flags: MessageFlags.Ephemeral });
     }
 
-    const data = getStaffOverviewData(guild);
+    const data = await getStaffOverviewData(guild);
     const embed = buildOverdueEmbed(data);
     const components = buildStaffPanelComponents('overdue');
 
@@ -633,7 +633,7 @@ async function handleButtonClick(interaction) {
       pageIndex = parseInt(customId.replace('btn_staff_mem_roster_', ''), 10) || 0;
     }
 
-    const data = getStaffOverviewData(guild);
+    const data = await getStaffOverviewData(guild);
     const { embed, currentPage, totalPages } = buildRosterPageEmbed(data, pageIndex);
     const components = buildStaffPanelComponents('roster', currentPage, totalPages);
 

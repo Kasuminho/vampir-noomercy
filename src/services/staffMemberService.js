@@ -4,7 +4,11 @@ const { findMemberByNickOrId } = require('./memberService');
 
 const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
 
-function getStaffOverviewData(guild = null) {
+async function getStaffOverviewData(guild = null) {
+  if (guild && guild.members) {
+    await guild.members.fetch().catch(() => {});
+  }
+
   const members = getMembers();
   const dkpData = getDkp();
   const balances = dkpData.balances || {};
@@ -61,15 +65,15 @@ function getStaffOverviewData(guild = null) {
     totalDkp += (bal.totalDkp || 0);
   }
 
-  // Se a guilda foi passada, checa membros do Discord que não estão no members.json
+  // Se a guilda foi passada, checa membros do Discord que não estão no members.json (todos menos bots)
   const unregistered = [];
   if (guild && guild.members && guild.members.cache) {
     for (const [gId, gMember] of guild.members.cache.entries()) {
-      if (gMember.user.bot) continue;
+      if (gMember.user?.bot || gMember.bot) continue;
       if (!members[gId]) {
         unregistered.push({
           userId: gId,
-          userTag: gMember.user.tag || gMember.displayName,
+          userTag: gMember.user?.tag || gMember.displayName,
           nick: gMember.displayName
         });
       }
@@ -200,8 +204,39 @@ function buildMemberDetailEmbed(identifier, guild = null) {
 
   const match = findMemberByNickOrId(identifier, members);
   if (!match) {
+    // Se não encontrou no banco, checa se é um membro/visitante do Discord
+    let discordUser = null;
+    if (guild && guild.members && guild.members.cache) {
+      const cleanId = (identifier || '').replace(/[<@!>]/g, '').trim();
+      const gm = guild.members.cache.get(cleanId) ||
+                 guild.members.cache.find(m => m.displayName.toLowerCase() === identifier.toLowerCase() || m.user.username.toLowerCase() === identifier.toLowerCase());
+      if (gm) {
+        if (gm.user?.bot || gm.bot) {
+          return { error: '❌ Bots não possuem ficha de combatente!' };
+        }
+        discordUser = gm;
+      }
+    }
+
+    if (discordUser) {
+      const embed = new EmbedBuilder()
+        .setTitle(`👤 CONSULTA DE USUÁRIO: ${discordUser.displayName}`)
+        .setColor('#95A5A6')
+        .setDescription(
+          `Este usuário está no Discord, mas **ainda não possui ficha cadastrada** na guilda:\n\n` +
+          `💬 **Discord:** <@${discordUser.id}> \`(${discordUser.user.tag || discordUser.id})\`\n` +
+          `📌 **Status:** ❌ Sem Alistamento / Sem CP enviado\n` +
+          `💰 **Saldo de DKP:** \`0 pts\`\n` +
+          `⚔️ **Presenças em Bosses:** \`0 eventos\`\n\n` +
+          `*Peça para o usuário realizar o alistamento no canal oficial (#registro) para liberar acesso e pontuar!*`
+        )
+        .setFooter({ text: `ID: ${discordUser.id} • Consulta Staff NooMercy` })
+        .setTimestamp();
+      return { embed };
+    }
+
     return {
-      error: `❌ Membro \`${identifier}\` não encontrado na base de dados da guilda!`
+      error: `❌ Membro \`${identifier}\` não encontrado na guilda nem no Discord!`
     };
   }
 
