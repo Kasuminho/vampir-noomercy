@@ -597,13 +597,13 @@ async function handleButtonClick(interaction) {
 
     if (customId === 'btn_staff_painel_membros') {
       await interaction.deferReply({ flags: MessageFlags.Ephemeral }).catch(() => {});
-      const data = getStaffOverviewData(guild);
+      const data = await getStaffOverviewData(guild);
       const embed = buildStaffOverviewEmbed(data);
       const components = buildStaffPanelComponents('overview');
       return interaction.editReply({ embeds: [embed], components });
     } else {
       await interaction.deferUpdate().catch(() => {});
-      const data = getStaffOverviewData(guild);
+      const data = await getStaffOverviewData(guild);
       const embed = buildStaffOverviewEmbed(data);
       const components = buildStaffPanelComponents('overview');
       return interaction.editReply({ embeds: [embed], components });
@@ -617,7 +617,7 @@ async function handleButtonClick(interaction) {
     }
 
     await interaction.deferUpdate().catch(() => {});
-    const data = getStaffOverviewData(guild);
+    const data = await getStaffOverviewData(guild);
     const embed = buildOverdueEmbed(data);
     const components = buildStaffPanelComponents('overdue');
 
@@ -631,7 +631,7 @@ async function handleButtonClick(interaction) {
     }
 
     await interaction.deferUpdate().catch(() => {});
-    const data = getStaffOverviewData(guild);
+    const data = await getStaffOverviewData(guild);
     const embed = buildZeroPresenceEmbed(data);
     const components = buildStaffPanelComponents('zero_pres');
 
@@ -655,7 +655,7 @@ async function handleButtonClick(interaction) {
       pageIndex = parseInt(customId.replace('btn_staff_mem_roster_', ''), 10) || 0;
     }
 
-    const data = getStaffOverviewData(guild);
+    const data = await getStaffOverviewData(guild);
     const { embed, currentPage, totalPages } = buildRosterPageEmbed(data, pageIndex);
     const components = buildStaffPanelComponents('roster', currentPage, totalPages);
 

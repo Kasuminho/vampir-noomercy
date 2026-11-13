@@ -12,6 +12,7 @@ require('dotenv').config();
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMembers,
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.GuildVoiceStates,
     GatewayIntentBits.MessageContent
@@ -84,6 +85,16 @@ function startAuctionChecker() {
 
 client.once('clientReady', async () => {
   console.log(`[NOOMERCY BOT] Online e pronto como ${client.user.tag}!`);
+
+  // Hidrata o cache de membros do Discord em background para auditoria imediata
+  for (const guild of client.guilds.cache.values()) {
+    try {
+      const fetched = await guild.members.fetch();
+      console.log(`[GUILD MEMBERS] Cache inicial hidratado para "${guild.name}": ${fetched.size} membros.`);
+    } catch (err) {
+      console.warn(`[GUILD MEMBERS] Aviso ao buscar membros de "${guild.name}":`, err.message);
+    }
+  }
 
   // Inicia scheduler de virada mensal (Dia 1 às 00:00)
   startDecayScheduler(client, channels['logs-dkp']);

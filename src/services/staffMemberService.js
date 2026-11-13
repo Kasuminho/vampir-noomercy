@@ -4,7 +4,11 @@ const { findMemberByNickOrId } = require('./memberService');
 
 const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
 
-function getStaffOverviewData(guild = null) {
+async function getStaffOverviewData(guild = null) {
+  if (guild && guild.members && (!guild.members.cache || guild.members.cache.size < (guild.memberCount || 0))) {
+    await guild.members.fetch().catch(() => {});
+  }
+
   const members = getMembers();
   const dkpData = getDkp();
   const balances = dkpData.balances || {};
@@ -169,9 +173,17 @@ function buildOverdueEmbed(data) {
       )
     : ['✅ *Nenhum membro com CP atrasado no momento! Todos em dia!*'];
 
-  const noCpLines = [...data.noCp, ...data.unregistered].slice(0, 15).map(m =>
+  const allNoCp = [...data.noCp, ...data.unregistered].sort((a, b) =>
+    (a.nick || a.userTag || '').localeCompare(b.nick || b.userTag || '', 'pt-BR', { sensitivity: 'base' })
+  );
+
+  const maxDisplay = 25;
+  const noCpLines = allNoCp.slice(0, maxDisplay).map(m =>
     `• <@${m.userId}> (\`${m.nick || m.userTag}\`)${m.pendingSubmission ? ' ⏳ *Print pendente de análise*' : ' ❌ *Nunca enviou CP*'}`
   );
+  if (allNoCp.length > maxDisplay) {
+    noCpLines.push(`*... e mais ${allNoCp.length - maxDisplay} usuário(s).*`);
+  }
 
   const embed = new EmbedBuilder()
     .setTitle('⚠️ AUDITORIA DE CP ATRASADO & SEM CADASTRO')
@@ -180,7 +192,7 @@ function buildOverdueEmbed(data) {
       `Jogadores que necessitam de atenção ou cobrança para atualização semanal de CP:\n\n` +
       `⏳ **CP Atrasado (> 7 dias sem atualizar) [${data.overdue.length}]:**\n` +
       overdueLines.join('\n') + '\n\n' +
-      `❌ **Sem CP Cadastrado / Novos Membros [${data.noCp.length + data.unregistered.length}]:**\n` +
+      `❌ **Sem CP Cadastrado / Novos Membros [${allNoCp.length}]:**\n` +
       (noCpLines.length > 0 ? noCpLines.join('\n') : '✅ *Todos os membros possuem CP cadastrado!*')
     )
     .setFooter({ text: 'Auditoria de Regularidade de CP • NooMercy' })
