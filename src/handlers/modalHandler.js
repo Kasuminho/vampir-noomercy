@@ -5,6 +5,7 @@ const { placeBid, startAuction, renderAuctionEmbed, updateAuctionDisplay } = req
 const { logAttendance, logAuctionBidLock, logAuctionBidUnlock } = require('../services/loggerService');
 const { getLeiloes, saveLeiloes } = require('../database/db');
 const { channels } = require('../config/channels');
+const { buildMemberDetailEmbed } = require('../services/staffMemberService');
 
 async function handleModalSubmit(interaction) {
   const { customId, fields, user } = interaction;
@@ -336,7 +337,7 @@ async function handleModalSubmit(interaction) {
       if (m.calc.cutoffStatus && m.calc.cutoffStatus.inGracePeriod) {
         return `⚠️ <@${m.userId}> (${m.nick || m.userTag}): **+${points} DKP** *(Aviso: meta vence em ${m.calc.cutoffStatus.details.daysLeft}d)*${lastHitTag}`;
       }
-      return `• <@${m.userId}> (${m.nick || m.userTag}): **+${points} DKP** *(CP: ${m.cp.toLocaleString('pt-BR')} • Mult: ${m.calc.combinedMultiplier}x)*${lastHitTag}`;
+      return `• <@${m.userId}> (${m.nick || m.userTag}): **+${points} DKP** *(Mult: ${m.calc.combinedMultiplier}x)*${lastHitTag}`;
     });
 
     const embed = new EmbedBuilder()
@@ -427,6 +428,18 @@ async function handleModalSubmit(interaction) {
       content: `✅ Leilão do item **${itemName}** iniciado com sucesso no canal <#${auctionChannelId}>! (ID: \`${auction.id}\`)`,
       flags: MessageFlags.Ephemeral
     });
+  }
+
+  // 7. Modal de Consulta de Membro (Staff)
+  if (customId === 'modal_staff_mem_lookup') {
+    const input = fields.getTextInputValue('input_staff_lookup_member');
+    const result = buildMemberDetailEmbed(input, interaction.guild);
+
+    if (result.error) {
+      return interaction.reply({ content: result.error, flags: MessageFlags.Ephemeral });
+    }
+
+    return interaction.reply({ embeds: [result.embed], flags: MessageFlags.Ephemeral });
   }
 }
 

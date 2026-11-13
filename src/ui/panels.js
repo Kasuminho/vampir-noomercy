@@ -162,19 +162,24 @@ function createStaffPanelButtons() {
   const row1 = new ActionRowBuilder().addComponents(
     new ButtonBuilder()
       .setCustomId('btn_staff_presenca_lote')
-      .setLabel('📋 Presença em Lote / Batch')
+      .setLabel('📋 Presença em Lote')
       .setStyle(ButtonStyle.Success),
     new ButtonBuilder()
       .setCustomId('btn_staff_presenca_voz')
-      .setLabel('🎙️ Presença por Voz / Voice')
-      .setStyle(ButtonStyle.Secondary)
+      .setLabel('🎙️ Presença por Voz')
+      .setStyle(ButtonStyle.Secondary),
+    new ButtonBuilder()
+      .setCustomId('btn_staff_painel_membros')
+      .setLabel('👥 Painel de Membros')
+      .setStyle(ButtonStyle.Primary)
+      .setEmoji('🛡️')
   );
 
   const row2 = new ActionRowBuilder().addComponents(
     new ButtonBuilder()
       .setCustomId('btn_staff_novo_leilao')
       .setLabel('📦 Criar Leilão / New Auction')
-      .setStyle(ButtonStyle.Primary),
+      .setStyle(ButtonStyle.Secondary),
     new ButtonBuilder()
       .setCustomId('btn_staff_reset_mensal')
       .setLabel('🔄 Virada Mensal / Monthly Decay')

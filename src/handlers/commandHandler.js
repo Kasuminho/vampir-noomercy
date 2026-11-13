@@ -4,7 +4,8 @@ const {
   ButtonBuilder,
   ButtonStyle,
   ChannelType,
-  MessageFlags
+  MessageFlags,
+  PermissionFlagsBits
 } = require('discord.js');
 const { submitCpUpdate, getMember, getMemberDkp, getCpRanking, resolveMembersBatch } = require('../services/memberService');
 const { calculateDkpReward } = require('../services/dkpCalculator');
@@ -13,7 +14,15 @@ const { startAuction, placeBid, finalizeAuction, renderAuctionEmbed, updateAucti
 const { executeMonthlyDecay } = require('../services/monthlyDecayService');
 const { logAttendance, logAuctionBidLock, logAuctionBidUnlock } = require('../services/loggerService');
 const { getConfig, saveConfig, getLeiloes, saveLeiloes } = require('../database/db');
-const { channels } = require('../config/channels');
+const { channels, roles } = require('../config/channels');
+const {
+  getStaffOverviewData,
+  buildStaffOverviewEmbed,
+  buildOverdueEmbed,
+  buildRosterPageEmbed,
+  buildMemberDetailEmbed,
+  buildStaffPanelComponents
+} = require('../services/staffMemberService');
 const {
   createMemberPanelEmbed,
   createMemberPanelButtons,
@@ -27,6 +36,18 @@ const {
   createStaffPanelButtons
 } = require('../ui/panels');
 
+function isStaffMember(member) {
+  if (!member) return false;
+  if (member.permissions && member.permissions.has(PermissionFlagsBits.Administrator)) return true;
+  if (member.permissions && member.permissions.has(PermissionFlagsBits.ManageGuild)) return true;
+  if (member.roles && member.roles.cache) {
+    return member.roles.cache.has(roles.staff) ||
+           member.roles.cache.has(roles.lider) ||
+           member.roles.cache.has(roles.admGuerra);
+  }
+  return false;
+}
+
 function formatPresenceMemberLine(m) {
   const lastHitTag = m.isLastHit ? ' • 🎯 **[LAST HIT +10 DKP]**' : '';
   const points = m.totalAwardedDkp || m.calc?.finalDkp || 0;
@@ -34,9 +55,9 @@ function formatPresenceMemberLine(m) {
     return `🚫 <@${m.userId}> (${m.nick || m.userTag}): **0 DKP** *(Cortado: ${m.calc.cutoffStatus.details.failedReason})*${lastHitTag}`;
   }
   if (m.calc.cutoffStatus && m.calc.cutoffStatus.inGracePeriod) {
-    return `⚠️ <@${m.userId}> (${m.nick || m.userTag}): **+${points} DKP** *(Aviso: meta de ${m.calc.cutoffStatus.details.minCp.toLocaleString('pt-BR')} CP vence em ${m.calc.cutoffStatus.details.daysLeft}d)*${lastHitTag}`;
+    return `⚠️ <@${m.userId}> (${m.nick || m.userTag}): **+${points} DKP** *(Aviso: meta vence em ${m.calc.cutoffStatus.details.daysLeft}d)*${lastHitTag}`;
   }
-  return `• <@${m.userId}> (${m.nick || m.userTag}): **+${points} DKP** *(CP: ${m.cp.toLocaleString('pt-BR')} • Mult: ${m.calc.combinedMultiplier}x)*${lastHitTag}`;
+  return `• <@${m.userId}> (${m.nick || m.userTag}): **+${points} DKP** *(Mult: ${m.calc.combinedMultiplier}x)*${lastHitTag}`;
 }
 
 async function handleSlashCommand(interaction) {
@@ -855,6 +876,48 @@ async function handleSlashCommand(interaction) {
     } catch (e) {
       console.error(e);
       return interaction.editReply({ content: `❌ Erro ao postar painéis: ${e.message}` });
+    }
+  }
+
+  // 13. /painel-membros (Staff)
+  if (commandName === 'painel-membros') {
+    if (!isStaffMember(interaction.member)) {
+      return interaction.reply({ content: '❌ Acesso restrito à Staff!', flags: MessageFlags.Ephemeral });
+    }
+
+    const sub = options.getSubcommand();
+
+    if (sub === 'visao-geral') {
+      const data = getStaffOverviewData(guild);
+      const embed = buildStaffOverviewEmbed(data);
+      const components = buildStaffPanelComponents('overview');
+      return interaction.reply({ embeds: [embed], components, flags: MessageFlags.Ephemeral });
+    }
+
+    if (sub === 'atrasados') {
+      const data = getStaffOverviewData(guild);
+      const embed = buildOverdueEmbed(data);
+      const components = buildStaffPanelComponents('overdue');
+      return interaction.reply({ embeds: [embed], components, flags: MessageFlags.Ephemeral });
+    }
+
+    if (sub === 'roster') {
+      const pageNum = options.getInteger('pagina') || 1;
+      const data = getStaffOverviewData(guild);
+      const { embed, currentPage, totalPages } = buildRosterPageEmbed(data, pageNum - 1);
+      const components = buildStaffPanelComponents('roster', currentPage, totalPages);
+      return interaction.reply({ embeds: [embed], components, flags: MessageFlags.Ephemeral });
+    }
+
+    if (sub === 'consultar') {
+      const identifier = options.getString('membro');
+      const result = buildMemberDetailEmbed(identifier, guild);
+
+      if (result.error) {
+        return interaction.reply({ content: result.error, flags: MessageFlags.Ephemeral });
+      }
+
+      return interaction.reply({ embeds: [result.embed], flags: MessageFlags.Ephemeral });
     }
   }
 }

@@ -21,7 +21,7 @@ async function logAttendance({ client, eventName, baseDkp, registeredBy, awarded
   const lines = validAwarded.slice(0, 25).map(m => {
     const lhText = m.isLastHit ? ' • 🎯 **Last Hit: +10 DKP**' : '';
     const points = m.totalAwardedDkp || m.calc?.finalDkp || 0;
-    return `• <@${m.userId}> (\`${m.nick || m.userTag}\`): **+${points} DKP** *(CP: ${(m.cp || 0).toLocaleString('pt-BR')} • Saldo: \`${m.newTotalDkp} DKP\`${lhText})*`;
+    return `• <@${m.userId}> (\`${m.nick || m.userTag}\`): **+${points} DKP** *(Saldo: \`${m.newTotalDkp} DKP\`${lhText})*`;
   });
 
   let lastHitSection = '';

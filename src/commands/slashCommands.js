@@ -151,7 +151,31 @@ function getSlashCommands() {
     new SlashCommandBuilder()
       .setName('setup-paineis')
       .setDescription('[STAFF] Publica ou recria os painéis fixos com botões interativos nos canais.')
-      .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
+      .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
+
+    // 13. Painel de Membros (Staff)
+    new SlashCommandBuilder()
+      .setName('painel-membros')
+      .setDescription('[STAFF] Consulta painel de membros, CPs atrasados, presenças e fichas detalhadas.')
+      .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
+      .addSubcommand(sub =>
+        sub.setName('visao-geral')
+          .setDescription('Exibe a visão geral dos combatentes, estatísticas e regularidade de CP.')
+      )
+      .addSubcommand(sub =>
+        sub.setName('atrasados')
+          .setDescription('Lista membros com CP atrasado (> 7 dias) ou que ainda não enviaram CP.')
+      )
+      .addSubcommand(sub =>
+        sub.setName('roster')
+          .setDescription('Exibe a lista completa de membros com CP, presenças e DKP.')
+          .addIntegerOption(opt => opt.setName('pagina').setDescription('Número da página (padrão: 1)').setMinValue(1))
+      )
+      .addSubcommand(sub =>
+        sub.setName('consultar')
+          .setDescription('Consulta a ficha completa de um membro (CP, Nível, Presenças, DKP, prints).')
+          .addStringOption(opt => opt.setName('membro').setDescription('Nick in-game, @menção ou ID do membro').setRequired(true))
+      )
   ];
 }
 

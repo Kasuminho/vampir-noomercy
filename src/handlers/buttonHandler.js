@@ -16,6 +16,14 @@ const { logDisputeApproved, logAttendance } = require('../services/loggerService
 const { getConfig, getLeiloes } = require('../database/db');
 const { channels, roles } = require('../config/channels');
 const { startCpUpdateTicket, handleTicketButton } = require('../services/ticketService');
+const {
+  getStaffOverviewData,
+  buildStaffOverviewEmbed,
+  buildOverdueEmbed,
+  buildRosterPageEmbed,
+  buildMemberDetailEmbed,
+  buildStaffPanelComponents
+} = require('../services/staffMemberService');
 
 function isStaffMember(member) {
   if (!member) return false;
@@ -577,6 +585,73 @@ async function handleButtonClick(interaction) {
       new ActionRowBuilder().addComponents(inputImg)
     );
 
+    return interaction.showModal(modal);
+  }
+
+  // 16. Staff Painel de Membros
+  if (customId === 'btn_staff_painel_membros' || customId === 'btn_staff_mem_overview' || customId === 'btn_staff_mem_refresh') {
+    if (!isStaffMember(member)) {
+      return interaction.reply({ content: '❌ Acesso restrito à Staff!', flags: MessageFlags.Ephemeral });
+    }
+
+    const data = getStaffOverviewData(guild);
+    const embed = buildStaffOverviewEmbed(data);
+    const components = buildStaffPanelComponents('overview');
+
+    if (customId === 'btn_staff_painel_membros') {
+      return interaction.reply({ embeds: [embed], components, flags: MessageFlags.Ephemeral });
+    } else {
+      return interaction.update({ embeds: [embed], components });
+    }
+  }
+
+  // 16.1 Staff Ver CP Atrasado / Sem Envio
+  if (customId === 'btn_staff_mem_overdue') {
+    if (!isStaffMember(member)) {
+      return interaction.reply({ content: '❌ Acesso restrito à Staff!', flags: MessageFlags.Ephemeral });
+    }
+
+    const data = getStaffOverviewData(guild);
+    const embed = buildOverdueEmbed(data);
+    const components = buildStaffPanelComponents('overdue');
+
+    return interaction.update({ embeds: [embed], components });
+  }
+
+  // 16.2 Staff Ver Roster Completo Paginado
+  if (customId.startsWith('btn_staff_mem_roster_')) {
+    if (!isStaffMember(member)) {
+      return interaction.reply({ content: '❌ Acesso restrito à Staff!', flags: MessageFlags.Ephemeral });
+    }
+
+    const pageStr = customId.replace('btn_staff_mem_roster_', '');
+    const pageIndex = parseInt(pageStr, 10) || 0;
+
+    const data = getStaffOverviewData(guild);
+    const { embed, currentPage, totalPages } = buildRosterPageEmbed(data, pageIndex);
+    const components = buildStaffPanelComponents('roster', currentPage, totalPages);
+
+    return interaction.update({ embeds: [embed], components });
+  }
+
+  // 16.3 Staff Abrir Modal para Consultar Membro Específico
+  if (customId === 'btn_staff_mem_lookup') {
+    if (!isStaffMember(member)) {
+      return interaction.reply({ content: '❌ Acesso restrito à Staff!', flags: MessageFlags.Ephemeral });
+    }
+
+    const modal = new ModalBuilder()
+      .setCustomId('modal_staff_mem_lookup')
+      .setTitle('Consultar Membro • Staff');
+
+    const inputMember = new TextInputBuilder()
+      .setCustomId('input_staff_lookup_member')
+      .setLabel('Nick In-game, @Menção ou ID Discord')
+      .setStyle(TextInputStyle.Short)
+      .setPlaceholder('Ex: Sasuke ou 909786062602272802')
+      .setRequired(true);
+
+    modal.addComponents(new ActionRowBuilder().addComponents(inputMember));
     return interaction.showModal(modal);
   }
 }
