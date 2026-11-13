@@ -14,13 +14,19 @@ async function sendLog(client, embed) {
 }
 
 // 1. Log Presença em Lote ou Voz
-async function logAttendance({ client, eventName, baseDkp, registeredBy, awardedList }) {
+async function logAttendance({ client, eventName, baseDkp, registeredBy, awardedList, lastHit }) {
   const validAwarded = (awardedList || []).filter(m => !m.noCpApproved && !m.calc?.cutoffStatus?.isCut);
   const cutAwarded = (awardedList || []).filter(m => m.noCpApproved || m.calc?.cutoffStatus?.isCut);
 
-  const lines = validAwarded.slice(0, 25).map(m =>
-    `• <@${m.userId}> (\`${m.nick || m.userTag}\`): **+${m.calc.finalDkp} DKP** *(CP: ${(m.cp || 0).toLocaleString('pt-BR')} • Saldo: \`${m.newTotalDkp} DKP\`)*`
-  );
+  const lines = validAwarded.slice(0, 25).map(m => {
+    const lhText = m.isLastHit ? ' • 🎯 **Last Hit: +10 DKP**' : '';
+    const points = m.totalAwardedDkp || m.calc?.finalDkp || 0;
+    return `• <@${m.userId}> (\`${m.nick || m.userTag}\`): **+${points} DKP** *(CP: ${(m.cp || 0).toLocaleString('pt-BR')} • Saldo: \`${m.newTotalDkp} DKP\`${lhText})*`;
+  });
+
+  const lastHitSection = lastHit
+    ? `🎯 **Last Hit (+10 DKP Bônus):** <@${lastHit.userId}> (\`${lastHit.nick}\`)\n`
+    : '';
 
   const embed = new EmbedBuilder()
     .setTitle(`⚔️ LOG DKP • PRESENÇA / ATTENDANCE • ${eventName.toUpperCase()}`)
@@ -28,6 +34,7 @@ async function logAttendance({ client, eventName, baseDkp, registeredBy, awarded
     .setDescription(
       `**Evento / Event:** \`${eventName}\`\n` +
       `**DKP Base / Base DKP:** \`${baseDkp} DKP\`\n` +
+      lastHitSection +
       `**Registrado por / Registered by:** ${registeredBy}\n\n` +
       `**Pontuações Concedidas / Awarded Members (${validAwarded.length}):**\n` +
       (lines.length > 0 ? lines.join('\n') : '*Nenhum membro pontuado.*') +

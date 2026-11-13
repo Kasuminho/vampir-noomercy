@@ -5,12 +5,25 @@ const {
   ButtonBuilder,
   ButtonStyle,
   AttachmentBuilder,
-  MessageFlags
+  MessageFlags,
+  PermissionFlagsBits
 } = require('discord.js');
 const { submitCpUpdate } = require('./memberService');
 const { submitPresenceDispute } = require('./presenceService');
-const { channels } = require('../config/channels');
+const { channels, roles } = require('../config/channels');
 const { getConfig, getMembers, saveMembers, getPresencas, savePresencas } = require('../database/db');
+
+function isStaffMember(member) {
+  if (!member) return false;
+  if (member.permissions && member.permissions.has(PermissionFlagsBits.Administrator)) return true;
+  if (member.permissions && member.permissions.has(PermissionFlagsBits.ManageGuild)) return true;
+  if (member.roles && member.roles.cache) {
+    return member.roles.cache.has(roles.staff) ||
+           member.roles.cache.has(roles.lider) ||
+           member.roles.cache.has(roles.admGuerra);
+  }
+  return false;
+}
 
 // Guarda os estados dos tickets ativos em memória:
 // threadId -> { userId, type: 'cp' | 'dispute', step, data, timer, expiresAt }
@@ -241,7 +254,7 @@ async function handleTicketMessage(message) {
   const targetId = message.channel.isThread() ? message.channel.id : (message.threadId || message.channelId);
   const ticket = activeTickets.get(targetId);
 
-  if (!ticket || ticket.userId !== message.author.id) return false;
+  if (!ticket || (ticket.userId !== message.author.id && !isStaffMember(message.member))) return false;
 
   const text = (message.content || '').trim();
   const attachments = message.attachments;
@@ -408,14 +421,14 @@ async function handleTicketMessage(message) {
 
 // Trata os cliques dos botões dentro do ticket (Escolha de classe e confirmações)
 async function handleTicketButton(interaction) {
-  const { customId, channel, user } = interaction;
+  const { customId, channel, user, member } = interaction;
 
   // 1. Escolha da Classe
   if (customId.startsWith('ticket_class_')) {
     const chosenClass = customId.replace('ticket_class_', '');
     const ticket = activeTickets.get(channel.id);
 
-    if (!ticket || ticket.userId !== user.id) {
+    if (!ticket || (ticket.userId !== user.id && !isStaffMember(member))) {
       return interaction.reply({ content: '❌ Esse ticket não é seu, curioso!', flags: MessageFlags.Ephemeral });
     }
 
@@ -441,8 +454,8 @@ async function handleTicketButton(interaction) {
       });
     }
 
-    if (ticket.userId !== user.id) {
-      return interaction.reply({ content: '❌ Apenas o dono do ticket pode confirmar!', flags: MessageFlags.Ephemeral });
+    if (ticket.userId !== user.id && !isStaffMember(member)) {
+      return interaction.reply({ content: '❌ Apenas o dono do ticket ou a Staff podem confirmar!', flags: MessageFlags.Ephemeral });
     }
 
     // Defer imediato para evitar timeout de 3 segundos do Discord durante o upload do print
@@ -459,10 +472,12 @@ async function handleTicketButton(interaction) {
     }).catch(() => {});
 
     const isNewRegistration = !!ticket.data.isRegistration;
+    const targetUserId = ticket.userId;
+    const targetUserTag = ticket.userTag || user.tag || user.username;
 
     const sub = submitCpUpdate({
-      userId: user.id,
-      userTag: user.tag || user.username,
+      userId: targetUserId,
+      userTag: targetUserTag,
       nick: ticket.data.nick,
       classe: ticket.data.classe,
       nivel: ticket.data.nivel,
@@ -493,8 +508,8 @@ async function handleTicketButton(interaction) {
           .setColor(isNewRegistration ? '#9B59B6' : '#3498DB')
           .setDescription(
             isNewRegistration
-              ? `Novo recruta: <@${user.id}> \`(${user.tag || user.username})\`\n*Aprovação dará o cargo da classe e liberará os canais.*`
-              : `Membro: <@${user.id}> \`(${user.tag || user.username})\`\n*Atualização de pontuação semanal de DKP.*`
+              ? `Novo recruta: <@${targetUserId}> \`(${targetUserTag})\`\n*Aprovação dará o cargo da classe e liberará os canais.*`
+              : `Membro: <@${targetUserId}> \`(${targetUserTag})\`\n*Atualização de pontuação semanal de DKP.*`
           )
           .addFields(
             { name: '🎮 Nick In-game', value: `\`${ticket.data.nick}\``, inline: true },
@@ -507,16 +522,16 @@ async function handleTicketButton(interaction) {
           .setTimestamp();
 
         const row = new ActionRowBuilder().addComponents(
-          new ButtonBuilder().setCustomId(`btn_aprovar_cp_${user.id}`).setLabel(isNewRegistration ? 'Aprovar Alistamento' : 'Aprovar CP').setStyle(ButtonStyle.Success).setEmoji('✅'),
-          new ButtonBuilder().setCustomId(`btn_rejeitar_cp_${user.id}`).setLabel('Rejeitar').setStyle(ButtonStyle.Danger).setEmoji('❌')
+          new ButtonBuilder().setCustomId(`btn_aprovar_cp_${targetUserId}`).setLabel(isNewRegistration ? 'Aprovar Alistamento' : 'Aprovar CP').setStyle(ButtonStyle.Success).setEmoji('✅'),
+          new ButtonBuilder().setCustomId(`btn_rejeitar_cp_${targetUserId}`).setLabel('Rejeitar').setStyle(ButtonStyle.Danger).setEmoji('❌')
         );
 
         const sentMsg = await ch.send({ embeds: [embed], files, components: [row] });
         if (sentMsg && sentMsg.attachments && sentMsg.attachments.size > 0) {
           const permUrl = sentMsg.attachments.first().url;
           const mems = getMembers();
-          if (mems[user.id] && mems[user.id].pendingSubmission) {
-            mems[user.id].pendingSubmission.printUrl = permUrl;
+          if (mems[targetUserId] && mems[targetUserId].pendingSubmission) {
+            mems[targetUserId].pendingSubmission.printUrl = permUrl;
             saveMembers(mems);
           }
         }
@@ -541,6 +556,11 @@ async function handleTicketButton(interaction) {
   if (customId.startsWith('ticket_cp_cancel_')) {
     const threadId = customId.replace('ticket_cp_cancel_', '');
     const ticket = activeTickets.get(threadId);
+
+    if (ticket && ticket.userId !== user.id && !isStaffMember(member)) {
+      return interaction.reply({ content: '❌ Apenas o dono do ticket ou a Staff podem cancelar!', flags: MessageFlags.Ephemeral });
+    }
+
     if (ticket) clearTimeout(ticket.timer);
     activeTickets.delete(threadId);
 
@@ -565,8 +585,8 @@ async function handleTicketButton(interaction) {
       });
     }
 
-    if (ticket.userId !== user.id) {
-      return interaction.reply({ content: '❌ Apenas o dono do ticket pode confirmar!', flags: MessageFlags.Ephemeral });
+    if (ticket.userId !== user.id && !isStaffMember(member)) {
+      return interaction.reply({ content: '❌ Apenas o dono do ticket ou a Staff podem confirmar!', flags: MessageFlags.Ephemeral });
     }
 
     await interaction.deferUpdate().catch(() => {});
@@ -580,9 +600,12 @@ async function handleTicketButton(interaction) {
       embeds: []
     }).catch(() => {});
 
+    const targetUserId = ticket.userId;
+    const targetUserTag = ticket.userTag || user.tag || user.username;
+
     const dispute = submitPresenceDispute({
-      userId: user.id,
-      userTag: user.tag || user.username,
+      userId: targetUserId,
+      userTag: targetUserTag,
       eventKey: ticket.data.eventKey,
       eventName: ticket.data.eventName,
       printUrl: ticket.data.printUrl,
@@ -609,7 +632,7 @@ async function handleTicketButton(interaction) {
           .setTitle('🔍 REVISÃO DE PRESENÇA SOLICITADA')
           .setColor('#E74C3C')
           .addFields(
-            { name: 'Jogador', value: `<@${user.id}> \`(${user.tag || user.username})\``, inline: true },
+            { name: 'Jogador', value: `<@${targetUserId}> \`(${targetUserTag})\``, inline: true },
             { name: 'Boss / Evento', value: `\`${dispute.eventName}\` *(Base: ${dispute.baseDkp} DKP)*`, inline: true },
             { name: 'Obs / Piloto', value: ticket.data.note, inline: false }
           )
@@ -646,6 +669,11 @@ async function handleTicketButton(interaction) {
   if (customId.startsWith('ticket_disp_cancel_')) {
     const threadId = customId.replace('ticket_disp_cancel_', '');
     const ticket = activeTickets.get(threadId);
+
+    if (ticket && ticket.userId !== user.id && !isStaffMember(member)) {
+      return interaction.reply({ content: '❌ Apenas o dono do ticket ou a Staff podem cancelar!', flags: MessageFlags.Ephemeral });
+    }
+
     if (ticket) clearTimeout(ticket.timer);
     activeTickets.delete(threadId);
 

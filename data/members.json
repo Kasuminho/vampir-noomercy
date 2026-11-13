@@ -1,4 +1,70 @@
 {
+  "813906967990763600": {
+    "userId": "813906967990763600",
+    "userTag": "billyz8",
+    "nick": "Taws",
+    "classe": "Viper",
+    "nivel": 72,
+    "cp": 345589,
+    "lastApprovedPrint": "https://cdn.discordapp.com/attachments/1569731774274215988/1569732142542364733/image.png?ex=6af4867a&is=6af334fa&hm=28da6900fa7a104151f158c9b765d1667ca39a718b151fe04672a068c620e346&",
+    "lastApprovedAt": "2026-11-10T15:59:25.179Z",
+    "approvedBy": "273600843251712020",
+    "pendingSubmission": null,
+    "history": [
+      {
+        "cp": 345589,
+        "date": "2026-11-10T15:59:25.179Z",
+        "nivel": 72,
+        "classe": "Viper",
+        "approvedBy": "273600843251712020"
+      }
+    ],
+    "rejectedHistory": []
+  },
+  "985483640232366121": {
+    "userId": "985483640232366121",
+    "userTag": "flookeph",
+    "nick": "Flooke \nLvl 68\n273",
+    "classe": "Viper",
+    "nivel": 68,
+    "cp": 273500,
+    "lastApprovedPrint": "https://cdn.discordapp.com/attachments/1569731083002450014/1569732877376168127/image0.jpg?ex=6af4872a&is=6af335aa&hm=9e7d862cbc2a79fafe0a6d9dccc34e97d4752dc717f02316b0f221bd1bdf6172&",
+    "lastApprovedAt": "2026-11-10T15:59:20.202Z",
+    "approvedBy": "273600843251712020",
+    "pendingSubmission": null,
+    "history": [
+      {
+        "cp": 273500,
+        "date": "2026-11-10T15:59:20.202Z",
+        "nivel": 68,
+        "classe": "Viper",
+        "approvedBy": "273600843251712020"
+      }
+    ],
+    "rejectedHistory": []
+  },
+  "163034833965023232": {
+    "userId": "163034833965023232",
+    "userTag": "vinilovesz",
+    "nick": "Pombagira",
+    "classe": "Grim Reaper",
+    "nivel": 72,
+    "cp": 338038,
+    "lastApprovedPrint": "https://cdn.discordapp.com/attachments/1569742669796605986/1569743408711475230/image.png?ex=6af490f9&is=6af33f79&hm=c8292176f7f53113a2cceb514257a5a803ed3430401e27ba3459199026f61ef4&",
+    "lastApprovedAt": "2026-11-10T16:00:44.360Z",
+    "approvedBy": "273600843251712020",
+    "pendingSubmission": null,
+    "history": [
+      {
+        "cp": 338038,
+        "date": "2026-11-10T16:00:44.360Z",
+        "nivel": 72,
+        "classe": "Grim Reaper",
+        "approvedBy": "273600843251712020"
+      }
+    ],
+    "rejectedHistory": []
+  },
   "570376636051095562": {
     "userId": "570376636051095562",
     "userTag": "douglasmr.",
@@ -175,57 +241,6 @@
     ],
     "rejectedHistory": []
   },
-  "114481570135408645": {
-    "userId": "114481570135408645",
-    "userTag": "mackfadem",
-    "nick": "Mackfadem",
-    "classe": "Bloodstained",
-    "nivel": 71,
-    "cp": 307000,
-    "lastApprovedPrint": "https://cdn.discordapp.com/attachments/1569724635463811082/1569724980349112380/image.png?ex=6af47fcf&is=6af32e4f&hm=3ca6c2418cd84705c7770e9ef7b13eecfb5bb8437f4cad124eae66f1f811413b&",
-    "lastApprovedAt": "2026-11-10T15:03:40.587Z",
-    "approvedBy": "273600843251712020",
-    "pendingSubmission": null,
-    "history": [
-      {
-        "cp": 307000,
-        "date": "2026-11-10T15:03:40.587Z",
-        "nivel": 71,
-        "classe": "Bloodstained",
-        "approvedBy": "273600843251712020"
-      }
-    ],
-    "rejectedHistory": []
-  },
-  "458709154509488129": {
-    "userId": "458709154509488129",
-    "userTag": "noogaard",
-    "nick": "zNogard",
-    "classe": "Bloodstained",
-    "nivel": 74,
-    "cp": 451000,
-    "lastApprovedPrint": "https://cdn.discordapp.com/attachments/1570247018453143643/1570247162263249078/image.png?ex=6af66621&is=6af514a1&hm=ba310c361b4ea5b2d3f61b6911bf337ebd9afab8fb20c748dbcb8583e8574bc1&",
-    "lastApprovedAt": "2026-11-12T01:22:16.372Z",
-    "approvedBy": "458709154509488129",
-    "pendingSubmission": null,
-    "history": [
-      {
-        "cp": 443000,
-        "date": "2026-11-10T14:59:21.045Z",
-        "nivel": 73,
-        "classe": "Bloodstained",
-        "approvedBy": "458709154509488129"
-      },
-      {
-        "cp": 451000,
-        "nivel": 74,
-        "classe": "Bloodstained",
-        "date": "2026-11-12T01:22:16.372Z",
-        "approvedBy": "458709154509488129"
-      }
-    ],
-    "rejectedHistory": []
-  },
   "859139024560324628": {
     "userId": "859139024560324628",
     "userTag": "dr.fexli",
@@ -248,103 +263,45 @@
     ],
     "rejectedHistory": []
   },
-  "813906967990763600": {
-    "userId": "813906967990763600",
-    "userTag": "billyz8",
-    "nick": "Taws",
-    "classe": "Viper",
-    "nivel": 72,
-    "cp": 345589,
-    "lastApprovedPrint": "https://cdn.discordapp.com/attachments/1569731774274215988/1569732142542364733/image.png?ex=6af4867a&is=6af334fa&hm=28da6900fa7a104151f158c9b765d1667ca39a718b151fe04672a068c620e346&",
-    "lastApprovedAt": "2026-11-10T15:59:25.179Z",
+  "114481570135408645": {
+    "userId": "114481570135408645",
+    "userTag": "mackfadem",
+    "nick": "Mackfadem",
+    "classe": "Bloodstained",
+    "nivel": 71,
+    "cp": 307000,
+    "lastApprovedPrint": "https://cdn.discordapp.com/attachments/1569724635463811082/1569724980349112380/image.png?ex=6af47fcf&is=6af32e4f&hm=3ca6c2418cd84705c7770e9ef7b13eecfb5bb8437f4cad124eae66f1f811413b&",
+    "lastApprovedAt": "2026-11-10T15:03:40.587Z",
     "approvedBy": "273600843251712020",
     "pendingSubmission": null,
     "history": [
       {
-        "cp": 345589,
-        "date": "2026-11-10T15:59:25.179Z",
-        "nivel": 72,
-        "classe": "Viper",
+        "cp": 307000,
+        "date": "2026-11-10T15:03:40.587Z",
+        "nivel": 71,
+        "classe": "Bloodstained",
         "approvedBy": "273600843251712020"
       }
     ],
     "rejectedHistory": []
   },
-  "985483640232366121": {
-    "userId": "985483640232366121",
-    "userTag": "flookeph",
-    "nick": "Flooke \nLvl 68\n273",
+  "285591759516336128": {
+    "userId": "285591759516336128",
+    "userTag": "_eduardo_",
+    "nick": "BixaPreta",
     "classe": "Viper",
-    "nivel": 68,
-    "cp": 273500,
-    "lastApprovedPrint": "https://cdn.discordapp.com/attachments/1569731083002450014/1569732877376168127/image0.jpg?ex=6af4872a&is=6af335aa&hm=9e7d862cbc2a79fafe0a6d9dccc34e97d4752dc717f02316b0f221bd1bdf6172&",
-    "lastApprovedAt": "2026-11-10T15:59:20.202Z",
-    "approvedBy": "273600843251712020",
-    "pendingSubmission": null,
-    "history": [
-      {
-        "cp": 273500,
-        "date": "2026-11-10T15:59:20.202Z",
-        "nivel": 68,
-        "classe": "Viper",
-        "approvedBy": "273600843251712020"
-      }
-    ],
-    "rejectedHistory": []
-  },
-  "1539332550261080106": {
-    "userId": "1539332550261080106",
-    "userTag": "dpizinnalt.",
-    "nick": "BrancaSafada",
-    "classe": "Viper",
-    "nivel": 73,
-    "cp": 427522,
-    "lastApprovedPrint": "https://cdn.discordapp.com/attachments/1570267500183167067/1570267674074939432/image.png?ex=6af6793b&is=6af527bb&hm=ce85c1d98d99f888c5e19a5860f18df742ede1a442973f6ac128b2af36476219&",
-    "lastApprovedAt": "2026-11-12T02:43:07.542Z",
-    "approvedBy": "1539332550261080106",
-    "pendingSubmission": null,
-    "history": [
-      {
-        "cp": 414162,
-        "date": "2026-11-10T15:58:41.624Z",
-        "nivel": 73,
-        "classe": "Viper",
-        "approvedBy": "1539332550261080106"
-      },
-      {
-        "cp": 415122,
-        "date": "2026-11-10T16:01:26.884Z",
-        "nivel": 73,
-        "classe": "Viper",
-        "approvedBy": "1539332550261080106"
-      },
-      {
-        "cp": 427522,
-        "nivel": 73,
-        "classe": "Viper",
-        "date": "2026-11-12T02:43:07.542Z",
-        "approvedBy": "1539332550261080106"
-      }
-    ],
-    "rejectedHistory": []
-  },
-  "163034833965023232": {
-    "userId": "163034833965023232",
-    "userTag": "vinilovesz",
-    "nick": "Pombagira",
-    "classe": "Grim Reaper",
     "nivel": 72,
-    "cp": 338038,
-    "lastApprovedPrint": "https://cdn.discordapp.com/attachments/1569742669796605986/1569743408711475230/image.png?ex=6af490f9&is=6af33f79&hm=c8292176f7f53113a2cceb514257a5a803ed3430401e27ba3459199026f61ef4&",
-    "lastApprovedAt": "2026-11-10T16:00:44.360Z",
+    "cp": 360168,
+    "lastApprovedPrint": "https://cdn.discordapp.com/attachments/1570073272048029886/1570073434887692349/image.png?ex=6af5c455&is=6af472d5&hm=951b8bfe485a1b2407722f33bfd1b81651fb39c82991108f41476eef320dc87b&",
+    "lastApprovedAt": "2026-11-11T14:01:19.087Z",
     "approvedBy": "273600843251712020",
     "pendingSubmission": null,
     "history": [
       {
-        "cp": 338038,
-        "date": "2026-11-10T16:00:44.360Z",
+        "cp": 360168,
+        "date": "2026-11-11T14:01:19.087Z",
         "nivel": 72,
-        "classe": "Grim Reaper",
+        "classe": "Viper",
         "approvedBy": "273600843251712020"
       }
     ],
@@ -394,6 +351,72 @@
     ],
     "rejectedHistory": []
   },
+  "714962181296226406": {
+    "userId": "714962181296226406",
+    "userTag": "ibloodhunter",
+    "nick": "IMRz",
+    "classe": "Viper",
+    "nivel": 71,
+    "cp": 311000,
+    "lastApprovedPrint": "https://cdn.discordapp.com/attachments/1569916201252036770/1569916629251395635/IMG-20261111-WA0000.jpg?ex=6af5324c&is=6af3e0cc&hm=a1ce1900d2d38544bfac0a0a52313b388c2e99cbb45cbd613d8b3015a208f265&",
+    "lastApprovedAt": "2026-11-11T03:46:10.071Z",
+    "approvedBy": "273600843251712020",
+    "pendingSubmission": null,
+    "history": [
+      {
+        "cp": 311000,
+        "date": "2026-11-11T03:46:10.071Z",
+        "nivel": 71,
+        "classe": "Viper",
+        "approvedBy": "273600843251712020"
+      }
+    ],
+    "rejectedHistory": []
+  },
+  "380761383597506560": {
+    "userId": "380761383597506560",
+    "userTag": "d0ugueira",
+    "nick": "M7Z",
+    "classe": "Carnage",
+    "nivel": 71,
+    "cp": 338723,
+    "lastApprovedPrint": "https://cdn.discordapp.com/attachments/1570173160895152168/1570173787805188187/Screenshot_21.png?ex=6af621cb&is=6af4d04b&hm=f54ea03b888101afec5fb428ef5e75b3db2a8f6ecafb0af585d7b67311d86054&",
+    "lastApprovedAt": "2026-11-11T20:30:34.333Z",
+    "approvedBy": "1177008353927495710",
+    "pendingSubmission": null,
+    "history": [
+      {
+        "cp": 338723,
+        "date": "2026-11-11T20:30:34.333Z",
+        "nivel": 71,
+        "classe": "Carnage",
+        "approvedBy": "1177008353927495710"
+      }
+    ],
+    "rejectedHistory": []
+  },
+  "258777573733957633": {
+    "userId": "258777573733957633",
+    "userTag": "diton89",
+    "nick": "DESGRAÇADO",
+    "classe": "Bloodstained",
+    "nivel": 72,
+    "cp": 352645,
+    "lastApprovedPrint": "https://cdn.discordapp.com/attachments/1570074301753860136/1570074415138611271/image.png?ex=6af5c53f&is=6af473bf&hm=519d2b1327e8898ed278140eec9876d4e3c13b2dae4c7afb69f199e233303ee5&",
+    "lastApprovedAt": "2026-11-11T14:01:31.913Z",
+    "approvedBy": "273600843251712020",
+    "pendingSubmission": null,
+    "history": [
+      {
+        "cp": 352645,
+        "date": "2026-11-11T14:01:31.913Z",
+        "nivel": 72,
+        "classe": "Bloodstained",
+        "approvedBy": "273600843251712020"
+      }
+    ],
+    "rejectedHistory": []
+  },
   "900804654693224478": {
     "userId": "900804654693224478",
     "userTag": "breno_cezar",
@@ -434,50 +457,6 @@
         "nivel": 70,
         "classe": "Viper",
         "approvedBy": "1177008353927495710"
-      }
-    ],
-    "rejectedHistory": []
-  },
-  "285591759516336128": {
-    "userId": "285591759516336128",
-    "userTag": "_eduardo_",
-    "nick": "BixaPreta",
-    "classe": "Viper",
-    "nivel": 72,
-    "cp": 360168,
-    "lastApprovedPrint": "https://cdn.discordapp.com/attachments/1570073272048029886/1570073434887692349/image.png?ex=6af5c455&is=6af472d5&hm=951b8bfe485a1b2407722f33bfd1b81651fb39c82991108f41476eef320dc87b&",
-    "lastApprovedAt": "2026-11-11T14:01:19.087Z",
-    "approvedBy": "273600843251712020",
-    "pendingSubmission": null,
-    "history": [
-      {
-        "cp": 360168,
-        "date": "2026-11-11T14:01:19.087Z",
-        "nivel": 72,
-        "classe": "Viper",
-        "approvedBy": "273600843251712020"
-      }
-    ],
-    "rejectedHistory": []
-  },
-  "258777573733957633": {
-    "userId": "258777573733957633",
-    "userTag": "diton89",
-    "nick": "DESGRAÇADO",
-    "classe": "Bloodstained",
-    "nivel": 72,
-    "cp": 352645,
-    "lastApprovedPrint": "https://cdn.discordapp.com/attachments/1570074301753860136/1570074415138611271/image.png?ex=6af5c53f&is=6af473bf&hm=519d2b1327e8898ed278140eec9876d4e3c13b2dae4c7afb69f199e233303ee5&",
-    "lastApprovedAt": "2026-11-11T14:01:31.913Z",
-    "approvedBy": "273600843251712020",
-    "pendingSubmission": null,
-    "history": [
-      {
-        "cp": 352645,
-        "date": "2026-11-11T14:01:31.913Z",
-        "nivel": 72,
-        "classe": "Bloodstained",
-        "approvedBy": "273600843251712020"
       }
     ],
     "rejectedHistory": []
@@ -540,89 +519,120 @@
     ],
     "rejectedHistory": []
   },
-  "714962181296226406": {
-    "userId": "714962181296226406",
-    "userTag": "ibloodhunter",
-    "nick": "IMRz",
-    "classe": "Viper",
-    "nivel": 71,
-    "cp": 311000,
-    "lastApprovedPrint": "https://cdn.discordapp.com/attachments/1569916201252036770/1569916629251395635/IMG-20261111-WA0000.jpg?ex=6af5324c&is=6af3e0cc&hm=a1ce1900d2d38544bfac0a0a52313b388c2e99cbb45cbd613d8b3015a208f265&",
-    "lastApprovedAt": "2026-11-11T03:46:10.071Z",
-    "approvedBy": "273600843251712020",
+  "458709154509488129": {
+    "userId": "458709154509488129",
+    "userTag": "noogaard",
+    "nick": "zNogard",
+    "classe": "Bloodstained",
+    "nivel": 74,
+    "cp": 451000,
+    "lastApprovedPrint": "https://cdn.discordapp.com/attachments/1570247018453143643/1570247162263249078/image.png?ex=6af66621&is=6af514a1&hm=ba310c361b4ea5b2d3f61b6911bf337ebd9afab8fb20c748dbcb8583e8574bc1&",
+    "lastApprovedAt": "2026-11-12T01:22:16.372Z",
+    "approvedBy": "458709154509488129",
     "pendingSubmission": null,
     "history": [
       {
-        "cp": 311000,
-        "date": "2026-11-11T03:46:10.071Z",
-        "nivel": 71,
-        "classe": "Viper",
-        "approvedBy": "273600843251712020"
+        "cp": 443000,
+        "date": "2026-11-10T14:59:21.045Z",
+        "nivel": 73,
+        "classe": "Bloodstained",
+        "approvedBy": "458709154509488129"
+      },
+      {
+        "cp": 451000,
+        "date": "2026-11-12T01:22:16.372Z",
+        "nivel": 74,
+        "classe": "Bloodstained",
+        "approvedBy": "458709154509488129"
       }
     ],
     "rejectedHistory": []
   },
-  "380761383597506560": {
-    "userId": "380761383597506560",
-    "userTag": "d0ugueira",
+  "1539332550261080106": {
+    "userId": "1539332550261080106",
+    "userTag": "dpizinnalt.",
+    "nick": "BrancaSafada",
+    "classe": "Viper",
+    "nivel": 74,
+    "cp": 430537,
+    "lastApprovedPrint": "https://cdn.discordapp.com/attachments/1570504330547560603/1570504466409721907/image.png?ex=6af755c3&is=6af60443&hm=67f1ba22c694c963b27e995bb31ddd38cb915efc3539dc84a719e544c0c740b9&",
+    "lastApprovedAt": "2026-11-12T18:23:58.372Z",
+    "approvedBy": "1539332550261080106",
+    "pendingSubmission": null,
     "history": [
       {
-        "cp": 338723,
-        "nivel": 71,
-        "classe": "Carnage",
-        "date": "2026-11-11T20:30:34.333Z",
-        "approvedBy": "1177008353927495710"
+        "cp": 414162,
+        "date": "2026-11-10T15:58:41.624Z",
+        "nivel": 73,
+        "classe": "Viper",
+        "approvedBy": "1539332550261080106"
+      },
+      {
+        "cp": 415122,
+        "date": "2026-11-10T16:01:26.884Z",
+        "nivel": 73,
+        "classe": "Viper",
+        "approvedBy": "1539332550261080106"
+      },
+      {
+        "cp": 427522,
+        "date": "2026-11-12T02:43:07.542Z",
+        "nivel": 73,
+        "classe": "Viper",
+        "approvedBy": "1539332550261080106"
+      },
+      {
+        "cp": 430537,
+        "nivel": 74,
+        "classe": "Viper",
+        "date": "2026-11-12T18:23:58.372Z",
+        "approvedBy": "1539332550261080106"
       }
     ],
-    "pendingSubmission": null,
-    "nick": "M7Z",
-    "classe": "Carnage",
-    "nivel": 71,
-    "cp": 338723,
-    "lastApprovedPrint": "https://cdn.discordapp.com/attachments/1570173160895152168/1570173787805188187/Screenshot_21.png?ex=6af621cb&is=6af4d04b&hm=f54ea03b888101afec5fb428ef5e75b3db2a8f6ecafb0af585d7b67311d86054&",
-    "lastApprovedAt": "2026-11-11T20:30:34.333Z",
-    "approvedBy": "1177008353927495710"
+    "rejectedHistory": []
   },
   "425370511749545984": {
     "userId": "425370511749545984",
     "userTag": "kakashii3337",
-    "history": [
-      {
-        "cp": 399000,
-        "nivel": 72,
-        "classe": "Viper",
-        "date": "2026-11-11T22:16:20.231Z",
-        "approvedBy": "273600843251712020"
-      }
-    ],
-    "pendingSubmission": null,
     "nick": "Markin",
     "classe": "Viper",
     "nivel": 72,
     "cp": 399000,
     "lastApprovedPrint": "https://cdn.discordapp.com/attachments/1570199640316313610/1570200465889558528/Screenshot_2026-11-11-19-15-43-009_com.netmarble.thered.png?ex=6af63aa3&is=6af4e923&hm=a6c36dc0d071ebf9fc142b9dae521ba84bb993c9dcc518589122ea320c90a393&",
     "lastApprovedAt": "2026-11-11T22:16:20.231Z",
-    "approvedBy": "273600843251712020"
+    "approvedBy": "273600843251712020",
+    "pendingSubmission": null,
+    "history": [
+      {
+        "cp": 399000,
+        "date": "2026-11-11T22:16:20.231Z",
+        "nivel": 72,
+        "classe": "Viper",
+        "approvedBy": "273600843251712020"
+      }
+    ],
+    "rejectedHistory": []
   },
   "299245685822455808": {
     "userId": "299245685822455808",
     "userTag": "omegared3000",
-    "history": [
-      {
-        "cp": 294811,
-        "nivel": 71,
-        "classe": "Carnage",
-        "date": "2026-11-11T23:28:24.248Z",
-        "approvedBy": "1177008353927495710"
-      }
-    ],
-    "pendingSubmission": null,
     "nick": "OmegaRed3000",
     "classe": "Carnage",
     "nivel": 71,
     "cp": 294811,
     "lastApprovedPrint": "https://cdn.discordapp.com/attachments/1570217646773768262/1570218333285126387/image.png?ex=6af64b47&is=6af4f9c7&hm=08b3592b01c9f1f2f3eed9432b6ca07a89a92661b8b11b6a337e24dc36d7af79&",
     "lastApprovedAt": "2026-11-11T23:28:24.248Z",
-    "approvedBy": "1177008353927495710"
+    "approvedBy": "1177008353927495710",
+    "pendingSubmission": null,
+    "history": [
+      {
+        "cp": 294811,
+        "date": "2026-11-11T23:28:24.248Z",
+        "nivel": 71,
+        "classe": "Carnage",
+        "approvedBy": "1177008353927495710"
+      }
+    ],
+    "rejectedHistory": []
   }
 }

@@ -462,6 +462,13 @@ async function handleButtonClick(interaction) {
       .setPlaceholder('Exemplo:\nNick1\nNick2\n@Membro3\n(separe por espaço, vírgula ou linha)')
       .setRequired(true);
 
+    const inputLastHit = new TextInputBuilder()
+      .setCustomId('input_lote_lasthit')
+      .setLabel('🎯 Last Hit (+10 DKP Bônus, Opcional)')
+      .setStyle(TextInputStyle.Short)
+      .setPlaceholder('Nick in-game ou @menção de quem deu o golpe final')
+      .setRequired(false);
+
     const inputDkp = new TextInputBuilder()
       .setCustomId('input_lote_dkp')
       .setLabel('DKP Base (opcional, padrão: 30)')
@@ -472,6 +479,7 @@ async function handleButtonClick(interaction) {
     modal.addComponents(
       new ActionRowBuilder().addComponents(inputEvento),
       new ActionRowBuilder().addComponents(inputJogadores),
+      new ActionRowBuilder().addComponents(inputLastHit),
       new ActionRowBuilder().addComponents(inputDkp)
     );
 

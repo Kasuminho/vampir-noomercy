@@ -1,8 +1,8 @@
 const { getPresencas, savePresencas, getAusencias, saveAusencias, getConfig } = require('../database/db');
-const { getMember, getMemberDkp, addDkp } = require('./memberService');
+const { getMember, getMemberDkp, addDkp, findMemberByNickOrId } = require('./memberService');
 const { calculateDkpReward } = require('./dkpCalculator');
 
-function recordEventAttendance({ eventKey, eventName, customBaseDkp = null, membersList, registeredBy }) {
+function recordEventAttendance({ eventKey, eventName, customBaseDkp = null, membersList, registeredBy, lastHitInput = null }) {
   const config = getConfig();
   const eventConfig = config.events[eventKey] || { name: eventName || 'Boss Geral', baseDkp: 30 };
   const baseDkp = customBaseDkp || eventConfig.baseDkp || 30;
@@ -11,22 +11,44 @@ function recordEventAttendance({ eventKey, eventName, customBaseDkp = null, memb
   const eventId = `evt_${Date.now()}`;
   const presencas = getPresencas();
 
+  // 1. Resolve o membro do Last Hit se fornecido
+  let lastHitMember = null;
+  if (lastHitInput && typeof lastHitInput === 'string' && lastHitInput.trim().length > 0) {
+    lastHitMember = findMemberByNickOrId(lastHitInput.trim());
+  } else if (lastHitInput && typeof lastHitInput === 'object') {
+    lastHitMember = lastHitInput.userId ? lastHitInput : findMemberByNickOrId(lastHitInput.id || lastHitInput.tag || '');
+  }
+
+  // Se quem deu Last Hit não constava na lista de presença, adiciona para receber pontuação
+  if (lastHitMember && !membersList.some(m => m.id === (lastHitMember.userId || lastHitMember.id))) {
+    membersList.push({
+      id: lastHitMember.userId || lastHitMember.id,
+      tag: lastHitMember.userTag || lastHitMember.nick || (lastHitMember.userId || lastHitMember.id)
+    });
+  }
+
   const awardedList = [];
+  const LAST_HIT_BONUS = 10; // Bônus fixo de 10 DKP sem multiplicador
 
   for (const m of membersList) {
-    const memberData = getMember(m.id) || {};
+    const memberId = m.id;
+    const memberData = getMember(memberId) || {};
     const hasApprovedProfile = memberData && memberData.cp && memberData.cp > 0 && memberData.nivel && memberData.nivel > 0;
+    const isLastHit = lastHitMember && (lastHitMember.userId === memberId || lastHitMember.id === memberId);
 
     if (!hasApprovedProfile) {
       // PROIBIDO PONTUAR SEM CP/NÍVEL APROVADOS PELA STAFF!
       awardedList.push({
-        userId: m.id,
-        userTag: m.tag || memberData.nick || m.id,
+        userId: memberId,
+        userTag: m.tag || memberData.nick || memberId,
         nick: memberData.nick || null,
         classe: memberData.classe || 'N/A',
         cp: 0,
         level: 0,
         noCpApproved: true,
+        isLastHit: !!isLastHit,
+        lastHitBonus: isLastHit ? LAST_HIT_BONUS : 0,
+        totalAwardedDkp: 0,
         calc: {
           baseDkp,
           finalDkp: 0,
@@ -35,7 +57,7 @@ function recordEventAttendance({ eventKey, eventName, customBaseDkp = null, memb
           combinedMultiplier: 0,
           cutoffStatus: { isCut: true, details: { failedReason: 'PROIBIDO: Sem CP/Nível aprovados pela Staff (Envie print em #atualizacao-cp)' } }
         },
-        newTotalDkp: (getMember(m.id) ? (getMemberDkp(m.id) || {}).totalDkp : 0) || 0
+        newTotalDkp: (getMember(memberId) ? (getMemberDkp(memberId) || {}).totalDkp : 0) || 0
       });
       continue;
     }
@@ -46,8 +68,16 @@ function recordEventAttendance({ eventKey, eventName, customBaseDkp = null, memb
     const calc = calculateDkpReward({ baseDkp, cp, level });
     let newBalance = 0;
 
-    if (!calc.cutoffStatus.isCut && calc.finalDkp > 0) {
-      const credit = addDkp(m.id, calc.finalDkp, `Presença: ${resolvedEventName}`, {
+    // Se tiver last hit, adiciona +10 DKP direto sem multiplicador
+    const bonusDkp = isLastHit ? LAST_HIT_BONUS : 0;
+    const totalAwardedDkp = calc.finalDkp + bonusDkp;
+
+    if (!calc.cutoffStatus.isCut && totalAwardedDkp > 0) {
+      const reasonText = isLastHit
+        ? `Presença (${calc.finalDkp} DKP) + Last Hit (+${LAST_HIT_BONUS} DKP): ${resolvedEventName}`
+        : `Presença: ${resolvedEventName}`;
+
+      const credit = addDkp(memberId, totalAwardedDkp, reasonText, {
         isEvent: true,
         eventId,
         eventName: resolvedEventName,
@@ -57,20 +87,25 @@ function recordEventAttendance({ eventKey, eventName, customBaseDkp = null, memb
         multCp: calc.multCp,
         multLvl: calc.multLvl,
         finalDkp: calc.finalDkp,
+        isLastHit: !!isLastHit,
+        lastHitBonus: bonusDkp,
         registeredBy
       });
       newBalance = credit.newBalance;
     }
 
     awardedList.push({
-      userId: m.id,
-      userTag: m.tag || memberData.nick || m.id,
+      userId: memberId,
+      userTag: m.tag || memberData.nick || memberId,
       nick: memberData.nick || null,
       classe: memberData.classe || 'N/A',
       cp,
       level,
       noCpApproved: false,
+      isLastHit: !!isLastHit,
+      lastHitBonus: bonusDkp,
       calc,
+      totalAwardedDkp,
       newTotalDkp: newBalance
     });
   }
@@ -83,6 +118,11 @@ function recordEventAttendance({ eventKey, eventName, customBaseDkp = null, memb
     registeredBy,
     registeredAt: new Date().toISOString(),
     totalMembers: awardedList.length,
+    lastHit: lastHitMember ? {
+      userId: lastHitMember.userId || lastHitMember.id,
+      nick: lastHitMember.nick || lastHitMember.userTag || (lastHitMember.userId || lastHitMember.id),
+      bonus: LAST_HIT_BONUS
+    } : null,
     members: awardedList
   };
 

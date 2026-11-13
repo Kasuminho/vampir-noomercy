@@ -28,13 +28,15 @@ const {
 } = require('../ui/panels');
 
 function formatPresenceMemberLine(m) {
+  const lastHitTag = m.isLastHit ? ' • 🎯 **[LAST HIT +10 DKP]**' : '';
+  const points = m.totalAwardedDkp || m.calc?.finalDkp || 0;
   if (m.calc.cutoffStatus && m.calc.cutoffStatus.isCut) {
-    return `🚫 <@${m.userId}> (${m.nick || m.userTag}): **0 DKP** *(Cortado: ${m.calc.cutoffStatus.details.failedReason})*`;
+    return `🚫 <@${m.userId}> (${m.nick || m.userTag}): **0 DKP** *(Cortado: ${m.calc.cutoffStatus.details.failedReason})*${lastHitTag}`;
   }
   if (m.calc.cutoffStatus && m.calc.cutoffStatus.inGracePeriod) {
-    return `⚠️ <@${m.userId}> (${m.nick || m.userTag}): **+${m.calc.finalDkp} DKP** *(Aviso: meta de ${m.calc.cutoffStatus.details.minCp.toLocaleString('pt-BR')} CP vence em ${m.calc.cutoffStatus.details.daysLeft}d)*`;
+    return `⚠️ <@${m.userId}> (${m.nick || m.userTag}): **+${points} DKP** *(Aviso: meta de ${m.calc.cutoffStatus.details.minCp.toLocaleString('pt-BR')} CP vence em ${m.calc.cutoffStatus.details.daysLeft}d)*${lastHitTag}`;
   }
-  return `• <@${m.userId}> (${m.nick || m.userTag}): **+${m.calc.finalDkp} DKP** *(CP: ${m.cp.toLocaleString('pt-BR')} • Mult: ${m.calc.combinedMultiplier}x)*`;
+  return `• <@${m.userId}> (${m.nick || m.userTag}): **+${points} DKP** *(CP: ${m.cp.toLocaleString('pt-BR')} • Mult: ${m.calc.combinedMultiplier}x)*${lastHitTag}`;
 }
 
 async function handleSlashCommand(interaction) {
@@ -338,6 +340,7 @@ async function handleSlashCommand(interaction) {
 
     if (sub === 'marcar-lote') {
       const inputJogadores = options.getString('jogadores');
+      const lastHitInput = options.getString('last_hit');
       const { resolved, unresolved } = resolveMembersBatch(inputJogadores);
 
       if (resolved.length === 0) {
@@ -351,7 +354,8 @@ async function handleSlashCommand(interaction) {
         eventKey,
         customBaseDkp: dkpManual,
         membersList: resolved,
-        registeredBy: user.tag || user.username
+        registeredBy: user.tag || user.username,
+        lastHitInput
       });
 
       const lines = rec.members.slice(0, 25).map(m => formatPresenceMemberLine(m));
@@ -367,6 +371,14 @@ async function handleSlashCommand(interaction) {
         .setFooter({ text: 'DKP ponderado por CP e Nível creditado com sucesso!' })
         .setTimestamp();
 
+      if (rec.lastHit) {
+        embed.addFields({
+          name: '🎯 Last Hit (+10 DKP Bônus Fixo)',
+          value: `<@${rec.lastHit.userId}> \`(${rec.lastHit.nick || rec.lastHit.tag})\``,
+          inline: true
+        });
+      }
+
       if (unresolved.length > 0) {
         embed.addFields({
           name: '⚠️ Não Encontrados no Discord (Sem Cadastro)',
@@ -380,7 +392,8 @@ async function handleSlashCommand(interaction) {
         eventName: rec.eventName,
         baseDkp: rec.baseDkp,
         registeredBy: `<@${user.id}>`,
-        awardedList: rec.members
+        awardedList: rec.members,
+        lastHit: rec.lastHit
       });
 
       return interaction.reply({ embeds: [embed] });
@@ -388,6 +401,7 @@ async function handleSlashCommand(interaction) {
 
     if (sub === 'marcar-voz') {
       let voiceChannel = options.getChannel('canal_voz');
+      const lastHitInput = options.getString('last_hit');
       if (!voiceChannel) {
         // Usa o canal de voz de auditorio salvo ou busca na guilda
         const defaultVoiceId = channels['🔊-boss-auditorio'];
@@ -416,7 +430,8 @@ async function handleSlashCommand(interaction) {
         eventKey,
         customBaseDkp: dkpManual,
         membersList,
-        registeredBy: user.tag || user.username
+        registeredBy: user.tag || user.username,
+        lastHitInput
       });
 
       const lines = rec.members.slice(0, 25).map(m => formatPresenceMemberLine(m));
@@ -432,12 +447,21 @@ async function handleSlashCommand(interaction) {
         .setFooter({ text: 'Pontuação creditada com sucesso!' })
         .setTimestamp();
 
+      if (rec.lastHit) {
+        embed.addFields({
+          name: '🎯 Last Hit (+10 DKP Bônus Fixo)',
+          value: `<@${rec.lastHit.userId}> \`(${rec.lastHit.nick || rec.lastHit.tag})\``,
+          inline: true
+        });
+      }
+
       await logAttendance({
         client: interaction.client,
         eventName: rec.eventName,
         baseDkp: rec.baseDkp,
         registeredBy: `<@${user.id}>`,
-        awardedList: rec.members
+        awardedList: rec.members,
+        lastHit: rec.lastHit
       });
 
       return interaction.reply({ embeds: [embed] });
@@ -445,11 +469,13 @@ async function handleSlashCommand(interaction) {
 
     if (sub === 'marcar-membro') {
       const targetUser = options.getUser('membro');
+      const isLastHit = options.getBoolean('last_hit');
       const rec = recordEventAttendance({
         eventKey,
         customBaseDkp: dkpManual,
         membersList: [{ id: targetUser.id, tag: targetUser.tag || targetUser.username }],
-        registeredBy: user.tag || user.username
+        registeredBy: user.tag || user.username,
+        lastHitInput: isLastHit ? targetUser.id : null
       });
 
       const awarded = rec.members[0];
@@ -458,11 +484,13 @@ async function handleSlashCommand(interaction) {
         eventName: rec.eventName,
         baseDkp: rec.baseDkp,
         registeredBy: `<@${user.id}>`,
-        awardedList: rec.members
+        awardedList: rec.members,
+        lastHit: rec.lastHit
       });
 
+      const lastHitText = awarded.isLastHit ? '\n🎯 **Bônus de Last Hit:** +10 DKP' : '';
       return interaction.reply({
-        content: `✅ Presença marcada para <@${targetUser.id}> no evento **${rec.eventName}**!\nDKP Concedido: **+${awarded.calc.finalDkp} DKP** (Mult CP: ${awarded.calc.multCp}x, Mult Nv: ${awarded.calc.multLvl}x).`,
+        content: `✅ Presença marcada para <@${targetUser.id}> no evento **${rec.eventName}**!\nDKP Concedido: **+${awarded.calc.finalDkp} DKP** (Mult CP: ${awarded.calc.multCp}x, Mult Nv: ${awarded.calc.multLvl}x).${lastHitText}`,
         ephemeral: false
       });
     }

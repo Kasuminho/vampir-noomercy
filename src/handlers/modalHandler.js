@@ -293,6 +293,10 @@ async function handleModalSubmit(interaction) {
   if (customId === 'modal_staff_presenca_lote') {
     const eventoNome = fields.getTextInputValue('input_lote_evento');
     const inputJogadores = fields.getTextInputValue('input_lote_jogadores');
+    let lastHitInput = null;
+    try {
+      lastHitInput = fields.getTextInputValue('input_lote_lasthit');
+    } catch {}
     const dkpInput = fields.getTextInputValue('input_lote_dkp');
     const customBaseDkp = dkpInput ? parseInt(dkpInput, 10) : null;
 
@@ -310,7 +314,8 @@ async function handleModalSubmit(interaction) {
       eventName: eventoNome,
       customBaseDkp,
       membersList: resolved,
-      registeredBy: user.tag || user.username
+      registeredBy: user.tag || user.username,
+      lastHitInput
     });
 
     await logAttendance({
@@ -318,17 +323,20 @@ async function handleModalSubmit(interaction) {
       eventName: rec.eventName,
       baseDkp: rec.baseDkp,
       registeredBy: `<@${user.id}>`,
-      awardedList: rec.members
+      awardedList: rec.members,
+      lastHit: rec.lastHit
     });
 
     const lines = rec.members.slice(0, 25).map(m => {
+      const lastHitTag = m.isLastHit ? ' • 🎯 **[LAST HIT +10 DKP]**' : '';
+      const points = m.totalAwardedDkp || m.calc?.finalDkp || 0;
       if (m.calc.cutoffStatus && m.calc.cutoffStatus.isCut) {
-        return `🚫 <@${m.userId}> (${m.nick || m.userTag}): **0 DKP** *(Cortado: ${m.calc.cutoffStatus.details.failedReason})*`;
+        return `🚫 <@${m.userId}> (${m.nick || m.userTag}): **0 DKP** *(Cortado: ${m.calc.cutoffStatus.details.failedReason})*${lastHitTag}`;
       }
       if (m.calc.cutoffStatus && m.calc.cutoffStatus.inGracePeriod) {
-        return `⚠️ <@${m.userId}> (${m.nick || m.userTag}): **+${m.calc.finalDkp} DKP** *(Aviso: meta de ${m.calc.cutoffStatus.details.minCp.toLocaleString('pt-BR')} CP vence em ${m.calc.cutoffStatus.details.daysLeft}d)*`;
+        return `⚠️ <@${m.userId}> (${m.nick || m.userTag}): **+${points} DKP** *(Aviso: meta vence em ${m.calc.cutoffStatus.details.daysLeft}d)*${lastHitTag}`;
       }
-      return `• <@${m.userId}> (${m.nick || m.userTag}): **+${m.calc.finalDkp} DKP** *(CP: ${m.cp.toLocaleString('pt-BR')} • Mult: ${m.calc.combinedMultiplier}x)*`;
+      return `• <@${m.userId}> (${m.nick || m.userTag}): **+${points} DKP** *(CP: ${m.cp.toLocaleString('pt-BR')} • Mult: ${m.calc.combinedMultiplier}x)*${lastHitTag}`;
     });
 
     const embed = new EmbedBuilder()
@@ -338,7 +346,17 @@ async function handleModalSubmit(interaction) {
       .addFields(
         { name: '🎯 DKP Base', value: `\`${rec.baseDkp} pts\``, inline: true },
         { name: '🛡️ Registrado por', value: `<@${user.id}>`, inline: true }
-      )
+      );
+
+    if (rec.lastHit) {
+      embed.addFields({
+        name: '🎯 Last Hit (+10 DKP Bônus Fixo)',
+        value: `<@${rec.lastHit.userId}> (\`${rec.lastHit.nick}\`)`,
+        inline: true
+      });
+    }
+
+    embed
       .setFooter({ text: 'DKP ponderado por CP e Nível creditado com sucesso!' })
       .setTimestamp();
 

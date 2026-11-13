@@ -75,6 +75,7 @@ function getSlashCommands() {
           .setDescription('Marca presença para múltiplos jogadores de uma vez por Nicks in-game, @menções ou IDs.')
           .addStringOption(opt => opt.setName('evento').setDescription('Evento correspondente').setRequired(true).addChoices(...eventChoices))
           .addStringOption(opt => opt.setName('jogadores').setDescription('Cole a lista de Nicks ou @menções separados por espaço, vírgula ou quebra de linha').setRequired(true))
+          .addStringOption(opt => opt.setName('last_hit').setDescription('Nick ou @menção de quem deu o Last Hit (+10 DKP bônus sem multiplicador)'))
           .addIntegerOption(opt => opt.setName('dkp_base_manual').setDescription('Substituir o DKP base'))
       )
       .addSubcommand(sub =>
@@ -82,6 +83,7 @@ function getSlashCommands() {
           .setDescription('Puxa a presença de todos conectados na sala de voz especificada.')
           .addStringOption(opt => opt.setName('evento').setDescription('Evento correspondente').setRequired(true).addChoices(...eventChoices))
           .addChannelOption(opt => opt.setName('canal_voz').setDescription('Canal de voz onde os membros estão').setRequired(false))
+          .addStringOption(opt => opt.setName('last_hit').setDescription('Nick ou @menção de quem deu o Last Hit (+10 DKP bônus sem multiplicador)'))
           .addIntegerOption(opt => opt.setName('dkp_base_manual').setDescription('Substituir o DKP base deste evento'))
       )
       .addSubcommand(sub =>
@@ -89,6 +91,7 @@ function getSlashCommands() {
           .setDescription('Concede presença avulsa para um membro específico.')
           .addUserOption(opt => opt.setName('membro').setDescription('Membro que esteve presente').setRequired(true))
           .addStringOption(opt => opt.setName('evento').setDescription('Evento correspondente').setRequired(true).addChoices(...eventChoices))
+          .addBooleanOption(opt => opt.setName('last_hit').setDescription('Este membro deu o Last Hit? (+10 DKP bônus fixo)'))
           .addIntegerOption(opt => opt.setName('dkp_base_manual').setDescription('Substituir o DKP base'))
       ),
 
