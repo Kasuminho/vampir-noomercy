@@ -886,35 +886,37 @@ async function handleSlashCommand(interaction) {
       return interaction.reply({ content: '❌ Acesso restrito à Staff!', flags: MessageFlags.Ephemeral });
     }
 
+    await interaction.deferReply({ flags: MessageFlags.Ephemeral });
+
     const sub = options.getSubcommand();
 
     if (sub === 'visao-geral') {
-      const data = await getStaffOverviewData(guild);
+      const data = getStaffOverviewData(guild);
       const embed = buildStaffOverviewEmbed(data);
       const components = buildStaffPanelComponents('overview');
-      return interaction.reply({ embeds: [embed], components, flags: MessageFlags.Ephemeral });
+      return interaction.editReply({ embeds: [embed], components });
     }
 
     if (sub === 'atrasados') {
-      const data = await getStaffOverviewData(guild);
+      const data = getStaffOverviewData(guild);
       const embed = buildOverdueEmbed(data);
       const components = buildStaffPanelComponents('overdue');
-      return interaction.reply({ embeds: [embed], components, flags: MessageFlags.Ephemeral });
+      return interaction.editReply({ embeds: [embed], components });
     }
 
     if (sub === 'sem-presenca') {
-      const data = await getStaffOverviewData(guild);
+      const data = getStaffOverviewData(guild);
       const embed = buildZeroPresenceEmbed(data);
       const components = buildStaffPanelComponents('zero_pres');
-      return interaction.reply({ embeds: [embed], components, flags: MessageFlags.Ephemeral });
+      return interaction.editReply({ embeds: [embed], components });
     }
 
     if (sub === 'roster') {
       const pageNum = options.getInteger('pagina') || 1;
-      const data = await getStaffOverviewData(guild);
+      const data = getStaffOverviewData(guild);
       const { embed, currentPage, totalPages } = buildRosterPageEmbed(data, pageNum - 1);
       const components = buildStaffPanelComponents('roster', currentPage, totalPages);
-      return interaction.reply({ embeds: [embed], components, flags: MessageFlags.Ephemeral });
+      return interaction.editReply({ embeds: [embed], components });
     }
 
     if (sub === 'consultar') {
@@ -922,10 +924,10 @@ async function handleSlashCommand(interaction) {
       const result = buildMemberDetailEmbed(identifier, guild);
 
       if (result.error) {
-        return interaction.reply({ content: result.error, flags: MessageFlags.Ephemeral });
+        return interaction.editReply({ content: result.error });
       }
 
-      return interaction.reply({ embeds: [result.embed], flags: MessageFlags.Ephemeral });
+      return interaction.editReply({ embeds: [result.embed] });
     }
   }
 }

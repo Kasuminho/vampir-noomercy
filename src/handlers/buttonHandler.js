@@ -595,14 +595,18 @@ async function handleButtonClick(interaction) {
       return interaction.reply({ content: '❌ Acesso restrito à Staff!', flags: MessageFlags.Ephemeral });
     }
 
-    const data = await getStaffOverviewData(guild);
-    const embed = buildStaffOverviewEmbed(data);
-    const components = buildStaffPanelComponents('overview');
-
     if (customId === 'btn_staff_painel_membros') {
-      return interaction.reply({ embeds: [embed], components, flags: MessageFlags.Ephemeral });
+      await interaction.deferReply({ flags: MessageFlags.Ephemeral }).catch(() => {});
+      const data = getStaffOverviewData(guild);
+      const embed = buildStaffOverviewEmbed(data);
+      const components = buildStaffPanelComponents('overview');
+      return interaction.editReply({ embeds: [embed], components });
     } else {
-      return interaction.update({ embeds: [embed], components });
+      await interaction.deferUpdate().catch(() => {});
+      const data = getStaffOverviewData(guild);
+      const embed = buildStaffOverviewEmbed(data);
+      const components = buildStaffPanelComponents('overview');
+      return interaction.editReply({ embeds: [embed], components });
     }
   }
 
@@ -612,11 +616,12 @@ async function handleButtonClick(interaction) {
       return interaction.reply({ content: '❌ Acesso restrito à Staff!', flags: MessageFlags.Ephemeral });
     }
 
-    const data = await getStaffOverviewData(guild);
+    await interaction.deferUpdate().catch(() => {});
+    const data = getStaffOverviewData(guild);
     const embed = buildOverdueEmbed(data);
     const components = buildStaffPanelComponents('overdue');
 
-    return interaction.update({ embeds: [embed], components });
+    return interaction.editReply({ embeds: [embed], components });
   }
 
   // 16.1.1 Staff Ver Membros sem Presença em Boss (0 Presenças)
@@ -625,11 +630,12 @@ async function handleButtonClick(interaction) {
       return interaction.reply({ content: '❌ Acesso restrito à Staff!', flags: MessageFlags.Ephemeral });
     }
 
-    const data = await getStaffOverviewData(guild);
+    await interaction.deferUpdate().catch(() => {});
+    const data = getStaffOverviewData(guild);
     const embed = buildZeroPresenceEmbed(data);
     const components = buildStaffPanelComponents('zero_pres');
 
-    return interaction.update({ embeds: [embed], components });
+    return interaction.editReply({ embeds: [embed], components });
   }
 
   // 16.2 Staff Ver Roster Completo Paginado
@@ -637,6 +643,8 @@ async function handleButtonClick(interaction) {
     if (!isStaffMember(member)) {
       return interaction.reply({ content: '❌ Acesso restrito à Staff!', flags: MessageFlags.Ephemeral });
     }
+
+    await interaction.deferUpdate().catch(() => {});
 
     let pageIndex = 0;
     if (customId.startsWith('btn_staff_mem_page_prev_')) {
@@ -647,11 +655,11 @@ async function handleButtonClick(interaction) {
       pageIndex = parseInt(customId.replace('btn_staff_mem_roster_', ''), 10) || 0;
     }
 
-    const data = await getStaffOverviewData(guild);
+    const data = getStaffOverviewData(guild);
     const { embed, currentPage, totalPages } = buildRosterPageEmbed(data, pageIndex);
     const components = buildStaffPanelComponents('roster', currentPage, totalPages);
 
-    return interaction.update({ embeds: [embed], components });
+    return interaction.editReply({ embeds: [embed], components });
   }
 
   // 16.3 Staff Abrir Modal para Consultar Membro Específico

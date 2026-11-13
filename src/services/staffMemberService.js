@@ -4,11 +4,7 @@ const { findMemberByNickOrId } = require('./memberService');
 
 const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
 
-async function getStaffOverviewData(guild = null) {
-  if (guild && guild.members) {
-    await guild.members.fetch().catch(() => {});
-  }
-
+function getStaffOverviewData(guild = null) {
   const members = getMembers();
   const dkpData = getDkp();
   const balances = dkpData.balances || {};
