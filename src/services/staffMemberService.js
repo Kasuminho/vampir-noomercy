@@ -267,7 +267,7 @@ function buildStaffPanelComponents(view = 'overview', currentPage = 0, totalPage
       .setLabel('⚠️ CP Atrasado / Sem Envio')
       .setStyle(view === 'overdue' ? ButtonStyle.Primary : ButtonStyle.Secondary),
     new ButtonBuilder()
-      .setCustomId('btn_staff_mem_roster_0')
+      .setCustomId('btn_staff_mem_roster_main')
       .setLabel('📋 Roster Completo')
       .setStyle(view === 'roster' ? ButtonStyle.Primary : ButtonStyle.Secondary),
     new ButtonBuilder()
@@ -281,17 +281,17 @@ function buildStaffPanelComponents(view = 'overview', currentPage = 0, totalPage
   if (view === 'roster') {
     const row2 = new ActionRowBuilder().addComponents(
       new ButtonBuilder()
-        .setCustomId(`btn_staff_mem_roster_${Math.max(0, currentPage - 1)}`)
+        .setCustomId(`btn_staff_mem_page_prev_${Math.max(0, currentPage - 1)}`)
         .setLabel('◀️ Anterior')
         .setStyle(ButtonStyle.Secondary)
         .setDisabled(currentPage <= 0),
       new ButtonBuilder()
-        .setCustomId('btn_staff_mem_roster_curr')
+        .setCustomId(`btn_staff_mem_page_curr_${currentPage}`)
         .setLabel(`Página ${currentPage + 1}/${totalPages}`)
         .setStyle(ButtonStyle.Secondary)
         .setDisabled(true),
       new ButtonBuilder()
-        .setCustomId(`btn_staff_mem_roster_${Math.min(totalPages - 1, currentPage + 1)}`)
+        .setCustomId(`btn_staff_mem_page_next_${Math.min(totalPages - 1, currentPage + 1)}`)
         .setLabel('Próximo ▶️')
         .setStyle(ButtonStyle.Secondary)
         .setDisabled(currentPage >= totalPages - 1),

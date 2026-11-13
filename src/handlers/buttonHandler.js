@@ -619,13 +619,19 @@ async function handleButtonClick(interaction) {
   }
 
   // 16.2 Staff Ver Roster Completo Paginado
-  if (customId.startsWith('btn_staff_mem_roster_')) {
+  if (customId === 'btn_staff_mem_roster_main' || customId.startsWith('btn_staff_mem_page_prev_') || customId.startsWith('btn_staff_mem_page_next_') || customId.startsWith('btn_staff_mem_roster_')) {
     if (!isStaffMember(member)) {
       return interaction.reply({ content: '❌ Acesso restrito à Staff!', flags: MessageFlags.Ephemeral });
     }
 
-    const pageStr = customId.replace('btn_staff_mem_roster_', '');
-    const pageIndex = parseInt(pageStr, 10) || 0;
+    let pageIndex = 0;
+    if (customId.startsWith('btn_staff_mem_page_prev_')) {
+      pageIndex = parseInt(customId.replace('btn_staff_mem_page_prev_', ''), 10) || 0;
+    } else if (customId.startsWith('btn_staff_mem_page_next_')) {
+      pageIndex = parseInt(customId.replace('btn_staff_mem_page_next_', ''), 10) || 0;
+    } else if (customId.startsWith('btn_staff_mem_roster_') && customId !== 'btn_staff_mem_roster_main') {
+      pageIndex = parseInt(customId.replace('btn_staff_mem_roster_', ''), 10) || 0;
+    }
 
     const data = getStaffOverviewData(guild);
     const { embed, currentPage, totalPages } = buildRosterPageEmbed(data, pageIndex);
