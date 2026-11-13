@@ -255,10 +255,14 @@ function findMemberByNickOrId(identifier, membersCache = null) {
 }
 
 function resolveMembersBatch(inputString, guildMembers = null) {
+  if (!inputString || typeof inputString !== 'string') {
+    return { resolved: [], unresolved: [] };
+  }
   const members = getMembers();
-  // Divide por vírgula, ponto e vírgula, espaço ou quebra de linha
+
+  // Divide por quebra de linha, vírgula, ponto e vírgula, pipe (|), ou espaços antes de menção com @
   const tokens = inputString
-    .split(/[\n,;\t]+/)
+    .split(/[\n,;|\t]+|\s+(?=@)/)
     .map(t => t.trim())
     .filter(t => t.length > 0);
 
@@ -266,28 +270,38 @@ function resolveMembersBatch(inputString, guildMembers = null) {
   const unresolved = [];
   const seenIds = new Set();
 
+  function addMatch(match) {
+    if (!match) return false;
+    const uid = match.userId || match.id;
+    if (!uid || seenIds.has(uid)) return false;
+    seenIds.add(uid);
+    resolved.push({
+      id: uid,
+      tag: match.userTag || match.tag || match.nick || uid,
+      nick: match.nick || null,
+      classe: match.classe || 'N/A',
+      cp: match.cp || 0,
+      nivel: match.nivel || 0
+    });
+    return true;
+  }
+
   for (const token of tokens) {
-    // Se tiver múltiplas menções coladas como <@123><@456>
+    // Ignora tokens de ruído como "+1", "+2", etc.
+    if (/^\+\d*$/.test(token)) continue;
+
+    // Se tiver múltiplas menções discord coladas como <@123><@456>
     const subMentions = token.match(/<@!?(\d+)>/g);
     const subTokens = subMentions || [token];
 
     for (const raw of subTokens) {
-      const match = findMemberByNickOrId(raw, members);
+      const cleaned = raw.replace(/^@/, '').trim();
+      const match = findMemberByNickOrId(cleaned, members);
       if (match) {
-        if (!seenIds.has(match.userId)) {
-          seenIds.add(match.userId);
-          resolved.push({
-            id: match.userId,
-            tag: match.userTag || match.nick || match.userId,
-            nick: match.nick || null,
-            classe: match.classe || 'N/A',
-            cp: match.cp || 0,
-            nivel: match.nivel || 0
-          });
-        }
+        addMatch(match);
       } else {
-        // Se for um ID de Discord válido que ainda não tem ficha no members.json
-        const pureId = raw.replace(/[<@!>]/g, '').trim();
+        // Se for um ID de Discord puro (17-20 dígitos)
+        const pureId = cleaned.replace(/[<@!>]/g, '').trim();
         if (/^\d{17,20}$/.test(pureId)) {
           if (!seenIds.has(pureId)) {
             seenIds.add(pureId);
@@ -299,6 +313,20 @@ function resolveMembersBatch(inputString, guildMembers = null) {
               cp: 0,
               nivel: 0
             });
+          }
+        } else if (cleaned.includes(' ')) {
+          // Se for uma string composta com espaços (ex: "SSN BrancaSafada" sem vírgulas), tenta quebrar por palavra
+          const subWords = cleaned.split(/\s+/).map(w => w.replace(/^@/, '').trim()).filter(Boolean);
+          let anyMatched = false;
+          for (const w of subWords) {
+            if (/^\+\d*$/.test(w)) continue;
+            const subMatch = findMemberByNickOrId(w, members);
+            if (subMatch && addMatch(subMatch)) {
+              anyMatched = true;
+            }
+          }
+          if (!anyMatched) {
+            unresolved.push(raw);
           }
         } else {
           unresolved.push(raw);

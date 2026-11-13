@@ -24,9 +24,12 @@ async function logAttendance({ client, eventName, baseDkp, registeredBy, awarded
     return `• <@${m.userId}> (\`${m.nick || m.userTag}\`): **+${points} DKP** *(CP: ${(m.cp || 0).toLocaleString('pt-BR')} • Saldo: \`${m.newTotalDkp} DKP\`${lhText})*`;
   });
 
-  const lastHitSection = lastHit
-    ? `🎯 **Last Hit (+10 DKP Bônus):** <@${lastHit.userId}> (\`${lastHit.nick}\`)\n`
-    : '';
+  let lastHitSection = '';
+  const lhList = Array.isArray(lastHit) ? lastHit : (lastHit ? [lastHit] : []);
+  if (lhList.length > 0) {
+    const names = lhList.map(lh => `<@${lh.userId}> (\`${lh.nick || lh.userId}\`)`).join(', ');
+    lastHitSection = `🎯 **Last Hit (+10 DKP Bônus${lhList.length > 1 ? ' cada' : ''}):** ${names}\n`;
+  }
 
   const embed = new EmbedBuilder()
     .setTitle(`⚔️ LOG DKP • PRESENÇA / ATTENDANCE • ${eventName.toUpperCase()}`)

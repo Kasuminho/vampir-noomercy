@@ -348,12 +348,22 @@ async function handleModalSubmit(interaction) {
         { name: '🛡️ Registrado por', value: `<@${user.id}>`, inline: true }
       );
 
-    if (rec.lastHit) {
+    if (rec.lastHits && rec.lastHits.length > 0) {
+      const lhList = rec.lastHits.map(lh => `<@${lh.userId}> (\`${lh.nick}\`)`).join(', ');
       embed.addFields({
-        name: '🎯 Last Hit (+10 DKP Bônus Fixo)',
-        value: `<@${rec.lastHit.userId}> (\`${rec.lastHit.nick}\`)`,
+        name: `🎯 Last Hit (+10 DKP Bônus Fixo${rec.lastHits.length > 1 ? ' cada' : ''})`,
+        value: lhList,
         inline: true
       });
+    } else if (rec.lastHit) {
+      const single = Array.isArray(rec.lastHit) ? rec.lastHit[0] : rec.lastHit;
+      if (single) {
+        embed.addFields({
+          name: '🎯 Last Hit (+10 DKP Bônus Fixo)',
+          value: `<@${single.userId}> (\`${single.nick}\`)`,
+          inline: true
+        });
+      }
     }
 
     embed

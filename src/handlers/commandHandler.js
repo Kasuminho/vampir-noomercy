@@ -371,12 +371,22 @@ async function handleSlashCommand(interaction) {
         .setFooter({ text: 'DKP ponderado por CP e Nível creditado com sucesso!' })
         .setTimestamp();
 
-      if (rec.lastHit) {
+      if (rec.lastHits && rec.lastHits.length > 0) {
+        const lhList = rec.lastHits.map(lh => `<@${lh.userId}> \`(${lh.nick})\``).join(', ');
         embed.addFields({
-          name: '🎯 Last Hit (+10 DKP Bônus Fixo)',
-          value: `<@${rec.lastHit.userId}> \`(${rec.lastHit.nick || rec.lastHit.tag})\``,
+          name: `🎯 Last Hit (+10 DKP Bônus Fixo${rec.lastHits.length > 1 ? ' cada' : ''})`,
+          value: lhList,
           inline: true
         });
+      } else if (rec.lastHit) {
+        const single = Array.isArray(rec.lastHit) ? rec.lastHit[0] : rec.lastHit;
+        if (single) {
+          embed.addFields({
+            name: '🎯 Last Hit (+10 DKP Bônus Fixo)',
+            value: `<@${single.userId}> \`(${single.nick || single.tag})\``,
+            inline: true
+          });
+        }
       }
 
       if (unresolved.length > 0) {
@@ -393,7 +403,7 @@ async function handleSlashCommand(interaction) {
         baseDkp: rec.baseDkp,
         registeredBy: `<@${user.id}>`,
         awardedList: rec.members,
-        lastHit: rec.lastHit
+        lastHit: rec.lastHits || rec.lastHit
       });
 
       return interaction.reply({ embeds: [embed] });
@@ -447,12 +457,22 @@ async function handleSlashCommand(interaction) {
         .setFooter({ text: 'Pontuação creditada com sucesso!' })
         .setTimestamp();
 
-      if (rec.lastHit) {
+      if (rec.lastHits && rec.lastHits.length > 0) {
+        const lhList = rec.lastHits.map(lh => `<@${lh.userId}> \`(${lh.nick})\``).join(', ');
         embed.addFields({
-          name: '🎯 Last Hit (+10 DKP Bônus Fixo)',
-          value: `<@${rec.lastHit.userId}> \`(${rec.lastHit.nick || rec.lastHit.tag})\``,
+          name: `🎯 Last Hit (+10 DKP Bônus Fixo${rec.lastHits.length > 1 ? ' cada' : ''})`,
+          value: lhList,
           inline: true
         });
+      } else if (rec.lastHit) {
+        const single = Array.isArray(rec.lastHit) ? rec.lastHit[0] : rec.lastHit;
+        if (single) {
+          embed.addFields({
+            name: '🎯 Last Hit (+10 DKP Bônus Fixo)',
+            value: `<@${single.userId}> \`(${single.nick || single.tag})\``,
+            inline: true
+          });
+        }
       }
 
       await logAttendance({
@@ -461,7 +481,7 @@ async function handleSlashCommand(interaction) {
         baseDkp: rec.baseDkp,
         registeredBy: `<@${user.id}>`,
         awardedList: rec.members,
-        lastHit: rec.lastHit
+        lastHit: rec.lastHits || rec.lastHit
       });
 
       return interaction.reply({ embeds: [embed] });

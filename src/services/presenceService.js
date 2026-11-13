@@ -1,5 +1,5 @@
 const { getPresencas, savePresencas, getAusencias, saveAusencias, getConfig } = require('../database/db');
-const { getMember, getMemberDkp, addDkp, findMemberByNickOrId } = require('./memberService');
+const { getMember, getMemberDkp, addDkp, findMemberByNickOrId, resolveMembersBatch } = require('./memberService');
 const { calculateDkpReward } = require('./dkpCalculator');
 
 function recordEventAttendance({ eventKey, eventName, customBaseDkp = null, membersList, registeredBy, lastHitInput = null }) {
@@ -11,20 +11,54 @@ function recordEventAttendance({ eventKey, eventName, customBaseDkp = null, memb
   const eventId = `evt_${Date.now()}`;
   const presencas = getPresencas();
 
-  // 1. Resolve o membro do Last Hit se fornecido
-  let lastHitMember = null;
-  if (lastHitInput && typeof lastHitInput === 'string' && lastHitInput.trim().length > 0) {
-    lastHitMember = findMemberByNickOrId(lastHitInput.trim());
-  } else if (lastHitInput && typeof lastHitInput === 'object') {
-    lastHitMember = lastHitInput.userId ? lastHitInput : findMemberByNickOrId(lastHitInput.id || lastHitInput.tag || '');
+  // 1. Resolve os membros do Last Hit (suporta 1 ou múltiplos jogadores!)
+  const lastHitMembersMap = new Map();
+
+  function addLastHitMatch(match) {
+    if (!match) return;
+    const uid = match.userId || match.id;
+    if (!uid) return;
+    lastHitMembersMap.set(uid, {
+      userId: uid,
+      nick: match.nick || null,
+      tag: match.userTag || match.tag || match.nick || uid
+    });
+  }
+
+  if (lastHitInput) {
+    if (typeof lastHitInput === 'string' && lastHitInput.trim().length > 0) {
+      const { resolved } = resolveMembersBatch(lastHitInput);
+      for (const m of resolved) {
+        addLastHitMatch(m);
+      }
+      if (lastHitMembersMap.size === 0) {
+        const single = findMemberByNickOrId(lastHitInput.trim().replace(/^@/, ''));
+        if (single) addLastHitMatch(single);
+      }
+    } else if (Array.isArray(lastHitInput)) {
+      for (const item of lastHitInput) {
+        if (typeof item === 'string') {
+          const m = findMemberByNickOrId(item.replace(/^@/, '').trim());
+          if (m) addLastHitMatch(m);
+        } else if (item && (item.id || item.userId)) {
+          addLastHitMatch(item);
+        }
+      }
+    } else if (typeof lastHitInput === 'object') {
+      if (lastHitInput.userId || lastHitInput.id) {
+        addLastHitMatch(lastHitInput);
+      }
+    }
   }
 
   // Se quem deu Last Hit não constava na lista de presença, adiciona para receber pontuação
-  if (lastHitMember && !membersList.some(m => m.id === (lastHitMember.userId || lastHitMember.id))) {
-    membersList.push({
-      id: lastHitMember.userId || lastHitMember.id,
-      tag: lastHitMember.userTag || lastHitMember.nick || (lastHitMember.userId || lastHitMember.id)
-    });
+  for (const [lhId, lhData] of lastHitMembersMap.entries()) {
+    if (!membersList.some(m => m.id === lhId)) {
+      membersList.push({
+        id: lhId,
+        tag: lhData.tag || lhData.nick || lhId
+      });
+    }
   }
 
   const awardedList = [];
@@ -34,7 +68,7 @@ function recordEventAttendance({ eventKey, eventName, customBaseDkp = null, memb
     const memberId = m.id;
     const memberData = getMember(memberId) || {};
     const hasApprovedProfile = memberData && memberData.cp && memberData.cp > 0 && memberData.nivel && memberData.nivel > 0;
-    const isLastHit = lastHitMember && (lastHitMember.userId === memberId || lastHitMember.id === memberId);
+    const isLastHit = lastHitMembersMap.has(memberId);
 
     if (!hasApprovedProfile) {
       // PROIBIDO PONTUAR SEM CP/NÍVEL APROVADOS PELA STAFF!
@@ -110,6 +144,12 @@ function recordEventAttendance({ eventKey, eventName, customBaseDkp = null, memb
     });
   }
 
+  const lastHitsArray = Array.from(lastHitMembersMap.values()).map(lh => ({
+    userId: lh.userId,
+    nick: lh.nick || lh.tag,
+    bonus: LAST_HIT_BONUS
+  }));
+
   const record = {
     eventId,
     eventKey,
@@ -118,11 +158,8 @@ function recordEventAttendance({ eventKey, eventName, customBaseDkp = null, memb
     registeredBy,
     registeredAt: new Date().toISOString(),
     totalMembers: awardedList.length,
-    lastHit: lastHitMember ? {
-      userId: lastHitMember.userId || lastHitMember.id,
-      nick: lastHitMember.nick || lastHitMember.userTag || (lastHitMember.userId || lastHitMember.id),
-      bonus: LAST_HIT_BONUS
-    } : null,
+    lastHit: lastHitsArray.length === 1 ? lastHitsArray[0] : (lastHitsArray.length > 1 ? lastHitsArray : null),
+    lastHits: lastHitsArray,
     members: awardedList
   };
 
