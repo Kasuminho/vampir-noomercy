@@ -104,6 +104,19 @@ function getSlashCommands() {
         sub.setName('iniciar')
           .setDescription('Inicia um novo leilão de drop em #leilao-drops.')
           .addStringOption(opt => opt.setName('item').setDescription('Nome exato do item dropado').setRequired(true))
+          .addStringOption(opt =>
+            opt.setName('classe')
+              .setDescription('Classe permitida para disputar o item (ou Livre para todos)')
+              .setRequired(true)
+              .addChoices(
+                { name: '🌐 Todas as Classes (Livre)', value: 'Livre' },
+                { name: '🩸 Bloodstained', value: 'Bloodstained' },
+                { name: '⚔️ Carnage', value: 'Carnage' },
+                { name: '🔮 Akasha', value: 'Akasha' },
+                { name: '🐍 Viper', value: 'Viper' },
+                { name: '💀 Grim Reaper', value: 'Grim Reaper' }
+              )
+          )
           .addIntegerOption(opt => opt.setName('lance_minimo').setDescription('Lance inicial mínimo (ex: 20)').setRequired(true).setMinValue(1))
           .addIntegerOption(opt => opt.setName('duracao_minutos').setDescription('Duração do leilão em minutos (ex: 15)').setRequired(true).setMinValue(1).setMaxValue(1440))
           .addAttachmentOption(opt => opt.setName('imagem').setDescription('Print ou foto do item no jogo'))

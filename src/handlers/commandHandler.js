@@ -544,12 +544,14 @@ async function handleSlashCommand(interaction) {
 
     if (sub === 'iniciar') {
       const itemName = options.getString('item');
+      const targetClass = options.getString('classe') || 'Livre';
       const minBid = options.getInteger('lance_minimo');
       const duration = options.getInteger('duracao_minutos');
       const image = options.getAttachment('imagem');
 
       const auction = startAuction({
         itemName,
+        targetClass,
         minBid,
         durationMinutes: duration,
         imageUrl: image ? image.url : null,
@@ -582,8 +584,9 @@ async function handleSlashCommand(interaction) {
         }
       }
 
+      const classMsg = targetClass === 'Livre' ? 'Livre para todas as classes' : `Exclusivo para a classe **${targetClass}**`;
       return interaction.reply({
-        content: `✅ Leilão do item **${itemName}** iniciado com sucesso no canal <#${auctionChannelId}>! (ID: \`${auction.id}\`)`,
+        content: `✅ Leilão do item **${itemName}** (${classMsg}) iniciado com sucesso no canal <#${auctionChannelId}>! (ID: \`${auction.id}\`)`,
         flags: MessageFlags.Ephemeral
       });
     }

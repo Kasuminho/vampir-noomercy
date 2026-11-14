@@ -1,11 +1,17 @@
 const { EmbedBuilder } = require('discord.js');
 const { getLeiloes, saveLeiloes, getConfig } = require('../database/db');
-const { getMemberDkp, lockDkp, unlockDkp, deductLockedDkp } = require('./memberService');
+const { getMember, getMemberDkp, lockDkp, unlockDkp, deductLockedDkp } = require('./memberService');
 
 function renderAuctionEmbed(auction) {
   const isFinished = auction.status === 'finished';
   const color = isFinished ? '#2ECC71' : '#E67E22';
   const endsTimestamp = Math.floor(auction.endsAtTimestamp / 1000);
+
+  const isClassRestricted = auction.targetClass && auction.targetClass !== 'Livre' && auction.targetClass !== 'all';
+  const classTag = isClassRestricted ? ` [${auction.targetClass.toUpperCase()}]` : '';
+  const classInfo = isClassRestricted
+    ? `🛡️ **Restrição de Classe**: **${auction.targetClass}** *(Apenas jogadores desta classe podem dar lances!)*\n`
+    : `🌐 **Classe**: **Todas as Classes (Livre)**\n`;
 
   const highestBidText = auction.highestBidderId
     ? `👑 **Liderando o Leilão:** **${auction.currentBid} DKP** por <@${auction.highestBidderId}> (\`${auction.highestBidderTag}\`)`
@@ -21,10 +27,11 @@ function renderAuctionEmbed(auction) {
     : '*Nenhum lance registrado até o momento.*';
 
   const embed = new EmbedBuilder()
-    .setTitle(isFinished ? `🎉 LEILÃO ENCERRADO • ${auction.itemName.toUpperCase()}` : `🔥 LEILÃO DE DROP ATIVO • ${auction.itemName.toUpperCase()}`)
+    .setTitle(isFinished ? `🎉 LEILÃO ENCERRADO${classTag} • ${auction.itemName.toUpperCase()}` : `🔥 LEILÃO DE DROP ATIVO${classTag} • ${auction.itemName.toUpperCase()}`)
     .setColor(color)
     .setDescription(
-      `📦 **Item**: **${auction.itemName}**\n\n` +
+      `📦 **Item**: **${auction.itemName}**\n` +
+      classInfo + '\n' +
       `${highestBidText}\n\n` +
       (isFinished
         ? `🏆 **VENCEDOR**: ${auction.highestBidderId ? `<@${auction.highestBidderId}> com o lance de **${auction.currentBid} DKP**!` : '*Nenhum lance registrado.*'}\n`
@@ -34,7 +41,7 @@ function renderAuctionEmbed(auction) {
     .addFields(
       { name: '📊 Disputa de Lances (1 lance por jogador)', value: bidsHistoryText, inline: false }
     )
-    .setFooter({ text: `ID do Item: ${auction.id} • Clique no botão abaixo para cobrir!` })
+    .setFooter({ text: `ID do Item: ${auction.id} • ${isClassRestricted ? `Exclusivo ${auction.targetClass}` : 'Livre para todos'}` })
     .setTimestamp();
 
   if (auction.imageUrl) {
@@ -59,15 +66,18 @@ async function updateAuctionDisplay(client, auction) {
   }
 }
 
-function startAuction({ itemId, itemName, minBid = 10, durationMinutes = 15, imageUrl = null, startedBy }) {
+function startAuction({ itemId, itemName, minBid = 10, durationMinutes = 15, imageUrl = null, targetClass = 'Livre', startedBy }) {
   const leiloes = getLeiloes();
   const id = itemId || `item_${Date.now()}`;
   const now = Date.now();
   const endsAt = now + durationMinutes * 60 * 1000;
 
+  const normalizedClass = (!targetClass || targetClass === 'all') ? 'Livre' : targetClass;
+
   const auction = {
     id,
     itemName,
+    targetClass: normalizedClass,
     minBid: parseInt(minBid, 10),
     currentBid: 0,
     highestBidderId: null,
@@ -98,6 +108,24 @@ function placeBid({ itemId, userId, userTag, amount }) {
   const now = Date.now();
   if (now > auction.endsAtTimestamp) {
     return { success: false, error: 'O tempo deste leilão já expirou!' };
+  }
+
+  // 0. Validação de Restrição de Classe
+  if (auction.targetClass && auction.targetClass !== 'Livre' && auction.targetClass !== 'all') {
+    const member = getMember(userId);
+    if (!member || !member.classe) {
+      return {
+        success: false,
+        error: `Este leilão é exclusivo para a classe **${auction.targetClass}**!\nVocê precisa ter sua ficha cadastrada e aprovada com sua classe para poder dar lances.`
+      };
+    }
+
+    if (member.classe.toLowerCase().trim() !== auction.targetClass.toLowerCase().trim()) {
+      return {
+        success: false,
+        error: `⛔ **Lance Bloqueado!** Este leilão é exclusivo para a classe **${auction.targetClass}**.\nSua classe registrada na guilda é **${member.classe}**.`
+      };
+    }
   }
 
   const bidAmount = parseInt(amount, 10);

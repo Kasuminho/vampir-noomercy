@@ -83,6 +83,55 @@ async function handleSelectMenu(interaction) {
     return interaction.reply({ embeds: [embed], flags: MessageFlags.Ephemeral });
   }
 
+  // 4. Seleção de Classe para Criar Leilão (Staff)
+  if (customId === 'select_staff_leilao_classe') {
+    const selectedClass = values[0];
+    const classLabel = selectedClass === 'Livre' ? 'Livre' : selectedClass;
+
+    const modal = new ModalBuilder()
+      .setCustomId(`modal_staff_criar_leilao_${selectedClass}`)
+      .setTitle(`Criar Leilão [${classLabel}]`.slice(0, 45));
+
+    const inputItem = new TextInputBuilder()
+      .setCustomId('input_leilao_item')
+      .setLabel('Nome do Item Dropado')
+      .setStyle(TextInputStyle.Short)
+      .setPlaceholder('Ex: Montante da Ruína Heroico')
+      .setRequired(true);
+
+    const inputMinBid = new TextInputBuilder()
+      .setCustomId('input_leilao_min_bid')
+      .setLabel('Lance Mínimo Inicial (em DKP)')
+      .setStyle(TextInputStyle.Short)
+      .setPlaceholder('30')
+      .setValue('30')
+      .setRequired(true);
+
+    const inputDuracao = new TextInputBuilder()
+      .setCustomId('input_leilao_duracao')
+      .setLabel('Duração em Minutos (ex: 15)')
+      .setStyle(TextInputStyle.Short)
+      .setPlaceholder('15')
+      .setValue('15')
+      .setRequired(true);
+
+    const inputImg = new TextInputBuilder()
+      .setCustomId('input_leilao_imagem')
+      .setLabel('Link da Foto do Item (opcional)')
+      .setStyle(TextInputStyle.Short)
+      .setPlaceholder('https://cdn.discordapp.com/...')
+      .setRequired(false);
+
+    modal.addComponents(
+      new ActionRowBuilder().addComponents(inputItem),
+      new ActionRowBuilder().addComponents(inputMinBid),
+      new ActionRowBuilder().addComponents(inputDuracao),
+      new ActionRowBuilder().addComponents(inputImg)
+    );
+
+    return interaction.showModal(modal);
+  }
+
   // 3. Seleção de Evento para Iniciar Ticket de Contestação
   if (customId === 'select_contestar_evento') {
     const eventKey = values[0];

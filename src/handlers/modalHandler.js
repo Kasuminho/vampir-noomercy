@@ -383,7 +383,11 @@ async function handleModalSubmit(interaction) {
   }
 
   // 6. Modal Criar Leilão de Drop (Staff)
-  if (customId === 'modal_staff_criar_leilao') {
+  if (customId.startsWith('modal_staff_criar_leilao')) {
+    const targetClass = customId.startsWith('modal_staff_criar_leilao_')
+      ? customId.replace('modal_staff_criar_leilao_', '')
+      : 'Livre';
+
     const itemName = fields.getTextInputValue('input_leilao_item');
     const minBid = parseInt(fields.getTextInputValue('input_leilao_min_bid'), 10) || 30;
     const duration = parseInt(fields.getTextInputValue('input_leilao_duracao'), 10) || 15;
@@ -391,6 +395,7 @@ async function handleModalSubmit(interaction) {
 
     const auction = startAuction({
       itemName,
+      targetClass: targetClass || 'Livre',
       minBid,
       durationMinutes: duration,
       imageUrl,
@@ -424,8 +429,9 @@ async function handleModalSubmit(interaction) {
       }
     }
 
+    const classMsg = targetClass === 'Livre' ? 'Livre para todas as classes' : `Exclusivo para a classe **${targetClass}**`;
     return interaction.reply({
-      content: `✅ Leilão do item **${itemName}** iniciado com sucesso no canal <#${auctionChannelId}>! (ID: \`${auction.id}\`)`,
+      content: `✅ Leilão do item **${itemName}** (${classMsg}) iniciado com sucesso no canal <#${auctionChannelId}>! (ID: \`${auction.id}\`)`,
       flags: MessageFlags.Ephemeral
     });
   }

@@ -212,6 +212,23 @@ async function handleButtonClick(interaction) {
       });
     }
 
+    // Validação de classe antecipada ao clicar no botão
+    if (auction.targetClass && auction.targetClass !== 'Livre' && auction.targetClass !== 'all') {
+      const memberData = getMember(user.id);
+      if (!memberData || !memberData.classe) {
+        return interaction.reply({
+          content: `❌ **Acesso Bloqueado!** Este leilão é exclusivo para a classe **${auction.targetClass}**!\nVocê precisa ter sua ficha cadastrada e aprovada com sua classe para poder dar lances.`,
+          flags: MessageFlags.Ephemeral
+        });
+      }
+      if (memberData.classe.toLowerCase().trim() !== auction.targetClass.toLowerCase().trim()) {
+        return interaction.reply({
+          content: `⛔ **Classe Incompatível!** Este leilão é exclusivo para a classe **${auction.targetClass}**.\nSua classe registrada na guilda é **${memberData.classe}**.`,
+          flags: MessageFlags.Ephemeral
+        });
+      }
+    }
+
     const dkpInfo = getMemberDkp(user.id);
     const config = getConfig();
     const minIncrement = config.auction?.minBidIncrement || 5;
@@ -539,54 +556,31 @@ async function handleButtonClick(interaction) {
     });
   }
 
-  // 15. Staff Criar Leilão de Drop (Abre Modal)
+  // 15. Staff Criar Leilão de Drop (Abre Caixa de Seleção de Classe)
   if (customId === 'btn_staff_novo_leilao') {
     if (!isStaffMember(member)) {
       return interaction.reply({ content: '❌ Acesso restrito à Staff!', flags: MessageFlags.Ephemeral });
     }
 
-    const modal = new ModalBuilder()
-      .setCustomId('modal_staff_criar_leilao')
-      .setTitle('Criar Leilão de Drop');
-
-    const inputItem = new TextInputBuilder()
-      .setCustomId('input_leilao_item')
-      .setLabel('Nome do Item Dropado')
-      .setStyle(TextInputStyle.Short)
-      .setPlaceholder('Ex: Montante da Ruína Heroico')
-      .setRequired(true);
-
-    const inputMinBid = new TextInputBuilder()
-      .setCustomId('input_leilao_min_bid')
-      .setLabel('Lance Mínimo Inicial (em DKP)')
-      .setStyle(TextInputStyle.Short)
-      .setPlaceholder('30')
-      .setValue('30')
-      .setRequired(true);
-
-    const inputDuracao = new TextInputBuilder()
-      .setCustomId('input_leilao_duracao')
-      .setLabel('Duração em Minutos (ex: 15)')
-      .setStyle(TextInputStyle.Short)
-      .setPlaceholder('15')
-      .setValue('15')
-      .setRequired(true);
-
-    const inputImg = new TextInputBuilder()
-      .setCustomId('input_leilao_imagem')
-      .setLabel('Link da Foto do Item (opcional)')
-      .setStyle(TextInputStyle.Short)
-      .setPlaceholder('https://cdn.discordapp.com/...')
-      .setRequired(false);
-
-    modal.addComponents(
-      new ActionRowBuilder().addComponents(inputItem),
-      new ActionRowBuilder().addComponents(inputMinBid),
-      new ActionRowBuilder().addComponents(inputDuracao),
-      new ActionRowBuilder().addComponents(inputImg)
+    const selectRow = new ActionRowBuilder().addComponents(
+      new StringSelectMenuBuilder()
+        .setCustomId('select_staff_leilao_classe')
+        .setPlaceholder('Selecione a classe permitida para o leilão...')
+        .addOptions(
+          { label: 'Todas as Classes (Livre)', value: 'Livre', emoji: '🌐', description: 'Qualquer combatente aprovado pode dar lance' },
+          { label: 'Bloodstained', value: 'Bloodstained', emoji: '🩸', description: 'Exclusivo para combatentes Bloodstained' },
+          { label: 'Carnage', value: 'Carnage', emoji: '⚔️', description: 'Exclusivo para combatentes Carnage' },
+          { label: 'Akasha', value: 'Akasha', emoji: '🔮', description: 'Exclusivo para combatentes Akasha' },
+          { label: 'Viper', value: 'Viper', emoji: '🐍', description: 'Exclusivo para combatentes Viper' },
+          { label: 'Grim Reaper', value: 'Grim Reaper', emoji: '💀', description: 'Exclusivo para combatentes Grim Reaper' }
+        )
     );
 
-    return interaction.showModal(modal);
+    return interaction.reply({
+      content: '📦 **Criação de Leilão de Drop**\nSelecione abaixo na caixa de seleção a **classe permitida** para disputar este item:\n*(Se o item puder ser disputado por qualquer um, escolha "Todas as Classes")*',
+      components: [selectRow],
+      flags: MessageFlags.Ephemeral
+    });
   }
 
   // 16. Staff Painel de Membros

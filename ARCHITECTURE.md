@@ -119,9 +119,12 @@ vampir-noomercy/
   - Envia resumos formatados para `#logs-dkp`, `#logs-geral`, `#auditoria-cp`, etc.
   - **Regra de Ouro de Privacidade:** O Combat Power (CP) é **sempre ocultado** de mensagens e logs públicos. Apenas Staff tem acesso ao CP através do Painel de Membros.
 - **`auctionService.js`:**
-  - Sistema de leilão com `DKP Lock`: ao dar um lance, o saldo do jogador é bloqueado para impedir lances múltiplos acima do saldo real.
-  - Caso o jogador seja superado, o saldo é desbloqueado automaticamente.
-  - Anti-sniping: estende o prazo em +2 minutos se houver lance no minuto final.
+  - Sistema de leilão com **Restrição de Classe** e `DKP Lock`:
+    - Permite cadastrar leilões livres para todas as classes ou restritos a uma classe específica (`Bloodstained`, `Carnage`, `Akasha`, `Viper`, `Grim Reaper`).
+    - Bloqueia automaticamente lances de jogadores que não pertençam à classe exclusiva do item.
+    - Ao dar um lance, o saldo do jogador é bloqueado para impedir lances múltiplos acima do saldo real.
+    - Caso o jogador seja superado, o saldo é desbloqueado automaticamente.
+    - Anti-sniping: estende o prazo em +2 minutos se houver lance no minuto final.
 - **`monthlyDecayService.js`:**
   - Executa a virada de mês: retém 20% do DKP de cada membro e remove 80%.
 
