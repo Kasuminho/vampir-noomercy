@@ -210,11 +210,12 @@
     },
     "248940648563081226": {
       "userId": "248940648563081226",
-      "totalDkp": 92,
+      "totalDkp": 172,
       "lockedDkp": 0,
-      "eventsAttended": 3,
+      "eventsAttended": 5,
       "lastEvent": "Geena 23:00",
-      "lastDate": "2026-11-13T02:27:09.282Z"
+      "lastDate": "2026-11-13T02:27:09.282Z",
+      "balance": 172
     },
     "275130088834727938": {
       "userId": "275130088834727938",
