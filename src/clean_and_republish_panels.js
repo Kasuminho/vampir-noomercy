@@ -55,7 +55,6 @@ client.once('clientReady', async () => {
     const auditChannels = [
       channels['auditoria-cp'],
       channels['auditoria-presencas'],
-      channels['leilao-drops'],
       channels['logs-dkp']
     ];
 

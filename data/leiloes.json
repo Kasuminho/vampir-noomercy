@@ -1,4 +1,597 @@
 {
   "active": {},
-  "history": []
+  "history": [
+    {
+      "id": "item_1794790322096",
+      "itemName": "Luvas do Ceifador do Abismo",
+      "description": null,
+      "sellerId": null,
+      "currentBid": 452,
+      "highestBidderId": "1455647608696733778",
+      "status": "active",
+      "endsAt": "2026-11-16T01:07:02.096Z",
+      "endsAtTimestamp": 1794791222096,
+      "bids": [],
+      "minBid": 30,
+      "imageUrl": "https://cdn.discordapp.com/ephemeral-attachments/1569078299660128353/1571689265501311087/image.png?ex=6afba531&is=6afa53b1&hm=ea4c798b541ae07ddbe7a99631f7496a806122ff9e0b65ae0649666030ae213e&",
+      "channelId": "1572020998734356652",
+      "messageId": "1572020998734356652",
+      "startedAt": "2026-11-16T00:52:02.096Z",
+      "startedBy": "kasumo_",
+      "bidsHistory": [
+        {
+          "amount": 452,
+          "userId": "1455647608696733778",
+          "userTag": "joaomello24._54312",
+          "timestamp": "2026-11-16T00:59:42.670Z"
+        },
+        {
+          "amount": 447,
+          "userId": "273600843251712020",
+          "userTag": "kasumo_",
+          "timestamp": "2026-11-16T00:54:21.074Z"
+        },
+        {
+          "amount": 210,
+          "userId": "813906967990763600",
+          "userTag": "billyz8",
+          "timestamp": "2026-11-16T00:54:12.175Z"
+        },
+        {
+          "amount": 165,
+          "userId": "163034833965023232",
+          "userTag": "vinilovesz",
+          "timestamp": "2026-11-16T00:53:10.531Z"
+        },
+        {
+          "amount": 101,
+          "userId": "895720565430714419",
+          "userTag": "voltz86",
+          "timestamp": "2026-11-16T00:52:35.925Z"
+        }
+      ],
+      "targetClass": "Livre",
+      "highestBidderTag": "joaomello24._54312"
+    },
+    {
+      "id": "item_1794790650678",
+      "itemName": "1000x Resquício de Testamento Noturno",
+      "description": null,
+      "sellerId": null,
+      "currentBid": 457,
+      "highestBidderId": "425370511749545984",
+      "status": "active",
+      "endsAt": "2026-11-16T01:12:30.678Z",
+      "endsAtTimestamp": 1794791550678,
+      "bids": [],
+      "minBid": 30,
+      "imageUrl": "https://cdn.discordapp.com/ephemeral-attachments/1569078299660128353/1571690644278345920/image.png?ex=6afba67a&is=6afa54fa&hm=f07a0f1ac273b5f4f2923fd86834318bb80caf959a7e9f05cc0068b7099f8244&",
+      "channelId": "1572021056452165643",
+      "messageId": "1572021056452165643",
+      "startedAt": "2026-11-16T00:57:30.678Z",
+      "startedBy": "kasumo_",
+      "bidsHistory": [
+        {
+          "amount": 457,
+          "userId": "425370511749545984",
+          "userTag": "kakashii3337",
+          "timestamp": "2026-11-16T01:10:07.508Z"
+        },
+        {
+          "amount": 452,
+          "userId": "570376636051095562",
+          "userTag": "douglasmr.",
+          "timestamp": "2026-11-16T01:09:28.848Z"
+        },
+        {
+          "amount": 225,
+          "userId": "221320510087102464",
+          "userTag": "blow9906",
+          "timestamp": "2026-11-16T01:04:40.225Z"
+        },
+        {
+          "amount": 105,
+          "userId": "728576112480878683",
+          "userTag": "trevask8games",
+          "timestamp": "2026-11-16T01:02:51.480Z"
+        },
+        {
+          "amount": 40,
+          "userId": "773250841607667773",
+          "userTag": "sololeveling5091",
+          "timestamp": "2026-11-16T00:59:23.693Z"
+        },
+        {
+          "amount": 35,
+          "userId": "1539332550261080106",
+          "userTag": "dpizinnalt.",
+          "timestamp": "2026-11-16T00:58:24.177Z"
+        }
+      ],
+      "targetClass": "Livre",
+      "highestBidderTag": "kakashii3337"
+    },
+    {
+      "id": "item_1794790694742",
+      "itemName": "Livro: Aprimoramento de Poder Corpo a Corpo II",
+      "description": null,
+      "sellerId": null,
+      "currentBid": 165,
+      "highestBidderId": "163034833965023232",
+      "status": "active",
+      "endsAt": "2026-11-16T01:13:14.742Z",
+      "endsAtTimestamp": 1794791594742,
+      "bids": [],
+      "minBid": 30,
+      "imageUrl": "https://cdn.discordapp.com/ephemeral-attachments/1569078299660128353/1571690828064366642/image.png?ex=6afba6a6&is=6afa5526&hm=471d3f7dec9332b328cabec930564292df259d04022b1c6be7094a5c31383c08&",
+      "channelId": "1572021067005034527",
+      "messageId": "1572021067005034527",
+      "startedAt": "2026-11-16T00:58:14.742Z",
+      "startedBy": "kasumo_",
+      "bidsHistory": [
+        {
+          "amount": 165,
+          "userId": "163034833965023232",
+          "userTag": "vinilovesz",
+          "timestamp": "2026-11-16T01:07:36.019Z"
+        },
+        {
+          "amount": 40,
+          "userId": "221320510087102464",
+          "userTag": "blow9906",
+          "timestamp": "2026-11-16T01:06:39.644Z"
+        },
+        {
+          "amount": 30,
+          "userId": "1455647608696733778",
+          "userTag": "joaomello24._54312",
+          "timestamp": "2026-11-16T00:59:10.372Z"
+        }
+      ],
+      "targetClass": "Grim Reaper",
+      "highestBidderTag": "vinilovesz"
+    },
+    {
+      "id": "item_1794791976334",
+      "itemName": "Pagina de Livro de Habilidade Verde",
+      "description": null,
+      "sellerId": null,
+      "currentBid": 50,
+      "highestBidderId": "273600843251712020",
+      "status": "active",
+      "endsAt": "2026-11-16T02:19:36.334Z",
+      "endsAtTimestamp": 1794795576334,
+      "bids": [],
+      "minBid": 5,
+      "imageUrl": "attachment://drop_item_1794791976334.png",
+      "channelId": "1572021153676005577",
+      "messageId": "1572021153676005577",
+      "startedAt": "2026-11-16T01:19:36.334Z",
+      "startedBy": "Staff Web (Painel)",
+      "bidsHistory": [
+        {
+          "amount": 50,
+          "userId": "273600843251712020",
+          "userTag": "kasumo_",
+          "timestamp": "2026-11-16T02:17:27.002Z"
+        },
+        {
+          "amount": 31,
+          "userId": "557331568318742529",
+          "userTag": "jefahh",
+          "timestamp": "2026-11-16T01:54:54.106Z"
+        },
+        {
+          "amount": 7,
+          "userId": "909786062602272802",
+          "userTag": "vitorfreefireg",
+          "timestamp": "2026-11-16T01:21:26.181Z"
+        },
+        {
+          "amount": 6,
+          "userId": "773250841607667773",
+          "userTag": "sololeveling5091",
+          "timestamp": "2026-11-16T01:20:06.259Z"
+        },
+        {
+          "amount": 5,
+          "userId": "1539332550261080106",
+          "userTag": "dpizinnalt.",
+          "timestamp": "2026-11-16T01:19:57.584Z"
+        }
+      ],
+      "targetClass": "Livre",
+      "highestBidderTag": "kasumo_"
+    },
+    {
+      "id": "item_1794791973176",
+      "itemName": "60x Orbe de Geena",
+      "description": null,
+      "sellerId": null,
+      "currentBid": 190,
+      "highestBidderId": "273600843251712020",
+      "status": "active",
+      "endsAt": "2026-11-16T02:22:54.090Z",
+      "endsAtTimestamp": 1794795774090,
+      "bids": [],
+      "minBid": 30,
+      "imageUrl": "attachment://drop_item_1794791973176.png",
+      "channelId": "1572021113129795646",
+      "messageId": "1572021113129795646",
+      "startedAt": "2026-11-16T01:19:33.176Z",
+      "startedBy": "Staff Web (Painel)",
+      "bidsHistory": [
+        {
+          "amount": 190,
+          "userId": "273600843251712020",
+          "userTag": "kasumo_",
+          "timestamp": "2026-11-16T02:21:03.113Z"
+        },
+        {
+          "amount": 181,
+          "userId": "299245685822455808",
+          "userTag": "omegared3000",
+          "timestamp": "2026-11-16T02:20:54.092Z"
+        },
+        {
+          "amount": 102,
+          "userId": "1455647608696733778",
+          "userTag": "joaomello24._54312",
+          "timestamp": "2026-11-16T02:18:38.306Z"
+        },
+        {
+          "amount": 71,
+          "userId": "557331568318742529",
+          "userTag": "jefahh",
+          "timestamp": "2026-11-16T01:49:51.458Z"
+        }
+      ],
+      "targetClass": "Livre",
+      "highestBidderTag": "kasumo_"
+    },
+    {
+      "id": "item_1794790593093",
+      "itemName": "Manual de Acessório Heroico",
+      "description": null,
+      "sellerId": null,
+      "currentBid": 305,
+      "highestBidderId": "773250841607667773",
+      "status": "active",
+      "endsAt": "2026-11-16T01:11:33.093Z",
+      "endsAtTimestamp": 1794791493093,
+      "bids": [],
+      "minBid": 30,
+      "imageUrl": "https://cdn.discordapp.com/ephemeral-attachments/1569078299660128353/1571690402489172098/image.png?ex=6afba640&is=6afa54c0&hm=d560871df58c0a484e4f3e6dd38f2a26d46a9c4cf3a6904aae6b63800b2a55c6&",
+      "channelId": "1572021043189784640",
+      "messageId": "1572021043189784640",
+      "startedAt": "2026-11-16T00:56:33.093Z",
+      "startedBy": "kasumo_",
+      "bidsHistory": [
+        {
+          "amount": 305,
+          "userId": "773250841607667773",
+          "userTag": "sololeveling5091",
+          "timestamp": "2026-11-16T01:07:25.591Z"
+        },
+        {
+          "amount": 300,
+          "userId": "273600843251712020",
+          "userTag": "kasumo_",
+          "timestamp": "2026-11-16T01:07:06.747Z"
+        },
+        {
+          "amount": 200,
+          "userId": "813906967990763600",
+          "userTag": "billyz8",
+          "timestamp": "2026-11-16T01:00:15.581Z"
+        },
+        {
+          "amount": 155,
+          "userId": "1539332550261080106",
+          "userTag": "dpizinnalt.",
+          "timestamp": "2026-11-16T00:57:25.822Z"
+        },
+        {
+          "amount": 150,
+          "userId": "1455647608696733778",
+          "userTag": "joaomello24._54312",
+          "timestamp": "2026-11-16T00:57:04.706Z"
+        }
+      ],
+      "targetClass": "Livre",
+      "highestBidderTag": "sololeveling5091"
+    },
+    {
+      "id": "item_1794791973866",
+      "itemName": "60x Orbe de Geena",
+      "description": null,
+      "sellerId": null,
+      "currentBid": 160,
+      "highestBidderId": "273600843251712020",
+      "status": "active",
+      "endsAt": "2026-11-16T02:20:34.066Z",
+      "endsAtTimestamp": 1794795634066,
+      "bids": [],
+      "minBid": 30,
+      "imageUrl": "attachment://drop_item_1794791973866.png",
+      "channelId": "1572021123003060296",
+      "messageId": "1572021123003060296",
+      "startedAt": "2026-11-16T01:19:33.866Z",
+      "startedBy": "Staff Web (Painel)",
+      "bidsHistory": [
+        {
+          "amount": 160,
+          "userId": "273600843251712020",
+          "userTag": "kasumo_",
+          "timestamp": "2026-11-16T02:18:45.056Z"
+        },
+        {
+          "amount": 150,
+          "userId": "299245685822455808",
+          "userTag": "omegared3000",
+          "timestamp": "2026-11-16T02:18:34.068Z"
+        },
+        {
+          "amount": 76,
+          "userId": "557331568318742529",
+          "userTag": "jefahh",
+          "timestamp": "2026-11-16T01:53:39.299Z"
+        },
+        {
+          "amount": 31,
+          "userId": "1455647608696733778",
+          "userTag": "joaomello24._54312",
+          "timestamp": "2026-11-16T01:45:58.185Z"
+        }
+      ],
+      "targetClass": "Livre",
+      "highestBidderTag": "kasumo_"
+    },
+    {
+      "id": "item_1794791972232",
+      "itemName": "46 Barras de Ouro",
+      "description": null,
+      "sellerId": null,
+      "currentBid": 16,
+      "highestBidderId": "1455647608696733778",
+      "status": "active",
+      "endsAt": "2026-11-16T02:19:32.232Z",
+      "endsAtTimestamp": 1794795572232,
+      "bids": [],
+      "minBid": 5,
+      "imageUrl": "attachment://drop_item_1794791972232.png",
+      "channelId": "1572021102966743072",
+      "messageId": "1572021102966743072",
+      "startedAt": "2026-11-16T01:19:32.232Z",
+      "startedBy": "Staff Web (Painel)",
+      "bidsHistory": [
+        {
+          "amount": 16,
+          "userId": "1455647608696733778",
+          "userTag": "joaomello24._54312",
+          "timestamp": "2026-11-16T01:56:02.265Z"
+        },
+        {
+          "amount": 15,
+          "userId": "557331568318742529",
+          "userTag": "jefahh",
+          "timestamp": "2026-11-16T01:55:06.211Z"
+        },
+        {
+          "amount": 7,
+          "userId": "1539332550261080106",
+          "userTag": "dpizinnalt.",
+          "timestamp": "2026-11-16T01:27:38.976Z"
+        },
+        {
+          "amount": 6,
+          "userId": "134688155839365120",
+          "userTag": "mateus1260",
+          "timestamp": "2026-11-16T01:27:23.630Z"
+        }
+      ],
+      "targetClass": "Livre",
+      "highestBidderTag": "joaomello24._54312"
+    },
+    {
+      "id": "item_1794791974362",
+      "itemName": "20x Pagina de Livro de Habilidade Branca",
+      "description": null,
+      "sellerId": null,
+      "currentBid": 61,
+      "highestBidderId": "1455647608696733778",
+      "status": "active",
+      "endsAt": "2026-11-16T02:21:01.768Z",
+      "endsAtTimestamp": 1794795661768,
+      "bids": [],
+      "minBid": 15,
+      "imageUrl": "attachment://drop_item_1794791974362.png",
+      "channelId": "1572021132964401213",
+      "messageId": "1572021132964401213",
+      "startedAt": "2026-11-16T01:19:34.362Z",
+      "startedBy": "Staff Web (Painel)",
+      "bidsHistory": [
+        {
+          "amount": 61,
+          "userId": "1455647608696733778",
+          "userTag": "joaomello24._54312",
+          "timestamp": "2026-11-16T02:19:31.577Z"
+        },
+        {
+          "amount": 60,
+          "userId": "273600843251712020",
+          "userTag": "kasumo_",
+          "timestamp": "2026-11-16T02:19:17.559Z"
+        },
+        {
+          "amount": 46,
+          "userId": "557331568318742529",
+          "userTag": "jefahh",
+          "timestamp": "2026-11-16T01:50:10.468Z"
+        },
+        {
+          "amount": 15,
+          "userId": "1539332550261080106",
+          "userTag": "dpizinnalt.",
+          "timestamp": "2026-11-16T01:20:44.349Z"
+        }
+      ],
+      "targetClass": "Livre",
+      "highestBidderTag": "joaomello24._54312"
+    },
+    {
+      "id": "item_1794791975612",
+      "itemName": "20x Pagina de Livro de Habilidade Branca",
+      "description": null,
+      "sellerId": null,
+      "currentBid": 46,
+      "highestBidderId": "1455647608696733778",
+      "status": "active",
+      "endsAt": "2026-11-16T02:21:07.006Z",
+      "endsAtTimestamp": 1794795667006,
+      "bids": [],
+      "minBid": 15,
+      "imageUrl": "attachment://drop_item_1794791975612.png",
+      "channelId": "1572021143953612851",
+      "messageId": "1572021143953612851",
+      "startedAt": "2026-11-16T01:19:35.612Z",
+      "startedBy": "Staff Web (Painel)",
+      "bidsHistory": [
+        {
+          "amount": 46,
+          "userId": "1455647608696733778",
+          "userTag": "joaomello24._54312",
+          "timestamp": "2026-11-16T02:19:07.008Z"
+        },
+        {
+          "amount": 45,
+          "userId": "273600843251712020",
+          "userTag": "kasumo_",
+          "timestamp": "2026-11-16T01:23:01.758Z"
+        },
+        {
+          "amount": 15,
+          "userId": "1539332550261080106",
+          "userTag": "dpizinnalt.",
+          "timestamp": "2026-11-16T01:20:03.151Z"
+        }
+      ],
+      "targetClass": "Livre",
+      "highestBidderTag": "joaomello24._54312"
+    },
+    {
+      "id": "item_1794790754378",
+      "itemName": "Livro de Habilidade: Aprimoramento de Dano Bônus",
+      "description": null,
+      "sellerId": null,
+      "currentBid": 35,
+      "highestBidderId": "341746889785344001",
+      "status": "active",
+      "endsAt": "2026-11-16T04:59:14.378Z",
+      "endsAtTimestamp": 1794805154378,
+      "bids": [],
+      "minBid": 30,
+      "imageUrl": "https://cdn.discordapp.com/ephemeral-attachments/1569078299660128353/1571691079101849680/image.png?ex=6afba6e1&is=6afa5561&hm=3059e7ee3176d402d37d76e8bd995773b0bde8f52810757c1587fe35d0d01614&",
+      "channelId": "1572021077536804885",
+      "messageId": "1572021077536804885",
+      "startedAt": "2026-11-16T00:59:14.378Z",
+      "startedBy": "kasumo_",
+      "bidsHistory": [
+        {
+          "amount": 35,
+          "userId": "341746889785344001",
+          "userTag": "zedoalho2",
+          "timestamp": "2026-11-16T01:01:17.563Z"
+        },
+        {
+          "amount": 30,
+          "userId": "895720565430714419",
+          "userTag": "voltz86",
+          "timestamp": "2026-11-16T00:59:35.158Z"
+        }
+      ],
+      "targetClass": "Bloodstained",
+      "highestBidderTag": "zedoalho2"
+    },
+    {
+      "id": "item_1794790240623",
+      "itemName": "Armadura Corporal do Ceifador do Abismo",
+      "description": null,
+      "sellerId": null,
+      "currentBid": 452,
+      "highestBidderId": "1177008353927495710",
+      "status": "active",
+      "endsAt": "2026-11-16T01:05:40.623Z",
+      "endsAtTimestamp": 1794791140623,
+      "bids": [],
+      "minBid": 30,
+      "imageUrl": "https://cdn.discordapp.com/ephemeral-attachments/1569078299660128353/1571688924307529818/image.png?ex=6afba4e0&is=6afa5360&hm=1e23ed23927597eb567161ad27dc3ee2f1369f5621676304a2f2845b47288c01&",
+      "channelId": "1572020988290531440",
+      "messageId": "1572020988290531440",
+      "startedAt": "2026-11-16T00:50:40.623Z",
+      "startedBy": "kasumo_",
+      "bidsHistory": [
+        {
+          "amount": 452,
+          "userId": "1177008353927495710",
+          "userTag": "jmacedx",
+          "timestamp": "2026-11-16T00:54:14.421Z"
+        },
+        {
+          "amount": 447,
+          "userId": "273600843251712020",
+          "userTag": "kasumo_",
+          "timestamp": "2026-11-16T00:53:42.387Z"
+        }
+      ],
+      "targetClass": "Livre",
+      "highestBidderTag": "jmacedx"
+    },
+    {
+      "id": "item_1794790553893",
+      "itemName": "Ira do Inferno",
+      "description": null,
+      "sellerId": null,
+      "currentBid": 670,
+      "highestBidderId": "341746889785344001",
+      "status": "active",
+      "endsAt": "2026-11-16T01:10:53.893Z",
+      "endsAtTimestamp": 1794791453893,
+      "bids": [],
+      "minBid": 30,
+      "imageUrl": "https://cdn.discordapp.com/ephemeral-attachments/1569078299660128353/1571690238470914079/image.png?ex=6afba619&is=6afa5499&hm=a3b41ff7af0b116f4f356c523eb8a1be965b039c43a99d0619be731dd8392fc8&",
+      "channelId": "1572021014811119770",
+      "messageId": "1572021014811119770",
+      "startedAt": "2026-11-16T00:55:53.893Z",
+      "startedBy": "kasumo_",
+      "bidsHistory": [
+        {
+          "amount": 670,
+          "userId": "341746889785344001",
+          "userTag": "zedoalho2",
+          "timestamp": "2026-11-16T01:09:33.348Z"
+        },
+        {
+          "amount": 605,
+          "userId": "1539332550261080106",
+          "userTag": "dpizinnalt.",
+          "timestamp": "2026-11-16T01:08:57.115Z"
+        },
+        {
+          "amount": 420,
+          "userId": "273600843251712020",
+          "userTag": "kasumo_",
+          "timestamp": "2026-11-16T01:05:30.326Z"
+        },
+        {
+          "amount": 35,
+          "userId": "1455647608696733778",
+          "userTag": "joaomello24._54312",
+          "timestamp": "2026-11-16T00:56:32.475Z"
+        }
+      ],
+      "targetClass": "Livre",
+      "highestBidderTag": "zedoalho2"
+    }
+  ]
 }

@@ -4,7 +4,7 @@ const path = require('path');
 const { AttachmentBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require('discord.js');
 const { channels } = require('../config/channels');
 const { getLeiloes, saveLeiloes } = require('../database/db');
-const { startAuction, renderAuctionEmbed } = require('../services/auctionService');
+const { startAuction, renderAuctionEmbed, createAuctionPost } = require('../services/auctionService');
 
 const PORT = parseInt(process.env.PORT || process.env.OVERLAY_PORT || '3000', 10);
 const PUBLIC_DIR = path.join(__dirname, '..', '..', 'public');
@@ -129,43 +129,27 @@ function startWebServer(client) {
               auction.imageUrl = item.imageUrl;
             }
 
-            // 3. Monta o Embed e os componentes interativos
-            const embed = renderAuctionEmbed(auction);
-            const row = new ActionRowBuilder().addComponents(
-              new ButtonBuilder()
-                .setCustomId(`btn_bid_${auction.id}`)
-                .setLabel('Dar Lance (DKP)')
-                .setEmoji('💎')
-                .setStyle(ButtonStyle.Success)
-            );
-
-            // 4. Envia para o canal #leilao-drops
-            const msg = await ch.send({ embeds: [embed], files, components: [row] });
-            auction.messageId = msg.id;
-            auction.channelId = ch.id;
-
-            // Se a imagem foi enviada como anexo, salva a URL CDN permanente do Discord
-            if (msg.attachments.size > 0) {
-              auction.imageUrl = msg.attachments.first().url;
-            }
-
-            const leiloes = getLeiloes();
-            if (leiloes.active[auction.id]) {
-              leiloes.active[auction.id].messageId = msg.id;
-              leiloes.active[auction.id].channelId = ch.id;
-              leiloes.active[auction.id].imageUrl = auction.imageUrl;
-              saveLeiloes(leiloes);
-            }
-
-            created.push({
-              id: auction.id,
-              itemName: auction.itemName,
-              targetClass: auction.targetClass,
-              minBid: auction.minBid,
-              durationMinutes: auction.durationMinutes,
-              messageId: msg.id,
-              url: msg.url
+            // 3. Cria o Tópico no Fórum #leilao-drops com as tags adequadas
+            const thread = await createAuctionPost({
+              client,
+              auction,
+              files
+            }).catch(err => {
+              console.error(`[LEILÃO BATCH] Erro ao criar tópico para ${itemName}:`, err.message);
+              return null;
             });
+
+            if (thread) {
+              created.push({
+                id: auction.id,
+                itemName: auction.itemName,
+                targetClass: auction.targetClass,
+                minBid: auction.minBid,
+                durationMinutes: auction.durationMinutes,
+                messageId: thread.id,
+                url: thread.url
+              });
+            }
           }
 
           // 5. Registra log de lote em #logs-dkp se houver canal configurado

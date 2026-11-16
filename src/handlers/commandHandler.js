@@ -10,7 +10,7 @@ const {
 const { submitCpUpdate, getMember, getMemberDkp, getCpRanking, resolveMembersBatch } = require('../services/memberService');
 const { calculateDkpReward } = require('../services/dkpCalculator');
 const { recordEventAttendance, submitPresenceDispute, registerAbsence } = require('../services/presenceService');
-const { startAuction, placeBid, finalizeAuction, renderAuctionEmbed, updateAuctionDisplay } = require('../services/auctionService');
+const { startAuction, placeBid, finalizeAuction, renderAuctionEmbed, updateAuctionDisplay, createAuctionPost, closeAuctionThread } = require('../services/auctionService');
 const { executeMonthlyDecay } = require('../services/monthlyDecayService');
 const { logAttendance, logAuctionBidLock, logAuctionBidUnlock } = require('../services/loggerService');
 const { getConfig, saveConfig, getLeiloes, saveLeiloes } = require('../database/db');
@@ -558,35 +558,19 @@ async function handleSlashCommand(interaction) {
         startedBy: user.tag || user.username
       });
 
-      const auctionChannelId = channels['leilao-drops'];
-      if (auctionChannelId) {
-        const ch = await interaction.client.channels.fetch(auctionChannelId).catch(() => null);
-        if (ch) {
-          const row = new ActionRowBuilder().addComponents(
-            new ButtonBuilder()
-              .setCustomId(`btn_bid_${auction.id}`)
-              .setLabel('Dar Lance (DKP)')
-              .setEmoji('💎')
-              .setStyle(ButtonStyle.Success)
-          );
-
-          const embed = renderAuctionEmbed(auction);
-          const msg = await ch.send({ embeds: [embed], components: [row] });
-          auction.messageId = msg.id;
-          auction.channelId = ch.id;
-
-          const leiloes = getLeiloes();
-          if (leiloes.active[auction.id]) {
-            leiloes.active[auction.id].messageId = msg.id;
-            leiloes.active[auction.id].channelId = ch.id;
-            saveLeiloes(leiloes);
-          }
-        }
-      }
+      const thread = await createAuctionPost({
+        client: interaction.client,
+        auction,
+        files: image ? [image] : []
+      }).catch(err => {
+        console.error('Erro ao postar leilão no fórum:', err);
+        return null;
+      });
 
       const classMsg = targetClass === 'Livre' ? 'Livre para todas as classes' : `Exclusivo para a classe **${targetClass}**`;
+      const targetChannelId = thread?.id || channels['leilao-drops'];
       return interaction.reply({
-        content: `✅ Leilão do item **${itemName}** (${classMsg}) iniciado com sucesso no canal <#${auctionChannelId}>! (ID: \`${auction.id}\`)`,
+        content: `✅ Leilão do item **${itemName}** (${classMsg}) iniciado com sucesso no fórum <#${targetChannelId}>! (ID: \`${auction.id}\`)`,
         flags: MessageFlags.Ephemeral
       });
     }
@@ -599,13 +583,15 @@ async function handleSlashCommand(interaction) {
         return interaction.reply({ content: `❌ Leilão com ID \`${itemId}\` não encontrado ou já encerrado!`, flags: MessageFlags.Ephemeral });
       }
 
+      await closeAuctionThread(interaction.client, finished).catch(err => console.error('Erro ao fechar thread:', err));
+
       const winnerText = finished.highestBidderId
         ? `🏆 Vencedor: <@${finished.highestBidderId}> com o lance de **${finished.currentBid} DKP**!`
         : `⚠️ Nenhum lance foi realizado no item.`;
 
       return interaction.reply({
-        content: `✅ Leilão de **${finished.itemName}** encerrado!\n${winnerText}`,
-        ephemeral: false
+        content: `✅ Leilão de **${finished.itemName}** encerrado e tópico fechado!\n${winnerText}`,
+        flags: MessageFlags.Ephemeral
       });
     }
 
@@ -643,31 +629,11 @@ async function handleSlashCommand(interaction) {
       return interaction.reply({ content: `❌ ${result.error}`, flags: MessageFlags.Ephemeral });
     }
 
-    // Atualiza imediatamente a mensagem do leilão em tempo real no canal
+    // Atualiza imediatamente a mensagem do leilão em tempo real no tópico
     await updateAuctionDisplay(interaction.client, result.auction);
 
-    // Registra lance travado em #logs-dkp
-    await logAuctionBidLock({
-      client: interaction.client,
-      itemName: result.auction.itemName,
-      userId: user.id,
-      userTag: user.tag || user.username,
-      amount: valor,
-      lockedTotal: result.newLockedDkp,
-      availableDkp: result.newAvailableDkp
-    });
-
-    // Se houve licitante anterior, avisa ele por DM
+    // Se houve licitante anterior, avisa ele por DM que foi coberto (sem floodar #logs-dkp)
     if (result.previousBidder && result.previousBidder !== user.id) {
-      const prevDkp = getMemberDkp(result.previousBidder);
-      await logAuctionBidUnlock({
-        client: interaction.client,
-        itemName: result.auction.itemName,
-        userId: result.previousBidder,
-        amountUnlocked: result.auction.currentBid,
-        availableDkp: prevDkp.availableDkp
-      });
-
       if (guild) {
         guild.members.fetch(result.previousBidder)
           .then(m => m.send(`⚠️ Seu lance no item **${result.auction.itemName}** foi coberto! Seus pontos travados foram liberados de volta na sua carteira. / You were outbid! Locked DKP returned.`).catch(() => {}))

@@ -1,6 +1,23 @@
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const fs = require('fs');
+const path = require('path');
 const { getLeiloes, saveLeiloes, getConfig } = require('../database/db');
 const { getMember, getMemberDkp, lockDkp, unlockDkp, deductLockedDkp } = require('./memberService');
+const { logAuctionWon } = require('./loggerService');
+
+function getAuctionChannelId() {
+  try {
+    const cfPath = path.join(__dirname, '..', '..', 'discord_channels.json');
+    if (fs.existsSync(cfPath)) {
+      const cfg = JSON.parse(fs.readFileSync(cfPath, 'utf-8'));
+      if (cfg.channels && cfg.channels['leilao-drops']) {
+        return cfg.channels['leilao-drops'];
+      }
+    }
+  } catch {}
+  const { channels } = require('../config/channels');
+  return channels['leilao-drops'];
+}
 
 function renderAuctionEmbed(auction) {
   const isFinished = auction.status === 'finished';
@@ -51,18 +68,225 @@ function renderAuctionEmbed(auction) {
   return embed;
 }
 
-async function updateAuctionDisplay(client, auction) {
-  if (!auction || !auction.channelId || !auction.messageId) return;
-  try {
-    const ch = await client.channels.fetch(auction.channelId).catch(() => null);
-    if (ch) {
-      const msg = await ch.messages.fetch(auction.messageId).catch(() => null);
-      if (msg) {
-        await msg.edit({ embeds: [renderAuctionEmbed(auction)] }).catch(() => {});
+/**
+ * Cria o post do leilão como um Tópico no canal Fórum oficial
+ */
+async function createAuctionPost({ client, auction, files = [] }) {
+  const auctionChannelId = getAuctionChannelId();
+  if (!auctionChannelId) {
+    throw new Error('Canal #leilao-drops não configurado.');
+  }
+
+  const forumChannel = await client.channels.fetch(auctionChannelId).catch(() => null);
+  if (!forumChannel) {
+    throw new Error('Canal #leilao-drops não encontrado no Discord.');
+  }
+
+  // Tags do fórum
+  let appliedTags = [];
+  if (forumChannel.availableTags && forumChannel.availableTags.length > 0) {
+    const activeTag = forumChannel.availableTags.find(t => t.name.includes('Ativo'));
+    if (activeTag) appliedTags.push(activeTag.id);
+
+    const normClass = (auction.targetClass || 'Livre').toLowerCase().trim();
+    const classTag = forumChannel.availableTags.find(t => {
+      const tn = t.name.toLowerCase();
+      if (normClass === 'livre' || normClass === 'all') return tn.includes('livre');
+      return tn.includes(normClass);
+    });
+    if (classTag) appliedTags.push(classTag.id);
+  }
+
+  const embed = renderAuctionEmbed(auction);
+  const row = new ActionRowBuilder().addComponents(
+    new ButtonBuilder()
+      .setCustomId(`btn_bid_${auction.id}`)
+      .setLabel('Dar Lance (DKP)')
+      .setEmoji('💎')
+      .setStyle(ButtonStyle.Success)
+  );
+
+  const classPrefix = (auction.targetClass && auction.targetClass !== 'Livre' && auction.targetClass !== 'all')
+    ? `[${auction.targetClass.toUpperCase()}] `
+    : '';
+  const threadTitle = `${classPrefix}🗡️ ${auction.itemName} • Min: ${auction.minBid} DKP`.slice(0, 100);
+
+  // Se o canal for Fórum (ou suportar threads)
+  if (forumChannel.threads) {
+    const thread = await forumChannel.threads.create({
+      name: threadTitle,
+      autoArchiveDuration: 1440,
+      appliedTags,
+      message: {
+        embeds: [embed],
+        components: [row],
+        files
       }
+    });
+
+    auction.channelId = thread.id;
+    auction.messageId = thread.id;
+
+    // Se houve imagem anexada, salva URL permanente do Discord CDN
+    try {
+      const starterMsg = await thread.fetchStarterMessage().catch(() => null);
+      if (starterMsg && starterMsg.attachments.size > 0) {
+        auction.imageUrl = starterMsg.attachments.first().url;
+        await starterMsg.edit({ embeds: [renderAuctionEmbed(auction)] }).catch(() => {});
+      }
+    } catch (err) {
+      console.warn('Aviso ao obter starter message:', err.message);
+    }
+
+    const leiloes = getLeiloes();
+    if (leiloes.active[auction.id]) {
+      leiloes.active[auction.id].channelId = thread.id;
+      leiloes.active[auction.id].messageId = thread.id;
+      leiloes.active[auction.id].imageUrl = auction.imageUrl;
+      saveLeiloes(leiloes);
+    }
+
+    return thread;
+  } else {
+    // Fallback para canal de texto tradicional
+    const msg = await forumChannel.send({ embeds: [embed], components: [row], files });
+    auction.channelId = forumChannel.id;
+    auction.messageId = msg.id;
+
+    if (msg.attachments.size > 0) {
+      auction.imageUrl = msg.attachments.first().url;
+      await msg.edit({ embeds: [renderAuctionEmbed(auction)] }).catch(() => {});
+    }
+
+    const leiloes = getLeiloes();
+    if (leiloes.active[auction.id]) {
+      leiloes.active[auction.id].channelId = forumChannel.id;
+      leiloes.active[auction.id].messageId = msg.id;
+      leiloes.active[auction.id].imageUrl = auction.imageUrl;
+      saveLeiloes(leiloes);
+    }
+
+    return msg;
+  }
+}
+
+/**
+ * Atualiza o embed do leilão em tempo real após um lance
+ */
+async function updateAuctionDisplay(client, auction) {
+  if (!auction || !auction.channelId) return;
+  try {
+    const targetChannel = await client.channels.fetch(auction.channelId).catch(() => null);
+    if (!targetChannel) return;
+
+    let msg = null;
+    if (targetChannel.isThread()) {
+      msg = await targetChannel.fetchStarterMessage().catch(() => null);
+      if (!msg && auction.messageId) {
+        msg = await targetChannel.messages.fetch(auction.messageId).catch(() => null);
+      }
+    } else if (auction.messageId) {
+      msg = await targetChannel.messages.fetch(auction.messageId).catch(() => null);
+    }
+
+    if (msg) {
+      await msg.edit({ embeds: [renderAuctionEmbed(auction)] }).catch(() => {});
     }
   } catch (err) {
     console.error('Erro ao atualizar mensagem do leilão:', err);
+  }
+}
+
+/**
+ * Finaliza o leilão no Discord: atualiza starter embed, envia conclusão,
+ * troca tags para Encerrado, tranca e arquiva o tópico, e envia log único para #logs-dkp.
+ */
+async function closeAuctionThread(client, finished) {
+  if (!finished || !finished.channelId) return;
+  try {
+    const targetChannel = await client.channels.fetch(finished.channelId).catch(() => null);
+    if (!targetChannel) return;
+
+    if (targetChannel.isThread()) {
+      // 1. Atualiza starter message removendo o botão de lance
+      const starterMsg = await targetChannel.fetchStarterMessage().catch(() => null)
+        || await targetChannel.messages.fetch(targetChannel.id).catch(() => null);
+      if (starterMsg) {
+        await starterMsg.edit({
+          embeds: [renderAuctionEmbed(finished)],
+          components: []
+        }).catch(() => {});
+      }
+
+      // 2. Envia mensagem comemorativa de conclusão dentro do tópico
+      const winEmbed = new EmbedBuilder()
+        .setTitle(`🎉 LEILÃO ENCERRADO • ${finished.itemName.toUpperCase()}`)
+        .setColor('#2ECC71')
+        .setDescription(
+          finished.highestBidderId
+            ? `🏆 **VENCEDOR DO LEILÃO**: <@${finished.highestBidderId}>\n` +
+              `💰 **Valor Final**: **${finished.currentBid} DKP**\n\n` +
+              `🔒 *O valor de **${finished.currentBid} DKP** foi debitado definitivamente da carteira do jogador.*`
+            : `⚠️ **Leilão expirado sem nenhum lance registrado.**`
+        )
+        .setFooter({ text: `ID do Item: ${finished.id}` })
+        .setTimestamp();
+
+      await targetChannel.send({ embeds: [winEmbed] }).catch(() => {});
+
+      // 3. Atualiza tags do fórum: remove "Ativo", adiciona "Encerrado", preserva classe
+      const parentForum = targetChannel.parent;
+      if (parentForum && parentForum.availableTags) {
+        const closedTag = parentForum.availableTags.find(t => t.name.includes('Encerrado'));
+        const activeTag = parentForum.availableTags.find(t => t.name.includes('Ativo'));
+
+        let newTags = (targetChannel.appliedTags || []).filter(tId => tId !== activeTag?.id);
+        if (closedTag && !newTags.includes(closedTag.id)) {
+          newTags.push(closedTag.id);
+        }
+        await targetChannel.setAppliedTags(newTags).catch(() => {});
+      }
+
+      // 4. Tranca e arquiva o tópico (Leilões finalizados = tópicos fechados)
+      await targetChannel.setLocked(true).catch(() => {});
+      await targetChannel.setArchived(true).catch(() => {});
+    } else {
+      // Fallback para canal tradicional
+      if (finished.messageId) {
+        const msg = await targetChannel.messages.fetch(finished.messageId).catch(() => null);
+        if (msg) {
+          await msg.edit({
+            embeds: [renderAuctionEmbed(finished)],
+            components: []
+          }).catch(() => {});
+        }
+      }
+      const winEmbed = new EmbedBuilder()
+        .setTitle(`🎉 LEILÃO ENCERRADO • ${finished.itemName.toUpperCase()}`)
+        .setColor('#2ECC71')
+        .setDescription(
+          finished.highestBidderId
+            ? `🏆 **Vencedor**: <@${finished.highestBidderId}>\n💰 **Valor Final**: **${finished.currentBid} DKP**`
+            : `⚠️ Leilão encerrado sem lances.`
+        )
+        .setTimestamp();
+      await targetChannel.send({ embeds: [winEmbed] }).catch(() => {});
+    }
+
+    // 5. Log oficial em #logs-dkp apenas se houve vencedor
+    if (finished.highestBidderId && finished.currentBid > 0) {
+      const winnerDkp = getMemberDkp(finished.highestBidderId);
+      await logAuctionWon({
+        client,
+        itemName: finished.itemName,
+        winnerId: finished.highestBidderId,
+        winnerTag: finished.highestBidderTag,
+        finalAmount: finished.currentBid,
+        newBalance: winnerDkp?.totalDkp || 0
+      }).catch(err => console.error('Erro ao enviar log de vitória de leilão:', err));
+    }
+  } catch (err) {
+    console.error('Erro ao fechar thread de leilão:', err);
   }
 }
 
@@ -246,7 +470,9 @@ function finalizeAuction(itemId) {
 
 module.exports = {
   renderAuctionEmbed,
+  createAuctionPost,
   updateAuctionDisplay,
+  closeAuctionThread,
   startAuction,
   placeBid,
   finalizeAuction

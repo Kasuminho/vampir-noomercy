@@ -1,7 +1,7 @@
 const { Client, GatewayIntentBits, Partials, EmbedBuilder } = require('discord.js');
 const { handleInteraction } = require('./handlers/interactionHandler');
 const { startDecayScheduler } = require('./services/monthlyDecayService');
-const { finalizeAuction, renderAuctionEmbed } = require('./services/auctionService');
+const { finalizeAuction, renderAuctionEmbed, closeAuctionThread } = require('./services/auctionService');
 const { getMemberDkp } = require('./services/memberService');
 const { logAuctionWon } = require('./services/loggerService');
 const { handleTicketMessage } = require('./services/ticketService');
@@ -34,48 +34,7 @@ function startAuctionChecker() {
           const finished = finalizeAuction(itemId);
           if (finished) {
             console.log(`[LEILÃO] Item ${finished.itemName} finalizado automaticamente!`);
-            const auctionChId = finished.channelId || channels['leilao-drops'];
-            if (auctionChId) {
-              const ch = await client.channels.fetch(auctionChId).catch(() => null);
-              if (ch) {
-                // Atualiza a mensagem original do leilão se existir
-                if (finished.messageId) {
-                  const originalMsg = await ch.messages.fetch(finished.messageId).catch(() => null);
-                  if (originalMsg) {
-                    await originalMsg.edit({
-                      embeds: [renderAuctionEmbed(finished)],
-                      components: []
-                    }).catch(() => {});
-                  }
-                }
-
-                const embed = new EmbedBuilder()
-                  .setTitle(`🎉 LEILÃO ENCERRADO • ${finished.itemName.toUpperCase()} / AUCTION ENDED`)
-                  .setColor('#2ECC71')
-                  .setDescription(
-                    finished.highestBidderId
-                      ? `🏆 **Vencedor / Winner**: <@${finished.highestBidderId}>\n💰 **Valor Final / Final Bid**: **${finished.currentBid} DKP**\n\n*O valor foi debitado definitivamente da carteira do vencedor.*`
-                      : `⚠️ O tempo do leilão expirou sem nenhum lance registrado. / Auction expired with no bids.`
-                  )
-                  .setFooter({ text: `Item ID: ${finished.id}` })
-                  .setTimestamp();
-
-                await ch.send({ embeds: [embed] });
-
-                // Log oficial em #logs-dkp se houve vencedor
-                if (finished.highestBidderId && finished.currentBid > 0) {
-                  const winnerDkp = getMemberDkp(finished.highestBidderId);
-                  await logAuctionWon({
-                    client,
-                    itemName: finished.itemName,
-                    winnerId: finished.highestBidderId,
-                    winnerTag: finished.highestBidderTag,
-                    finalAmount: finished.currentBid,
-                    newBalance: winnerDkp?.totalDkp || 0
-                  });
-                }
-              }
-            }
+            await closeAuctionThread(client, finished).catch(err => console.error('Erro ao fechar thread no checker:', err));
           }
         }
       }

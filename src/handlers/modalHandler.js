@@ -1,7 +1,7 @@
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, AttachmentBuilder, MessageFlags } = require('discord.js');
 const { submitCpUpdate, getMember, getMemberDkp, resolveMembersBatch } = require('../services/memberService');
 const { registerAbsence, submitPresenceDispute, recordEventAttendance } = require('../services/presenceService');
-const { placeBid, startAuction, renderAuctionEmbed, updateAuctionDisplay } = require('../services/auctionService');
+const { placeBid, startAuction, renderAuctionEmbed, updateAuctionDisplay, createAuctionPost } = require('../services/auctionService');
 const { logAttendance, logAuctionBidLock, logAuctionBidUnlock } = require('../services/loggerService');
 const { getLeiloes, saveLeiloes } = require('../database/db');
 const { channels } = require('../config/channels');
@@ -249,31 +249,11 @@ async function handleModalSubmit(interaction) {
       return interaction.reply({ content: `❌ ${result.error}`, flags: MessageFlags.Ephemeral });
     }
 
-    // Atualiza imediatamente a mensagem do leilão em tempo real no canal
+    // Atualiza imediatamente a mensagem do leilão em tempo real no tópico
     await updateAuctionDisplay(interaction.client, result.auction);
 
-    // Registra lance travado em #logs-dkp
-    await logAuctionBidLock({
-      client: interaction.client,
-      itemName: result.auction.itemName,
-      userId: user.id,
-      userTag: user.tag || user.username,
-      amount: parseInt(amount, 10),
-      lockedTotal: result.newLockedDkp,
-      availableDkp: result.newAvailableDkp
-    });
-
-    // Se houve licitante anterior, avisa por DM que o lance foi coberto e DKP devolvido
+    // Se houve licitante anterior, avisa por DM que o lance foi coberto e DKP devolvido (sem floodar #logs-dkp)
     if (result.previousBidder && result.previousBidder !== user.id) {
-      const prevDkp = getMemberDkp(result.previousBidder);
-      await logAuctionBidUnlock({
-        client: interaction.client,
-        itemName: result.auction.itemName,
-        userId: result.previousBidder,
-        amountUnlocked: result.auction.currentBid,
-        availableDkp: prevDkp.availableDkp
-      });
-
       if (interaction.guild) {
         interaction.guild.members.fetch(result.previousBidder)
           .then(m => m.send(`⚠️ Seu lance no item **${result.auction.itemName}** foi coberto! Seus pontos travados foram liberados de volta na sua carteira. / You were outbid! Locked DKP returned to wallet.`).catch(() => {}))
@@ -402,36 +382,18 @@ async function handleModalSubmit(interaction) {
       startedBy: user.tag || user.username
     });
 
-    const auctionChannelId = channels['leilao-drops'];
-    if (auctionChannelId) {
-      const ch = await interaction.client.channels.fetch(auctionChannelId).catch(() => null);
-      if (ch) {
-        const row = new ActionRowBuilder().addComponents(
-          new ButtonBuilder()
-            .setCustomId(`btn_bid_${auction.id}`)
-            .setLabel('Dar Lance (DKP)')
-            .setEmoji('💎')
-            .setStyle(ButtonStyle.Success)
-        );
-
-        const embed = renderAuctionEmbed(auction);
-        const msg = await ch.send({ embeds: [embed], components: [row] });
-        
-        auction.messageId = msg.id;
-        auction.channelId = ch.id;
-
-        const leiloes = getLeiloes();
-        if (leiloes.active[auction.id]) {
-          leiloes.active[auction.id].messageId = msg.id;
-          leiloes.active[auction.id].channelId = ch.id;
-          saveLeiloes(leiloes);
-        }
-      }
-    }
+    const thread = await createAuctionPost({
+      client: interaction.client,
+      auction
+    }).catch(err => {
+      console.error('Erro ao postar leilão no fórum:', err);
+      return null;
+    });
 
     const classMsg = targetClass === 'Livre' ? 'Livre para todas as classes' : `Exclusivo para a classe **${targetClass}**`;
+    const targetChannelId = thread?.id || channels['leilao-drops'];
     return interaction.reply({
-      content: `✅ Leilão do item **${itemName}** (${classMsg}) iniciado com sucesso no canal <#${auctionChannelId}>! (ID: \`${auction.id}\`)`,
+      content: `✅ Leilão do item **${itemName}** (${classMsg}) iniciado com sucesso no fórum <#${targetChannelId}>! (ID: \`${auction.id}\`)`,
       flags: MessageFlags.Ephemeral
     });
   }
