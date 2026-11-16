@@ -127,6 +127,28 @@ function getSlashCommands() {
           .addStringOption(opt => opt.setName('item_id').setDescription('ID do item em leilão').setRequired(true))
       )
       .addSubcommand(sub =>
+        sub.setName('ativos')
+          .setDescription('Lista os leilões de drops ativos no momento.')
+          .addBooleanOption(opt =>
+            opt.setName('ocultar_sem_lance')
+              .setDescription('Ocultar leilões que ainda não receberam nenhum lance (mostrar apenas com bid)')
+              .setRequired(false)
+          )
+          .addStringOption(opt =>
+            opt.setName('classe')
+              .setDescription('Filtrar por classe específica')
+              .setRequired(false)
+              .addChoices(
+                { name: '🌐 Livre (Todas)', value: 'Livre' },
+                { name: '🩸 Bloodstained', value: 'Bloodstained' },
+                { name: '⚔️ Carnage', value: 'Carnage' },
+                { name: '🔮 Akasha', value: 'Akasha' },
+                { name: '🐍 Viper', value: 'Viper' },
+                { name: '💀 Grim Reaper', value: 'Grim Reaper' }
+              )
+          )
+      )
+      .addSubcommand(sub =>
         sub.setName('painel-web')
           .setDescription('Abre o link e instruções do Painel Web para lançar múltiplos itens com CTRL+V.')
       ),
@@ -196,6 +218,29 @@ function getSlashCommands() {
         sub.setName('consultar')
           .setDescription('Consulta a ficha completa de um membro (CP, Nível, Presenças, DKP, prints).')
           .addStringOption(opt => opt.setName('membro').setDescription('Nick in-game, @menção ou ID do membro').setRequired(true))
+      ),
+
+    // 14. /leiloes (Acesso Geral para Membros e Staff)
+    new SlashCommandBuilder()
+      .setName('leiloes')
+      .setDescription('Consulta os leilões de drops ativos com filtro de lances e classe.')
+      .addBooleanOption(opt =>
+        opt.setName('ocultar_sem_lance')
+          .setDescription('Ocultar leilões que ainda não receberam lances (mostrar apenas com bid)')
+          .setRequired(false)
+      )
+      .addStringOption(opt =>
+        opt.setName('classe')
+          .setDescription('Filtrar por classe específica')
+          .setRequired(false)
+          .addChoices(
+            { name: '🌐 Livre (Todas)', value: 'Livre' },
+            { name: '🩸 Bloodstained', value: 'Bloodstained' },
+            { name: '⚔️ Carnage', value: 'Carnage' },
+            { name: '🔮 Akasha', value: 'Akasha' },
+            { name: '🐍 Viper', value: 'Viper' },
+            { name: '💀 Grim Reaper', value: 'Grim Reaper' }
+          )
       )
   ];
 }

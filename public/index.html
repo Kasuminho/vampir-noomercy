@@ -259,6 +259,233 @@
       box-shadow: none;
     }
 
+    /* TABS DE NAVEGAÇÃO */
+    .tabs-nav {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 30px;
+      display: flex;
+      gap: 8px;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 25px;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 15px;
+      font-weight: 600;
+      padding: 14px 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover {
+      color: #FFF;
+    }
+
+    .tab-btn.active {
+      color: #FFF;
+      border-bottom: 3px solid var(--primary);
+    }
+
+    .tab-badge {
+      background: var(--primary);
+      color: #FFF;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-weight: 700;
+    }
+
+    /* FILTROS LEILÕES ATIVOS */
+    .active-filters-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 12px 20px;
+      margin-bottom: 25px;
+    }
+
+    .filter-options {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .filter-toggle-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      color: #FFF;
+      background: #171923;
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      user-select: none;
+      transition: all 0.2s;
+    }
+
+    .filter-toggle-label:hover {
+      border-color: #E67E22;
+    }
+
+    .filter-toggle-label input {
+      accent-color: #E67E22;
+      width: 17px;
+      height: 17px;
+      cursor: pointer;
+    }
+
+    .filter-select {
+      background: #171923;
+      border: 1px solid var(--border-color);
+      color: #FFF;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* ACTIVE CARDS */
+    .active-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .active-card:hover {
+      border-color: #4A4E68;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+
+    .active-card.has-bid {
+      border-color: #E67E22;
+      box-shadow: 0 4px 16px rgba(230, 126, 34, 0.15);
+    }
+
+    .active-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .active-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #FFF;
+      margin: 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .active-preview-wrap {
+      width: 100%;
+      height: 160px;
+      background: #0B0D13;
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .active-preview-wrap img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .active-bid-status {
+      background: #12141C;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .active-bid-status.with-bid {
+      border-color: rgba(230, 126, 34, 0.4);
+      background: rgba(230, 126, 34, 0.05);
+    }
+
+    .bid-highlight-val {
+      font-size: 20px;
+      font-weight: 800;
+      color: #F1C40F;
+    }
+
+    .bid-highlight-user {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .active-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .active-countdown {
+      font-size: 13px;
+      font-weight: 600;
+      color: #2ECC71;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .btn-open-thread {
+      background: #252736;
+      color: #FFF;
+      border: 1px solid var(--border-color);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s;
+    }
+
+    .btn-open-thread:hover {
+      background: #303346;
+      border-color: #E67E22;
+      color: #E67E22;
+    }
+
     /* GRID DE ITEMS */
     .items-grid {
       display: grid;
@@ -574,44 +801,94 @@
     </div>
   </header>
 
+  <!-- TABS DE NAVEGAÇÃO -->
+  <div class="tabs-nav">
+    <button class="tab-btn active" id="tabBtnBatch" onclick="switchTab('batch')">
+      <span>🚀</span> Lançamento em Lote
+    </button>
+    <button class="tab-btn" id="tabBtnActive" onclick="switchTab('active')">
+      <span>🔥</span> Leilões Ativos <span class="tab-badge" id="activeBadgeCount">0</span>
+    </button>
+  </div>
+
   <!-- CONTAINER -->
   <main class="container">
 
-    <!-- DICA CTRL+V EM DESTAQUE -->
-    <div class="tip-banner">
-      <div class="tip-icon">📋</div>
-      <div class="tip-content">
-        <h3>Colagem Rápida de Prints via <span class="kbd">CTRL + V</span></h3>
-        <p>Você pode tirar o print do drop no jogo (<span class="kbd">Win + Shift + S</span> ou PrintScreen) e simplesmente apertar <span class="kbd">CTRL + V</span> nesta página! Se nenhum card estiver focado, um novo card é criado automaticamente com a foto colada.</p>
-      </div>
-    </div>
-
-    <!-- BARRA DE CONTROLES GLOBAIS -->
-    <div class="controls-bar">
-      <div class="quick-settings">
-        <div class="setting-group">
-          <label>⏱️ Duração Padrão:</label>
-          <input type="number" id="defaultDuration" value="15" min="1" max="1440"> min
-        </div>
-        <div class="setting-group">
-          <label>💰 Lance Mínimo:</label>
-          <input type="number" id="defaultMinBid" value="30" min="1"> DKP
+    <!-- TAB 1: LANÇAMENTO EM LOTE -->
+    <div id="batchTabContent">
+      <!-- DICA CTRL+V EM DESTAQUE -->
+      <div class="tip-banner">
+        <div class="tip-icon">📋</div>
+        <div class="tip-content">
+          <h3>Colagem Rápida de Prints via <span class="kbd">CTRL + V</span></h3>
+          <p>Você pode tirar o print do drop no jogo (<span class="kbd">Win + Shift + S</span> ou PrintScreen) e simplesmente apertar <span class="kbd">CTRL + V</span> nesta página! Se nenhum card estiver focado, um novo card é criado automaticamente com a foto colada.</p>
         </div>
       </div>
 
-      <div class="action-buttons">
-        <button type="button" class="btn btn-secondary" id="btnAddItem" onclick="addNewItemCard()">
-          <span>➕</span> Adicionar Item
-        </button>
-        <button type="button" class="btn btn-primary" id="btnLaunchAll" onclick="launchAllAuctions()">
-          <span>🚀</span> Lançar Todos os Leilões (<span id="itemsCount">1</span>)
-        </button>
+      <!-- BARRA DE CONTROLES GLOBAIS -->
+      <div class="controls-bar">
+        <div class="quick-settings">
+          <div class="setting-group">
+            <label>⏱️ Duração Padrão:</label>
+            <input type="number" id="defaultDuration" value="15" min="1" max="1440"> min
+          </div>
+          <div class="setting-group">
+            <label>💰 Lance Mínimo:</label>
+            <input type="number" id="defaultMinBid" value="30" min="1"> DKP
+          </div>
+        </div>
+
+        <div class="action-buttons">
+          <button type="button" class="btn btn-secondary" id="btnAddItem" onclick="addNewItemCard()">
+            <span>➕</span> Adicionar Item
+          </button>
+          <button type="button" class="btn btn-primary" id="btnLaunchAll" onclick="launchAllAuctions()">
+            <span>🚀</span> Lançar Todos os Leilões (<span id="itemsCount">1</span>)
+          </button>
+        </div>
+      </div>
+
+      <!-- GRID DE CARDS DOS ITENS -->
+      <div class="items-grid" id="itemsGrid">
+        <!-- Cards serão injetados aqui dinamicamente -->
       </div>
     </div>
 
-    <!-- GRID DE CARDS DOS ITENS -->
-    <div class="items-grid" id="itemsGrid">
-      <!-- Cards serão injetados aqui dinamicamente -->
+    <!-- TAB 2: LEILÕES ATIVOS (MONITORAMENTO COM FILTRO) -->
+    <div id="activeTabContent" style="display: none;">
+      <!-- BARRA DE FILTROS DOS ATIVOS -->
+      <div class="active-filters-bar">
+        <div class="filter-options">
+          <label class="filter-toggle-label">
+            <input type="checkbox" id="filterHideNoBids" onchange="renderActiveAuctions()">
+            <span>🔥 Ocultar leilões sem lances (Apenas com Bid)</span>
+          </label>
+          <select id="filterClassActive" class="filter-select" onchange="renderActiveAuctions()">
+            <option value="all">🌐 Todas as Classes</option>
+            <option value="Livre">🌐 Livre</option>
+            <option value="Bloodstained">🩸 Bloodstained</option>
+            <option value="Carnage">⚔️ Carnage</option>
+            <option value="Akasha">🔮 Akasha</option>
+            <option value="Viper">🐍 Viper</option>
+            <option value="Grim Reaper">💀 Grim Reaper</option>
+          </select>
+        </div>
+        <div>
+          <button type="button" class="btn btn-secondary" onclick="fetchActiveAuctions(true)" style="padding: 7px 14px; font-size: 13px;">
+            <span>🔄</span> Atualizar
+          </button>
+        </div>
+      </div>
+
+      <!-- GRID DE LEILÕES ATIVOS -->
+      <div class="items-grid" id="activeItemsGrid">
+        <!-- Injetado via JS -->
+      </div>
+      <div id="activeEmptyState" style="display: none; text-align: center; padding: 60px 20px; color: var(--text-muted);">
+        <div style="font-size: 40px; margin-bottom: 12px;">💤</div>
+        <h3 style="color: #FFF; margin-bottom: 6px;">Nenhum leilão corresponde aos filtros</h3>
+        <p>Tente desmarcar a opção de ocultar itens sem lances ou aguarde a abertura de novos leilões.</p>
+      </div>
     </div>
 
   </main>
@@ -1010,6 +1287,143 @@
         showToast('Lote concluído! Pronto para cadastrar novos itens.', '✨');
       }
     }
+
+    // TABS SYSTEM & ACTIVE AUCTIONS WITH FILTERS
+    let currentTab = 'batch';
+    let activeAuctionsData = [];
+    let serverGuildId = '1561462359124480042';
+
+    function switchTab(tab) {
+      currentTab = tab;
+      const batchContent = document.getElementById('batchTabContent');
+      const activeContent = document.getElementById('activeTabContent');
+      const tabBtnBatch = document.getElementById('tabBtnBatch');
+      const tabBtnActive = document.getElementById('tabBtnActive');
+
+      if (tab === 'batch') {
+        batchContent.style.display = 'block';
+        activeContent.style.display = 'none';
+        tabBtnBatch.classList.add('active');
+        tabBtnActive.classList.remove('active');
+      } else {
+        batchContent.style.display = 'none';
+        activeContent.style.display = 'block';
+        tabBtnBatch.classList.remove('active');
+        tabBtnActive.classList.add('active');
+        fetchActiveAuctions();
+      }
+    }
+
+    async function fetchActiveAuctions(manual = false) {
+      try {
+        const res = await fetch('/api/auctions/active');
+        const data = await res.json();
+        if (data.guildId) serverGuildId = data.guildId;
+        activeAuctionsData = data.active || [];
+        document.getElementById('activeBadgeCount').textContent = activeAuctionsData.length;
+        renderActiveAuctions();
+        if (manual) showToast('Lista de leilões ativos atualizada!', '🔄');
+      } catch (err) {
+        console.error('Erro ao buscar leilões ativos:', err);
+      }
+    }
+
+    function renderActiveAuctions() {
+      const container = document.getElementById('activeItemsGrid');
+      const emptyState = document.getElementById('activeEmptyState');
+      if (!container) return;
+
+      const hideNoBids = document.getElementById('filterHideNoBids')?.checked || false;
+      const classFilter = document.getElementById('filterClassActive')?.value || 'all';
+
+      let filtered = activeAuctionsData.slice();
+
+      // FILTRO: Ocultar sem lances
+      if (hideNoBids) {
+        filtered = filtered.filter(a => a.currentBid > 0 && a.highestBidderId);
+      }
+
+      // FILTRO: Classe
+      if (classFilter !== 'all') {
+        const normFilter = classFilter.toLowerCase().trim();
+        filtered = filtered.filter(a => {
+          const itemClass = (a.targetClass || 'Livre').toLowerCase().trim();
+          if (normFilter === 'livre') return true;
+          return itemClass === normFilter || itemClass === 'livre';
+        });
+      }
+
+      if (filtered.length === 0) {
+        container.innerHTML = '';
+        if (emptyState) emptyState.style.display = 'block';
+        return;
+      }
+
+      if (emptyState) emptyState.style.display = 'none';
+
+      const now = Date.now();
+      container.innerHTML = filtered.map(a => {
+        const hasBid = a.currentBid > 0;
+        const msRemaining = Math.max(0, a.endsAtTimestamp - now);
+        const mins = Math.floor(msRemaining / 60000);
+        const secs = Math.floor((msRemaining % 60000) / 1000);
+        const timeStr = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+
+        const classInfo = CLASSES.find(c => c.value.toLowerCase() === (a.targetClass || 'Livre').toLowerCase()) || CLASSES[0];
+        const threadUrl = a.channelId ? `https://discord.com/channels/${serverGuildId}/${a.channelId}` : '#';
+
+        return `
+          <div class="active-card ${hasBid ? 'has-bid' : ''}">
+            <div class="active-card-top">
+              <h3 class="active-title" title="${a.itemName}">${a.itemName}</h3>
+              <span class="badge" style="font-size: 11px;">${classInfo.icon} ${a.targetClass || 'Livre'}</span>
+            </div>
+
+            <div class="active-preview-wrap">
+              ${a.imageUrl ? `<img src="${a.imageUrl}" alt="${a.itemName}">` : `<span style="color: var(--text-muted); font-size: 13px;">Sem imagem</span>`}
+            </div>
+
+            <div class="active-bid-status ${hasBid ? 'with-bid' : ''}">
+              <div>
+                <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">
+                  ${hasBid ? '👑 Maior Lance' : '💰 Lance Mínimo'}
+                </div>
+                <div class="bid-highlight-val">
+                  ${hasBid ? `${a.currentBid} DKP` : `${a.minBid} DKP`}
+                </div>
+              </div>
+              <div style="text-align: right;">
+                ${hasBid
+                  ? `<div class="bid-highlight-user">por <strong>@${a.highestBidderTag || 'Membro'}</strong></div>`
+                  : `<span class="badge" style="background: rgba(255,255,255,0.06); font-size: 11px;">💤 Sem Lances</span>`
+                }
+              </div>
+            </div>
+
+            <div class="active-card-footer">
+              <div class="active-countdown">
+                <span>⏱️</span> <strong>${timeStr}</strong> restante
+              </div>
+              <a href="${threadUrl}" target="_blank" class="btn-open-thread">
+                <span>💬</span> Tópico no Discord
+              </a>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Polling contínuo dos leilões ativos a cada 4 segundos
+    setInterval(() => {
+      fetchActiveAuctions();
+    }, 4000);
+
+    // Atualiza contadores de tempo a cada 1 segundo se estiver na aba de ativos
+    setInterval(() => {
+      if (currentTab === 'active') {
+        renderActiveAuctions();
+      }
+    }, 1000);
   </script>
 </body>
 </html>

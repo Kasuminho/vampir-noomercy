@@ -611,6 +611,15 @@ async function handleSlashCommand(interaction) {
         flags: MessageFlags.Ephemeral
       });
     }
+
+    if (sub === 'ativos') {
+      return handleListActiveAuctions(interaction, options);
+    }
+  }
+
+  // 8.1 /leiloes (Acesso Geral para Membros)
+  if (commandName === 'leiloes') {
+    return handleListActiveAuctions(interaction, options);
   }
 
   // 9. /bid
@@ -916,6 +925,80 @@ async function handleSlashCommand(interaction) {
       return interaction.editReply({ embeds: [result.embed] });
     }
   }
+}
+
+async function handleListActiveAuctions(interaction, options) {
+  const ocultarSemLance = options.getBoolean('ocultar_sem_lance') || false;
+  const classeFiltro = options.getString('classe');
+
+  const leiloes = getLeiloes();
+  let lista = Object.values(leiloes.active || {});
+
+  // Filtro: ocultar sem lances
+  if (ocultarSemLance) {
+    lista = lista.filter(a => a.currentBid > 0 && a.highestBidderId);
+  }
+
+  // Filtro: classe
+  if (classeFiltro) {
+    const normFiltro = classeFiltro.toLowerCase().trim();
+    lista = lista.filter(a => {
+      const itemClass = (a.targetClass || 'Livre').toLowerCase().trim();
+      if (normFiltro === 'livre') return true;
+      return itemClass === normFiltro || itemClass === 'livre';
+    });
+  }
+
+  if (lista.length === 0) {
+    const msg = ocultarSemLance
+      ? '💤 Não há nenhum leilão ativo com lances no momento. Desmarque a opção `ocultar_sem_lance` para ver todos os itens disponíveis!'
+      : '💤 Nenhum leilão de drop ativo no momento.';
+    return interaction.reply({ content: msg, flags: MessageFlags.Ephemeral });
+  }
+
+  // Ordena: maior lance primeiro, depois quem termina mais rápido
+  lista.sort((a, b) => (b.currentBid - a.currentBid) || (a.endsAtTimestamp - b.endsAtTimestamp));
+
+  const totalAtivos = Object.keys(leiloes.active || {}).length;
+  const totalComBid = Object.values(leiloes.active || {}).filter(a => a.currentBid > 0).length;
+
+  const fields = lista.slice(0, 15).map(a => {
+    const classTag = a.targetClass && a.targetClass !== 'Livre' ? ` \`[${a.targetClass}]\`` : '';
+    const lanceText = a.highestBidderId
+      ? `👑 **${a.currentBid} DKP** (<@${a.highestBidderId}>)`
+      : `💤 *Sem lances (Mín: ${a.minBid} DKP)*`;
+    const endsTimestamp = Math.floor(a.endsAtTimestamp / 1000);
+    const linkText = a.channelId ? ` • [Abrir Tópico](https://discord.com/channels/${interaction.guildId}/${a.channelId})` : '';
+
+    return {
+      name: `🗡️ ${a.itemName}${classTag}`,
+      value: `${lanceText}\n⏱️ Encerra <t:${endsTimestamp}:R>${linkText}`,
+      inline: false
+    };
+  });
+
+  const embed = new EmbedBuilder()
+    .setTitle(`🔥 LEILÕES DE DROPS ATIVOS • NOOMERCY`)
+    .setColor('#E67E22')
+    .setDescription(
+      `📊 Exibindo **${lista.length}** item(ns)` +
+      (ocultarSemLance ? ' *(Filtro ativado: **Apenas com Bid**)*' : ` *(Total ativos: **${totalAtivos}** | Com lances: **${totalComBid}**)*`) +
+      (classeFiltro ? ` • Classe: **${classeFiltro}**` : '') +
+      `\n\n💡 *Clique nos tópicos abaixo ou acesse <#${channels['leilao-drops']}> para dar seu lance!*`
+    )
+    .addFields(fields)
+    .setFooter({ text: `NooMercy DKP • Vlad, o Drácula da Shopee` })
+    .setTimestamp();
+
+  const row = new ActionRowBuilder().addComponents(
+    new ButtonBuilder()
+      .setLabel('Ir para #leilao-drops')
+      .setStyle(ButtonStyle.Link)
+      .setURL(`https://discord.com/channels/${interaction.guildId}/${channels['leilao-drops']}`)
+      .setEmoji('⚔️')
+  );
+
+  return interaction.reply({ embeds: [embed], components: [row], flags: MessageFlags.Ephemeral });
 }
 
 module.exports = { handleSlashCommand };

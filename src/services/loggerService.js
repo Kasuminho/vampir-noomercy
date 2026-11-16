@@ -146,11 +146,51 @@ async function logDecayExecuted({ client, totalMembers, totalBurnedDkp, executed
   await sendLog(client, embed);
 }
 
+// 7. Log Leilão Encerrado Sem Lances (Notificação para Staff)
+async function logAuctionNoBids({ client, itemName, targetClass, minBid, itemId, threadId }) {
+  const { roles, channels } = require('../config/channels');
+  const embed = new EmbedBuilder()
+    .setTitle(`⚠️ LEILÃO ENCERRADO SEM LANCES • ${itemName.toUpperCase()}`)
+    .setColor('#E74C3C')
+    .setDescription(
+      `📦 **Item Não Arrematado:** **${itemName}**\n` +
+      `🛡️ **Classe:** **${targetClass || 'Livre'}**\n` +
+      `💰 **Lance Mínimo Exigido:** **${minBid} DKP**\n` +
+      (threadId ? `📌 **Tópico:** <#${threadId}>\n\n` : '\n') +
+      `⚠️ *O leilão expirou sem nenhum lance registrado. O item não foi arrematado e está disponível para a liderança definir novo destino ou re-leilão.*`
+    )
+    .setFooter({ text: `ID do Item: ${itemId} • Auditoria de Leilões` })
+    .setTimestamp();
+
+  // Envia no canal de logs com menção da staff para alerta imediato
+  const logsChId = channels['logs-dkp'];
+  if (logsChId) {
+    const ch = await client.channels.fetch(logsChId).catch(() => null);
+    if (ch) {
+      const staffPing = roles.staff ? `<@&${roles.staff}> ` : '';
+      await ch.send({
+        content: `${staffPing}⚠️ **Atenção Staff: Item de leilão expirou sem lances!**`,
+        embeds: [embed]
+      }).catch(err => console.error('Erro ao enviar log sem lances:', err));
+    }
+  }
+
+  // Envia também no canal de comando da staff se disponível
+  const staffChId = channels['comando-staff'];
+  if (staffChId && staffChId !== logsChId) {
+    const staffCh = await client.channels.fetch(staffChId).catch(() => null);
+    if (staffCh) {
+      await staffCh.send({ embeds: [embed] }).catch(() => {});
+    }
+  }
+}
+
 module.exports = {
   logAttendance,
   logDisputeApproved,
   logAuctionBidLock,
   logAuctionBidUnlock,
   logAuctionWon,
+  logAuctionNoBids,
   logDecayExecuted
 };

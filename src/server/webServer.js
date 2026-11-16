@@ -52,6 +52,7 @@ function startWebServer(client) {
       const leiloes = getLeiloes();
       res.writeHead(200, { 'Content-Type': 'application/json' });
       return res.end(JSON.stringify({
+        guildId: process.env.GUILD_ID || '1561462359124480042',
         active: Object.values(leiloes.active || {})
       }));
     }

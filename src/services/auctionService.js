@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const { getLeiloes, saveLeiloes, getConfig } = require('../database/db');
 const { getMember, getMemberDkp, lockDkp, unlockDkp, deductLockedDkp } = require('./memberService');
-const { logAuctionWon } = require('./loggerService');
+const { logAuctionWon, logAuctionNoBids } = require('./loggerService');
 
 function getAuctionChannelId() {
   try {
@@ -95,6 +95,10 @@ async function createAuctionPost({ client, auction, files = [] }) {
       return tn.includes(normClass);
     });
     if (classTag) appliedTags.push(classTag.id);
+
+    // Tag inicial: "Sem Lance" para permitir filtro no Discord Forum
+    const semLanceTag = forumChannel.availableTags.find(t => t.name.includes('Sem Lance'));
+    if (semLanceTag) appliedTags.push(semLanceTag.id);
   }
 
   const embed = renderAuctionEmbed(auction);
@@ -185,6 +189,29 @@ async function updateAuctionDisplay(client, auction) {
       if (!msg && auction.messageId) {
         msg = await targetChannel.messages.fetch(auction.messageId).catch(() => null);
       }
+
+      // Se recebeu lance (currentBid > 0), troca a tag do fórum: remove "Sem Lance", adiciona "Com Lance"
+      if (auction.currentBid > 0) {
+        const parentForum = targetChannel.parent;
+        if (parentForum && parentForum.availableTags) {
+          const comLanceTag = parentForum.availableTags.find(t => t.name.includes('Com Lance'));
+          const semLanceTag = parentForum.availableTags.find(t => t.name.includes('Sem Lance'));
+
+          let curTags = targetChannel.appliedTags || [];
+          let changed = false;
+          if (semLanceTag && curTags.includes(semLanceTag.id)) {
+            curTags = curTags.filter(id => id !== semLanceTag.id);
+            changed = true;
+          }
+          if (comLanceTag && !curTags.includes(comLanceTag.id)) {
+            curTags.push(comLanceTag.id);
+            changed = true;
+          }
+          if (changed) {
+            await targetChannel.setAppliedTags(curTags).catch(() => {});
+          }
+        }
+      }
     } else if (auction.messageId) {
       msg = await targetChannel.messages.fetch(auction.messageId).catch(() => null);
     }
@@ -234,13 +261,14 @@ async function closeAuctionThread(client, finished) {
 
       await targetChannel.send({ embeds: [winEmbed] }).catch(() => {});
 
-      // 3. Atualiza tags do fórum: remove "Ativo", adiciona "Encerrado", preserva classe
+      // 3. Atualiza tags do fórum: remove "Ativo", remove "Sem Lance", adiciona "Encerrado", preserva classe
       const parentForum = targetChannel.parent;
       if (parentForum && parentForum.availableTags) {
         const closedTag = parentForum.availableTags.find(t => t.name.includes('Encerrado'));
         const activeTag = parentForum.availableTags.find(t => t.name.includes('Ativo'));
+        const semLanceTag = parentForum.availableTags.find(t => t.name.includes('Sem Lance'));
 
-        let newTags = (targetChannel.appliedTags || []).filter(tId => tId !== activeTag?.id);
+        let newTags = (targetChannel.appliedTags || []).filter(tId => tId !== activeTag?.id && tId !== semLanceTag?.id);
         if (closedTag && !newTags.includes(closedTag.id)) {
           newTags.push(closedTag.id);
         }
@@ -273,7 +301,7 @@ async function closeAuctionThread(client, finished) {
       await targetChannel.send({ embeds: [winEmbed] }).catch(() => {});
     }
 
-    // 5. Log oficial em #logs-dkp apenas se houve vencedor
+    // 5. Notificação de resultado para Staff e Auditoria
     if (finished.highestBidderId && finished.currentBid > 0) {
       const winnerDkp = getMemberDkp(finished.highestBidderId);
       await logAuctionWon({
@@ -284,6 +312,16 @@ async function closeAuctionThread(client, finished) {
         finalAmount: finished.currentBid,
         newBalance: winnerDkp?.totalDkp || 0
       }).catch(err => console.error('Erro ao enviar log de vitória de leilão:', err));
+    } else {
+      // Leilão fechou sem nenhum lance! Informa a staff em #logs-dkp e #comando-staff
+      await logAuctionNoBids({
+        client,
+        itemName: finished.itemName,
+        targetClass: finished.targetClass,
+        minBid: finished.minBid,
+        itemId: finished.id,
+        threadId: finished.channelId
+      }).catch(err => console.error('Erro ao notificar staff sobre leilão sem lances:', err));
     }
   } catch (err) {
     console.error('Erro ao fechar thread de leilão:', err);
