@@ -135,7 +135,7 @@ function placeBid({ itemId, userId, userTag, amount }) {
 
   // Verifica lance mínimo
   const config = getConfig();
-  const minIncrement = config.auction?.minBidIncrement || 5;
+  const minIncrement = config.auction?.minBidIncrement || 1;
 
   if (auction.currentBid === 0) {
     if (bidAmount < auction.minBid) {
@@ -144,7 +144,7 @@ function placeBid({ itemId, userId, userTag, amount }) {
   } else {
     const requiredMin = auction.currentBid + minIncrement;
     if (bidAmount < requiredMin) {
-      return { success: false, error: `O lance precisa ser de no mínimo ${requiredMin} DKP (Lance atual: ${auction.currentBid} + ${minIncrement} DKP de incremento)!` };
+      return { success: false, error: `O lance precisa ser maior que o lance atual! Mínimo aceito: ${requiredMin} DKP (Lance atual: ${auction.currentBid} DKP).` };
     }
   }
 

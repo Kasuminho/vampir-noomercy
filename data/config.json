@@ -83,6 +83,6 @@
   "auction": {
     "antiSnipingThresholdSeconds": 60,
     "antiSnipingExtensionSeconds": 120,
-    "minBidIncrement": 5
+    "minBidIncrement": 1
   }
 }

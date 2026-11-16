@@ -236,7 +236,7 @@ async function handleButtonClick(interaction) {
 
     const dkpInfo = getMemberDkp(user.id);
     const config = getConfig();
-    const minIncrement = config.auction?.minBidIncrement || 5;
+    const minIncrement = config.auction?.minBidIncrement || 1;
     const minRequired = auction.currentBid === 0 ? auction.minBid : (auction.currentBid + minIncrement);
 
     if (dkpInfo.availableDkp < minRequired) {
