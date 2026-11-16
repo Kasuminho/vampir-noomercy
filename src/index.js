@@ -5,7 +5,7 @@ const { finalizeAuction, renderAuctionEmbed } = require('./services/auctionServi
 const { getMemberDkp } = require('./services/memberService');
 const { logAuctionWon } = require('./services/loggerService');
 const { handleTicketMessage } = require('./services/ticketService');
-const { getLeiloes, initDatabase } = require('./database/db');
+const { getLeiloes, initDatabase, syncActiveAuctions } = require('./database/db');
 const { channels } = require('./config/channels');
 const { startWebServer } = require('./server/webServer');
 require('dotenv').config();
@@ -25,6 +25,7 @@ const client = new Client({
 function startAuctionChecker() {
   setInterval(async () => {
     try {
+      await syncActiveAuctions().catch(() => {});
       const leiloes = getLeiloes();
       const now = Date.now();
 

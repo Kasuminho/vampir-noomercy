@@ -507,6 +507,36 @@ function getLeiloes() {
   return memoryCache.leiloes;
 }
 
+async function syncActiveAuctions() {
+  try {
+    const auctionsRes = await pool.query("SELECT * FROM auctions WHERE status = 'active';");
+    const activeAuctions = {};
+    for (const r of auctionsRes.rows) {
+      activeAuctions[r.id] = {
+        id: r.id,
+        itemName: r.item_name,
+        description: r.description,
+        sellerId: r.seller_id,
+        currentBid: r.current_bid,
+        highestBidderId: r.highest_bidder,
+        status: r.status,
+        endsAt: r.ends_at ? r.ends_at.toISOString() : null,
+        endsAtTimestamp: r.ends_at ? new Date(r.ends_at).getTime() : null,
+        bids: r.bids || [],
+        ...(r.raw_data || {})
+      };
+    }
+    if (!memoryCache.leiloes) {
+      memoryCache.leiloes = { active: activeAuctions, history: [] };
+    } else {
+      memoryCache.leiloes.active = activeAuctions;
+    }
+    return activeAuctions;
+  } catch (err) {
+    return memoryCache.leiloes ? memoryCache.leiloes.active : {};
+  }
+}
+
 function saveLeiloes(data) {
   memoryCache.leiloes = data;
   saveJsonBackup('leiloes.json', data);
@@ -606,5 +636,6 @@ module.exports = {
   saveAusencias,
 
   getLeiloes,
-  saveLeiloes
+  saveLeiloes,
+  syncActiveAuctions
 };

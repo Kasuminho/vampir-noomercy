@@ -5,6 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
+    "panel": "node src/server/standalonePanel.js",
     "publish-panels": "node src/publish_panels.js",
     "register-commands": "node src/commands/registerCommands.js"
   },

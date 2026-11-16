@@ -13,7 +13,7 @@ const { approvePresenceDispute, rejectPresenceDispute, recordEventAttendance } =
 const { executeMonthlyDecay } = require('../services/monthlyDecayService');
 const { calculateDkpReward } = require('../services/dkpCalculator');
 const { logDisputeApproved, logAttendance } = require('../services/loggerService');
-const { getConfig, getLeiloes } = require('../database/db');
+const { getConfig, getLeiloes, syncActiveAuctions } = require('../database/db');
 const { channels, roles } = require('../config/channels');
 const { startCpUpdateTicket, handleTicketButton } = require('../services/ticketService');
 const {
@@ -203,7 +203,12 @@ async function handleButtonClick(interaction) {
   if (customId.startsWith('btn_bid_')) {
     const itemId = customId.replace('btn_bid_', '');
     const leiloes = getLeiloes();
-    const auction = leiloes.active[itemId];
+    let auction = leiloes.active[itemId];
+
+    if (!auction) {
+      await syncActiveAuctions().catch(() => {});
+      auction = getLeiloes().active[itemId];
+    }
 
     if (!auction) {
       return interaction.reply({
