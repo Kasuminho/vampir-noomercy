@@ -17,6 +17,8 @@ vampir-noomercy/
 │   ├── leiloes.json             # Estado dos leilões ativos e concluídos (DKP locks)
 │   ├── members.json             # Fichas dos membros (Nick, Discord ID, CP, Level, Classe, Data do CP)
 │   └── presencas.json           # Histórico de presença em eventos/bosses
+├── public/                      # Interface Web estática servida pelo bot
+│   └── index.html               # Painel Web de Leilões em Lote com suporte a CTRL+V e drag-and-drop
 ├── scripts/                     # Scripts utilitários de manutenção e migração
 │   ├── create_db.js             # Criação do banco de dados no PostgreSQL
 │   ├── init_schema.js           # Criação de tabelas, índices e constraints no PostgreSQL
@@ -38,6 +40,8 @@ vampir-noomercy/
 │   │   ├── interactionHandler.js # Roteador central de eventos de interação do Discord
 │   │   ├── modalHandler.js      # Trata a submissão de formulários modais
 │   │   └── selectMenuHandler.js # Trata seletores dropdown (ex: filtro por classe)
+│   ├── server/
+│   │   └── webServer.js         # Servidor HTTP nativo na porta 3000 para API e Painel Web de Leilões em Lote
 │   ├── services/
 │   │   ├── auctionService.js    # Motor de leilões, travas de DKP (DKP Lock) e anti-sniping
 │   │   ├── dkpCalculator.js     # Cálculo ponderado de DKP por CP e Nível + bônus de Last Hit

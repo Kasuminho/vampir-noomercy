@@ -7,6 +7,7 @@ const { logAuctionWon } = require('./services/loggerService');
 const { handleTicketMessage } = require('./services/ticketService');
 const { getLeiloes, initDatabase } = require('./database/db');
 const { channels } = require('./config/channels');
+const { startWebServer } = require('./server/webServer');
 require('dotenv').config();
 
 const client = new Client({
@@ -102,7 +103,10 @@ client.once('clientReady', async () => {
   // Inicia monitor de encerramento de leilões
   startAuctionChecker();
 
-  console.log('[SISTEMA] Módulos de presença, CP, DKP Lock e Virada Mensal prontos.');
+  // Inicia o Web Server para o Painel de Leilões em Lote (Porta 3000 / localhost)
+  startWebServer(client);
+
+  console.log('[SISTEMA] Módulos de presença, CP, DKP Lock, Leilões em Lote e Virada Mensal prontos.');
 });
 
 client.on('interactionCreate', async (interaction) => {

@@ -125,6 +125,10 @@ function getSlashCommands() {
         sub.setName('encerrar')
           .setDescription('Encerra antecipadamente um leilão ativo e declara o vencedor.')
           .addStringOption(opt => opt.setName('item_id').setDescription('ID do item em leilão').setRequired(true))
+      )
+      .addSubcommand(sub =>
+        sub.setName('painel-web')
+          .setDescription('Abre o link e instruções do Painel Web para lançar múltiplos itens com CTRL+V.')
       ),
 
     // 9. Dar Lance (Bid)

@@ -577,7 +577,12 @@ async function handleButtonClick(interaction) {
     );
 
     return interaction.reply({
-      content: '📦 **Criação de Leilão de Drop**\nSelecione abaixo na caixa de seleção a **classe permitida** para disputar este item:\n*(Se o item puder ser disputado por qualquer um, escolha "Todas as Classes")*',
+      content:
+        '📦 **Criação de Leilão de Drop**\n' +
+        'Selecione abaixo na caixa de seleção a **classe permitida** para disputar este item:\n' +
+        '*(Se o item puder ser disputado por qualquer um, escolha "Todas as Classes")*\n\n' +
+        '💡 **Dica de Produtividade:** Para cadastrar **múltiplos itens em lote com CTRL+V no print**, use o Painel Web:\n' +
+        '👉 **http://localhost:3000** *(ou use `/leilao painel-web`)*',
       components: [selectRow],
       flags: MessageFlags.Ephemeral
     });

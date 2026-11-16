@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NooMercy • Painel de Leilões em Lote (CTRL+V)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #0B0C10;
+      --bg-card: #15161E;
+      --bg-card-hover: #1C1E2A;
+      --bg-input: #101118;
+      --border-color: #2A2C3C;
+      --border-accent: #E74C3C;
+      --primary: #E74C3C;
+      --primary-hover: #C0392B;
+      --primary-glow: rgba(231, 76, 60, 0.35);
+      --gold: #F1C40F;
+      --gold-glow: rgba(241, 196, 15, 0.3);
+      --text-main: #F5F6FA;
+      --text-muted: #8E9297;
+      --success: #2ECC71;
+      --danger: #E74C3C;
+      --font-title: 'Cinzel', serif;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(231, 76, 60, 0.12) 0%, transparent 60%),
+        radial-gradient(circle at 100% 100%, rgba(142, 68, 173, 0.08) 0%, transparent 50%);
+    }
+
+    /* HEADER */
+    header {
+      background: rgba(17, 18, 25, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 18px 32px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-icon {
+      font-size: 28px;
+      filter: drop-shadow(0 0 10px var(--primary-glow));
+    }
+
+    .brand-text h1 {
+      font-family: var(--font-title);
+      font-size: 20px;
+      letter-spacing: 1.5px;
+      color: #FFF;
+      text-transform: uppercase;
+    }
+
+    .brand-text span {
+      font-size: 12px;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(46, 204, 113, 0.12);
+      border: 1px solid rgba(46, 204, 113, 0.3);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--success);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--success);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--success);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.9); }
+    }
+
+    /* CONTAINER PRINCIPAL */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 30px 24px;
+      flex: 1;
+      width: 100%;
+    }
+
+    /* HERO BANNER & DICA CTRL+V */
+    .tip-banner {
+      background: linear-gradient(135deg, rgba(231, 76, 60, 0.15) 0%, rgba(21, 22, 30, 0.95) 100%);
+      border: 1px solid rgba(231, 76, 60, 0.3);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .tip-icon {
+      font-size: 32px;
+    }
+
+    .tip-content h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: #FFF;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .kbd {
+      background: #2A2C3C;
+      border: 1px solid #43475E;
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-size: 12px;
+      font-family: monospace;
+      color: var(--gold);
+      box-shadow: 0 2px 0 #181922;
+    }
+
+    .tip-content p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* TOOLBAR DE CONTROLES */
+    .controls-bar {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 18px 24px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .quick-settings {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .setting-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .setting-group label {
+      font-weight: 500;
+    }
+
+    .setting-group input {
+      width: 75px;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      color: #FFF;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .action-buttons {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      border: none;
+    }
+
+    .btn-secondary {
+      background: #252736;
+      color: #FFF;
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-secondary:hover {
+      background: #303346;
+      border-color: #4A4E68;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #E74C3C 0%, #C0392B 100%);
+      color: #FFF;
+      box-shadow: 0 4px 15px var(--primary-glow);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px var(--primary-glow);
+      background: linear-gradient(135deg, #FF5E4D 0%, #D63031 100%);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* GRID DE ITEMS */
+    .items-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    /* CARD DE ITEM */
+    .item-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 18px;
+      position: relative;
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .item-card.active-target {
+      border-color: var(--border-accent);
+      box-shadow: 0 0 16px var(--primary-glow);
+      background: var(--bg-card-hover);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .item-index-badge {
+      background: #252736;
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid rgba(241, 196, 15, 0.2);
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    .icon-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 4px;
+      font-size: 15px;
+      transition: color 0.15s;
+    }
+
+    .icon-btn:hover {
+      color: #FFF;
+      background: #252736;
+    }
+
+    .icon-btn.delete-btn:hover {
+      color: var(--danger);
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .form-control {
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      color: #FFF;
+      padding: 9px 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+
+    .form-control:focus {
+      border-color: var(--border-accent);
+    }
+
+    .row-two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    /* DROPZONE / PASTE ZONE DE IMAGEM */
+    .paste-dropzone {
+      border: 2px dashed #3A3D52;
+      border-radius: 8px;
+      min-height: 140px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      background: rgba(16, 17, 24, 0.6);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .paste-dropzone:hover, .paste-dropzone.drag-over {
+      border-color: var(--border-accent);
+      background: rgba(231, 76, 60, 0.05);
+    }
+
+    .dropzone-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-muted);
+    }
+
+    .dropzone-empty span.icon {
+      font-size: 26px;
+    }
+
+    .dropzone-empty p {
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .dropzone-empty span.sub {
+      font-size: 11px;
+      color: #6C727F;
+    }
+
+    .dropzone-preview {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .dropzone-preview img {
+      max-height: 160px;
+      max-width: 100%;
+      border-radius: 6px;
+      object-fit: contain;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+
+    .preview-badge {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      background: rgba(46, 204, 113, 0.9);
+      color: #FFF;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .remove-image-btn {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      background: rgba(231, 76, 60, 0.9);
+      color: #FFF;
+      border: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      font-size: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.15s;
+    }
+
+    .remove-image-btn:hover {
+      transform: scale(1.15);
+      background: #C0392B;
+    }
+
+    /* FOOTER STATUS */
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: 18px 32px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-muted);
+      background: var(--bg-card);
+    }
+
+    /* MODAL DE SUCESSO / PROGRESSO */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 28px 32px;
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .modal-icon {
+      font-size: 48px;
+    }
+
+    .modal-title {
+      font-family: var(--font-title);
+      font-size: 20px;
+      color: #FFF;
+    }
+
+    .modal-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .modal-results-list {
+      max-height: 180px;
+      overflow-y: auto;
+      text-align: left;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #DDD;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    /* TOAST NOTIFICATION */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #252736;
+      border: 1px solid var(--border-color);
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 13px;
+      color: #FFF;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+      z-index: 2000;
+    }
+
+    .toast.show {
+      display: flex;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="brand">
+      <div class="brand-icon">⚔️</div>
+      <div class="brand-text">
+        <h1>NooMercy • Leilões em Lote</h1>
+        <span>Painel de Lançamento de Drops com DKP Lock</span>
+      </div>
+    </div>
+    <div class="status-badge" id="botStatus">
+      <div class="status-dot"></div>
+      <span id="botStatusText">Conectado ao Discord (#leilao-drops)</span>
+    </div>
+  </header>
+
+  <!-- CONTAINER -->
+  <main class="container">
+
+    <!-- DICA CTRL+V EM DESTAQUE -->
+    <div class="tip-banner">
+      <div class="tip-icon">📋</div>
+      <div class="tip-content">
+        <h3>Colagem Rápida de Prints via <span class="kbd">CTRL + V</span></h3>
+        <p>Você pode tirar o print do drop no jogo (<span class="kbd">Win + Shift + S</span> ou PrintScreen) e simplesmente apertar <span class="kbd">CTRL + V</span> nesta página! Se nenhum card estiver focado, um novo card é criado automaticamente com a foto colada.</p>
+      </div>
+    </div>
+
+    <!-- BARRA DE CONTROLES GLOBAIS -->
+    <div class="controls-bar">
+      <div class="quick-settings">
+        <div class="setting-group">
+          <label>⏱️ Duração Padrão:</label>
+          <input type="number" id="defaultDuration" value="15" min="1" max="1440"> min
+        </div>
+        <div class="setting-group">
+          <label>💰 Lance Mínimo:</label>
+          <input type="number" id="defaultMinBid" value="30" min="1"> DKP
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button type="button" class="btn btn-secondary" id="btnAddItem" onclick="addNewItemCard()">
+          <span>➕</span> Adicionar Item
+        </button>
+        <button type="button" class="btn btn-primary" id="btnLaunchAll" onclick="launchAllAuctions()">
+          <span>🚀</span> Lançar Todos os Leilões (<span id="itemsCount">1</span>)
+        </button>
+      </div>
+    </div>
+
+    <!-- GRID DE CARDS DOS ITENS -->
+    <div class="items-grid" id="itemsGrid">
+      <!-- Cards serão injetados aqui dinamicamente -->
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    NooMercy DKP & Presence System • Vlad, o Drácula da Shopee • Integração Direta com Discord Bot
+  </footer>
+
+  <!-- MODAL DE PROGRESSO E RESULTADO -->
+  <div class="modal-overlay" id="resultModal">
+    <div class="modal-box">
+      <div class="modal-icon" id="modalIcon">⏳</div>
+      <h2 class="modal-title" id="modalTitle">Lançando Leilões...</h2>
+      <p class="modal-desc" id="modalDesc">Aguarde enquanto os itens e imagens são enviados e criados no canal #leilao-drops do Discord.</p>
+      <div class="modal-results-list" id="modalResults" style="display: none;"></div>
+      <button class="btn btn-primary" id="modalCloseBtn" style="display: none;" onclick="closeModal(true)">
+        Concluir e Limpar Lote
+      </button>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast" id="toast">
+    <span id="toastIcon">ℹ️</span>
+    <span id="toastMsg">Mensagem</span>
+  </div>
+
+  <script>
+    let items = [];
+    let focusedCardIndex = null;
+
+    const CLASSES = [
+      { label: 'Todas as Classes (Livre)', value: 'Livre', icon: '🌐' },
+      { label: 'Bloodstained', value: 'Bloodstained', icon: '🩸' },
+      { label: 'Carnage', value: 'Carnage', icon: '⚔️' },
+      { label: 'Akasha', value: 'Akasha', icon: '🔮' },
+      { label: 'Viper', value: 'Viper', icon: '🐍' },
+      { label: 'Grim Reaper', value: 'Grim Reaper', icon: '💀' }
+    ];
+
+    // Inicializa com 1 card vazio
+    window.addEventListener('DOMContentLoaded', () => {
+      addNewItemCard();
+      setupGlobalPasteListener();
+      checkBotStatus();
+    });
+
+    async function checkBotStatus() {
+      try {
+        const res = await fetch('/api/status');
+        const data = await res.json();
+        if (data.online) {
+          document.getElementById('botStatusText').textContent = `Conectado: ${data.guildName || 'Discord'} (${data.channel || '#leilao-drops'})`;
+        }
+      } catch (e) {
+        document.getElementById('botStatusText').textContent = 'Pronto para lançamento';
+      }
+    }
+
+    function showToast(msg, icon = '✅') {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastIcon').textContent = icon;
+      document.getElementById('toastMsg').textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3500);
+    }
+
+    function addNewItemCard(initialData = {}) {
+      const defaultDur = parseInt(document.getElementById('defaultDuration').value, 10) || 15;
+      const defaultBid = parseInt(document.getElementById('defaultMinBid').value, 10) || 30;
+
+      const item = {
+        id: 'item_' + Date.now() + '_' + Math.floor(Math.random() * 1000),
+        name: initialData.name || '',
+        targetClass: initialData.targetClass || 'Livre',
+        minBid: initialData.minBid || defaultBid,
+        duration: initialData.duration || defaultDur,
+        imageBase64: initialData.imageBase64 || null
+      };
+
+      items.push(item);
+      focusedCardIndex = items.length - 1;
+      renderCards();
+      updateItemsCount();
+    }
+
+    function removeItem(index) {
+      if (items.length <= 1) {
+        // Se for o último, apenas limpa
+        items[0].name = '';
+        items[0].imageBase64 = null;
+        renderCards();
+        return;
+      }
+      items.splice(index, 1);
+      focusedCardIndex = Math.max(0, items.length - 1);
+      renderCards();
+      updateItemsCount();
+    }
+
+    function duplicateItem(index) {
+      const source = items[index];
+      addNewItemCard({
+        name: source.name,
+        targetClass: source.targetClass,
+        minBid: source.minBid,
+        duration: source.duration,
+        imageBase64: source.imageBase64
+      });
+      showToast('Item duplicado com sucesso!', '📑');
+    }
+
+    function updateItemsCount() {
+      document.getElementById('itemsCount').textContent = items.length;
+    }
+
+    function renderCards() {
+      const grid = document.getElementById('itemsGrid');
+      grid.innerHTML = '';
+
+      items.forEach((item, idx) => {
+        const card = document.createElement('div');
+        card.className = `item-card ${focusedCardIndex === idx ? 'active-target' : ''}`;
+        card.dataset.index = idx;
+
+        card.addEventListener('click', (e) => {
+          if (!e.target.closest('.delete-btn') && !e.target.closest('.remove-image-btn')) {
+            setFocusedCard(idx);
+          }
+        });
+
+        const classOptions = CLASSES.map(c => 
+          `<option value="${c.value}" ${item.targetClass === c.value ? 'selected' : ''}>${c.icon} ${c.label}</option>`
+        ).join('');
+
+        card.innerHTML = `
+          <div class="card-header">
+            <span class="item-index-badge">DROP #${idx + 1}</span>
+            <div class="card-actions">
+              <button type="button" class="icon-btn" title="Duplicar Item" onclick="duplicateItem(${idx})">📑</button>
+              <button type="button" class="icon-btn delete-btn" title="Remover Item" onclick="removeItem(${idx})">🗑️</button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Nome do Item Dropado:</label>
+            <input type="text" class="form-control" placeholder="Ex: Montante da Ruína Heroico" 
+                   value="${escapeHtml(item.name)}" 
+                   oninput="items[${idx}].name = this.value">
+          </div>
+
+          <div class="form-group">
+            <label>Classe Permitida:</label>
+            <select class="form-control" onchange="items[${idx}].targetClass = this.value">
+              ${classOptions}
+            </select>
+          </div>
+
+          <div class="row-two">
+            <div class="form-group">
+              <label>Lance Mínimo (DKP):</label>
+              <input type="number" class="form-control" min="1" value="${item.minBid}" 
+                     oninput="items[${idx}].minBid = parseInt(this.value, 10) || 1">
+            </div>
+            <div class="form-group">
+              <label>Duração (Minutos):</label>
+              <input type="number" class="form-control" min="1" max="1440" value="${item.duration}" 
+                     oninput="items[${idx}].duration = parseInt(this.value, 10) || 15">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Print / Imagem do Item:</label>
+            <div class="paste-dropzone" id="dropzone_${idx}" onclick="triggerFileInput(${idx})">
+              ${item.imageBase64 ? `
+                <div class="dropzone-preview">
+                  <span class="preview-badge">Print Carregado ✅</span>
+                  <img src="${item.imageBase64}" alt="Print Preview">
+                  <button type="button" class="remove-image-btn" title="Remover Imagem" onclick="event.stopPropagation(); removeCardImage(${idx})">✕</button>
+                </div>
+              ` : `
+                <div class="dropzone-empty">
+                  <span class="icon">📸</span>
+                  <p>Clique ou aperte <span class="kbd">CTRL + V</span> para colar o print</p>
+                  <span class="sub">(Ou arraste o arquivo de imagem aqui)</span>
+                </div>
+              `}
+            </div>
+            <input type="file" id="fileInput_${idx}" accept="image/*" style="display: none;" onchange="handleFileSelected(${idx}, this.files)">
+          </div>
+        `;
+
+        setupCardDragAndDrop(card, idx);
+        grid.appendChild(card);
+      });
+    }
+
+    function setFocusedCard(idx) {
+      focusedCardIndex = idx;
+      document.querySelectorAll('.item-card').forEach((c, i) => {
+        if (i === idx) c.classList.add('active-target');
+        else c.classList.remove('active-target');
+      });
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+    function triggerFileInput(idx) {
+      const fileInput = document.getElementById(`fileInput_${idx}`);
+      if (fileInput) fileInput.click();
+    }
+
+    function handleFileSelected(idx, files) {
+      if (!files || files.length === 0) return;
+      const file = files[0];
+      if (!file.type.startsWith('image/')) {
+        showToast('Por favor, selecione um arquivo de imagem!', '⚠️');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        items[idx].imageBase64 = e.target.result;
+        renderCards();
+        showToast(`Print anexado ao Drop #${idx + 1}!`, '📸');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function removeCardImage(idx) {
+      items[idx].imageBase64 = null;
+      renderCards();
+      showToast('Imagem removida.', '🗑️');
+    }
+
+    function setupCardDragAndDrop(card, idx) {
+      const dropzone = card.querySelector('.paste-dropzone');
+      if (!dropzone) return;
+
+      ['dragenter', 'dragover'].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropzone.classList.add('drag-over');
+        });
+      });
+
+      ['dragleave', 'drop'].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropzone.classList.remove('drag-over');
+        });
+      });
+
+      dropzone.addEventListener('drop', (e) => {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        handleFileSelected(idx, files);
+      });
+    }
+
+    // LISTENER GLOBAL DE CTRL+V (CLIPBOARD PASTE)
+    function setupGlobalPasteListener() {
+      window.addEventListener('paste', (e) => {
+        const clipboardItems = e.clipboardData ? e.clipboardData.items : [];
+        let imageFound = false;
+
+        for (let i = 0; i < clipboardItems.length; i++) {
+          if (clipboardItems[i].type.indexOf('image') !== -1) {
+            imageFound = true;
+            const blob = clipboardItems[i].getAsFile();
+            const reader = new FileReader();
+
+            reader.onload = (event) => {
+              const base64 = event.target.result;
+              handlePastedImage(base64);
+            };
+
+            reader.readAsDataURL(blob);
+            break;
+          }
+        }
+
+        if (imageFound) {
+          e.preventDefault();
+        }
+      });
+    }
+
+    function handlePastedImage(base64) {
+      // 1. Se o card focado atual NÃO tiver imagem, coloca nele!
+      if (focusedCardIndex !== null && items[focusedCardIndex] && !items[focusedCardIndex].imageBase64) {
+        items[focusedCardIndex].imageBase64 = base64;
+        renderCards();
+        showToast(`Print colado no Drop #${focusedCardIndex + 1}!`, '📋');
+        return;
+      }
+
+      // 2. Se o último card não tiver imagem, coloca nele
+      const lastIndex = items.length - 1;
+      if (lastIndex >= 0 && !items[lastIndex].imageBase64) {
+        items[lastIndex].imageBase64 = base64;
+        focusedCardIndex = lastIndex;
+        renderCards();
+        showToast(`Print colado no Drop #${lastIndex + 1}!`, '📋');
+        return;
+      }
+
+      // 3. Caso contrário, CRIA AUTOMATICAMENTE UM NOVO CARD com a imagem já carregada!
+      addNewItemCard({ imageBase64: base64 });
+      showToast(`Novo Drop #${items.length} criado com o print colado via CTRL+V!`, '🎉');
+    }
+
+    // LANÇAMENTO DE TODOS OS LEILÕES
+    async function launchAllAuctions() {
+      // Validações
+      const invalid = items.filter(it => !it.name || it.name.trim().length === 0);
+      if (invalid.length > 0) {
+        alert('Por favor, preencha o Nome de todos os itens antes de lançar!');
+        return;
+      }
+
+      if (!confirm(`Deseja lançar ${items.length} leilão(ões) agora no canal #leilao-drops do Discord?`)) {
+        return;
+      }
+
+      const modal = document.getElementById('resultModal');
+      const modalIcon = document.getElementById('modalIcon');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalDesc = document.getElementById('modalDesc');
+      const modalResults = document.getElementById('modalResults');
+      const modalCloseBtn = document.getElementById('modalCloseBtn');
+
+      modal.style.display = 'flex';
+      modalIcon.textContent = '⏳';
+      modalTitle.textContent = 'Lançando Leilões no Discord...';
+      modalDesc.textContent = `Enviando ${items.length} itens com imagens e botões interativos para o servidor...`;
+      modalResults.style.display = 'none';
+      modalCloseBtn.style.display = 'none';
+
+      try {
+        const payload = {
+          startedBy: 'Staff Web (Painel)',
+          auctions: items.map(it => ({
+            itemName: it.name.trim(),
+            targetClass: it.targetClass,
+            minBid: it.minBid,
+            durationMinutes: it.duration,
+            imageBase64: it.imageBase64
+          }))
+        };
+
+        const response = await fetch('/api/auctions/batch', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          modalIcon.textContent = '🎉';
+          modalTitle.textContent = 'Leilões Lançados com Sucesso!';
+          modalDesc.textContent = `Todos os ${data.created.length} leilões foram enviados para o canal #leilao-drops com DKP Lock ativo!`;
+          
+          modalResults.innerHTML = data.created.map((c, i) => 
+            `<div>✅ <strong>${c.itemName}</strong> [${c.targetClass}] • Min: <strong>${c.minBid} DKP</strong> • <a href="${c.url || '#'}" target="_blank" style="color: #E74C3C; text-decoration: underline;">Ver no Discord</a></div>`
+          ).join('');
+          modalResults.style.display = 'flex';
+          modalCloseBtn.style.display = 'block';
+        } else {
+          modalIcon.textContent = '❌';
+          modalTitle.textContent = 'Erro ao Lançar Leilões';
+          modalDesc.textContent = data.error || 'Falha ao se comunicar com o Discord.';
+          modalCloseBtn.textContent = 'Fechar';
+          modalCloseBtn.style.display = 'block';
+        }
+      } catch (err) {
+        modalIcon.textContent = '❌';
+        modalTitle.textContent = 'Erro de Conexão';
+        modalDesc.textContent = err.message || 'Não foi possível conectar à API local do bot.';
+        modalCloseBtn.textContent = 'Fechar';
+        modalCloseBtn.style.display = 'block';
+      }
+    }
+
+    function closeModal(resetBatch = false) {
+      document.getElementById('resultModal').style.display = 'none';
+      if (resetBatch) {
+        items = [];
+        addNewItemCard();
+        showToast('Lote concluído! Pronto para cadastrar novos itens.', '✨');
+      }
+    }
+  </script>
+</body>
+</html>

@@ -608,6 +608,23 @@ async function handleSlashCommand(interaction) {
         ephemeral: false
       });
     }
+
+    if (sub === 'painel-web') {
+      const port = process.env.PORT || process.env.OVERLAY_PORT || '3000';
+      return interaction.reply({
+        content:
+          `🌐 **PAINEL WEB • CADASTRO DE LEILÕES EM LOTE**\n\n` +
+          `Acesse o painel web no seu navegador para lançar múltiplos itens simultaneamente com **CTRL+V no print**:\n\n` +
+          `👉 **http://localhost:${port}**\n\n` +
+          `💡 **Como usar:**\n` +
+          `1. Abra o link no navegador do PC onde você joga.\n` +
+          `2. Tire o print do drop no jogo com \`Win + Shift + S\` ou PrintScreen.\n` +
+          `3. Dê **CTRL+V** direto na página: o print é anexado automaticamente em um novo card!\n` +
+          `4. Defina o nome do item e a classe permitida (ou Livre).\n` +
+          `5. Clique em **"🚀 Lançar Todos os Leilões"** para enviar tudo para <#${channels['leilao-drops']}> de uma vez!`,
+        flags: MessageFlags.Ephemeral
+      });
+    }
   }
 
   // 9. /bid
