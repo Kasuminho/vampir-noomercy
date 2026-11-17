@@ -9,7 +9,7 @@ const {
 } = require('discord.js');
 const { submitCpUpdate, getMember, getMemberDkp, getCpRanking, resolveMembersBatch } = require('../services/memberService');
 const { calculateDkpReward } = require('../services/dkpCalculator');
-const { recordEventAttendance, submitPresenceDispute, registerAbsence } = require('../services/presenceService');
+const { recordEventAttendance, submitPresenceDispute, registerAbsence, buildPresenceResultEmbeds } = require('../services/presenceService');
 const { startAuction, placeBid, finalizeAuction, renderAuctionEmbed, updateAuctionDisplay, createAuctionPost, closeAuctionThread } = require('../services/auctionService');
 const { executeMonthlyDecay } = require('../services/monthlyDecayService');
 const { logAttendance, logAuctionBidLock, logAuctionBidUnlock } = require('../services/loggerService');
@@ -380,45 +380,6 @@ async function handleSlashCommand(interaction) {
         lastHitInput
       });
 
-      const lines = rec.members.slice(0, 25).map(m => formatPresenceMemberLine(m));
-
-      const embed = new EmbedBuilder()
-        .setTitle(`⚔️ PRESENÇA EM LOTE REGISTRADA: ${rec.eventName}`)
-        .setColor('#2ECC71')
-        .setDescription(`Foram pontuados com sucesso **${rec.totalMembers} jogadores**!\n\n${lines.join('\n')}${rec.totalMembers > 25 ? `\n*...e mais ${rec.totalMembers - 25} jogadores.*` : ''}`)
-        .addFields(
-          { name: '🎯 DKP Base', value: `\`${rec.baseDkp} pts\``, inline: true },
-          { name: '🛡️ Registrado por', value: `<@${user.id}>`, inline: true }
-        )
-        .setFooter({ text: 'DKP ponderado por CP e Nível creditado com sucesso!' })
-        .setTimestamp();
-
-      if (rec.lastHits && rec.lastHits.length > 0) {
-        const lhList = rec.lastHits.map(lh => `<@${lh.userId}> \`(${lh.nick})\``).join(', ');
-        embed.addFields({
-          name: `🎯 Last Hit (+10 DKP Bônus Fixo${rec.lastHits.length > 1 ? ' cada' : ''})`,
-          value: lhList,
-          inline: true
-        });
-      } else if (rec.lastHit) {
-        const single = Array.isArray(rec.lastHit) ? rec.lastHit[0] : rec.lastHit;
-        if (single) {
-          embed.addFields({
-            name: '🎯 Last Hit (+10 DKP Bônus Fixo)',
-            value: `<@${single.userId}> \`(${single.nick || single.tag})\``,
-            inline: true
-          });
-        }
-      }
-
-      if (unresolved.length > 0) {
-        embed.addFields({
-          name: '⚠️ Não Encontrados no Discord (Sem Cadastro)',
-          value: `\`${unresolved.join(', ')}\`\n*(Peça para eles enviarem seus dados via \`/atualizar-char\`)*`,
-          inline: false
-        });
-      }
-
       await logAttendance({
         client: interaction.client,
         eventName: rec.eventName,
@@ -428,7 +389,12 @@ async function handleSlashCommand(interaction) {
         lastHit: rec.lastHits || rec.lastHit
       });
 
-      return interaction.reply({ embeds: [embed] });
+      const embeds = buildPresenceResultEmbeds({ rec, userId: user.id, unresolved });
+      await interaction.reply({ embeds: [embeds[0]] });
+      for (let i = 1; i < embeds.length; i++) {
+        await interaction.followUp({ embeds: [embeds[i]] });
+      }
+      return;
     }
 
     if (sub === 'marcar-voz') {
@@ -466,37 +432,6 @@ async function handleSlashCommand(interaction) {
         lastHitInput
       });
 
-      const lines = rec.members.slice(0, 25).map(m => formatPresenceMemberLine(m));
-
-      const embed = new EmbedBuilder()
-        .setTitle(`⚔️ PRESENÇA REGISTRADA: ${rec.eventName}`)
-        .setColor('#2ECC71')
-        .setDescription(`Presença capturada via sala de voz <#${voiceChannel.id}> para **${rec.totalMembers} membros**.\n\n${lines.join('\n')}${rec.totalMembers > 20 ? `\n*...e mais ${rec.totalMembers - 20} jogadores.*` : ''}`)
-        .addFields(
-          { name: '🎯 DKP Base', value: `\`${rec.baseDkp} pts\``, inline: true },
-          { name: '🛡️ Registrado por', value: `<@${user.id}>`, inline: true }
-        )
-        .setFooter({ text: 'Pontuação creditada com sucesso!' })
-        .setTimestamp();
-
-      if (rec.lastHits && rec.lastHits.length > 0) {
-        const lhList = rec.lastHits.map(lh => `<@${lh.userId}> \`(${lh.nick})\``).join(', ');
-        embed.addFields({
-          name: `🎯 Last Hit (+10 DKP Bônus Fixo${rec.lastHits.length > 1 ? ' cada' : ''})`,
-          value: lhList,
-          inline: true
-        });
-      } else if (rec.lastHit) {
-        const single = Array.isArray(rec.lastHit) ? rec.lastHit[0] : rec.lastHit;
-        if (single) {
-          embed.addFields({
-            name: '🎯 Last Hit (+10 DKP Bônus Fixo)',
-            value: `<@${single.userId}> \`(${single.nick || single.tag})\``,
-            inline: true
-          });
-        }
-      }
-
       await logAttendance({
         client: interaction.client,
         eventName: rec.eventName,
@@ -506,7 +441,12 @@ async function handleSlashCommand(interaction) {
         lastHit: rec.lastHits || rec.lastHit
       });
 
-      return interaction.reply({ embeds: [embed] });
+      const embeds = buildPresenceResultEmbeds({ rec, userId: user.id, voiceChannelId: voiceChannel.id });
+      await interaction.reply({ embeds: [embeds[0]] });
+      for (let i = 1; i < embeds.length; i++) {
+        await interaction.followUp({ embeds: [embeds[i]] });
+      }
+      return;
     }
 
     if (sub === 'marcar-membro') {

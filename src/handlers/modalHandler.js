@@ -1,6 +1,6 @@
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, AttachmentBuilder, MessageFlags } = require('discord.js');
 const { submitCpUpdate, getMember, getMemberDkp, resolveMembersBatch } = require('../services/memberService');
-const { registerAbsence, submitPresenceDispute, recordEventAttendance } = require('../services/presenceService');
+const { registerAbsence, submitPresenceDispute, recordEventAttendance, buildPresenceResultEmbeds } = require('../services/presenceService');
 const { placeBid, startAuction, renderAuctionEmbed, updateAuctionDisplay, createAuctionPost } = require('../services/auctionService');
 const { logAttendance, logAuctionBidLock, logAuctionBidUnlock } = require('../services/loggerService');
 const { getLeiloes, saveLeiloes } = require('../database/db');
@@ -305,61 +305,15 @@ async function handleModalSubmit(interaction) {
       baseDkp: rec.baseDkp,
       registeredBy: `<@${user.id}>`,
       awardedList: rec.members,
-      lastHit: rec.lastHit
+      lastHit: rec.lastHits || rec.lastHit
     });
 
-    const lines = rec.members.slice(0, 25).map(m => {
-      const lastHitTag = m.isLastHit ? ' • 🎯 **[LAST HIT +10 DKP]**' : '';
-      const points = m.totalAwardedDkp || m.calc?.finalDkp || 0;
-      if (m.calc.cutoffStatus && m.calc.cutoffStatus.isCut) {
-        return `🚫 <@${m.userId}> (${m.nick || m.userTag}): **0 DKP** *(Cortado: ${m.calc.cutoffStatus.details.failedReason})*${lastHitTag}`;
-      }
-      if (m.calc.cutoffStatus && m.calc.cutoffStatus.inGracePeriod) {
-        return `⚠️ <@${m.userId}> (${m.nick || m.userTag}): **+${points} DKP** *(Aviso: meta vence em ${m.calc.cutoffStatus.details.daysLeft}d)*${lastHitTag}`;
-      }
-      return `• <@${m.userId}> (${m.nick || m.userTag}): **+${points} DKP** *(Mult: ${m.calc.combinedMultiplier}x)*${lastHitTag}`;
-    });
-
-    const embed = new EmbedBuilder()
-      .setTitle(`⚔️ PRESENÇA EM LOTE REGISTRADA: ${rec.eventName}`)
-      .setColor('#2ECC71')
-      .setDescription(`Foram pontuados com sucesso **${rec.totalMembers} jogadores**!\n\n${lines.join('\n')}${rec.totalMembers > 25 ? `\n*...e mais ${rec.totalMembers - 25} jogadores.*` : ''}`)
-      .addFields(
-        { name: '🎯 DKP Base', value: `\`${rec.baseDkp} pts\``, inline: true },
-        { name: '🛡️ Registrado por', value: `<@${user.id}>`, inline: true }
-      );
-
-    if (rec.lastHits && rec.lastHits.length > 0) {
-      const lhList = rec.lastHits.map(lh => `<@${lh.userId}> (\`${lh.nick}\`)`).join(', ');
-      embed.addFields({
-        name: `🎯 Last Hit (+10 DKP Bônus Fixo${rec.lastHits.length > 1 ? ' cada' : ''})`,
-        value: lhList,
-        inline: true
-      });
-    } else if (rec.lastHit) {
-      const single = Array.isArray(rec.lastHit) ? rec.lastHit[0] : rec.lastHit;
-      if (single) {
-        embed.addFields({
-          name: '🎯 Last Hit (+10 DKP Bônus Fixo)',
-          value: `<@${single.userId}> (\`${single.nick}\`)`,
-          inline: true
-        });
-      }
+    const embeds = buildPresenceResultEmbeds({ rec, userId: user.id, unresolved });
+    await interaction.reply({ embeds: [embeds[0]] });
+    for (let i = 1; i < embeds.length; i++) {
+      await interaction.followUp({ embeds: [embeds[i]] });
     }
-
-    embed
-      .setFooter({ text: 'DKP ponderado por CP e Nível creditado com sucesso!' })
-      .setTimestamp();
-
-    if (unresolved.length > 0) {
-      embed.addFields({
-        name: '⚠️ Não Encontrados no Discord (Sem Cadastro)',
-        value: `\`${unresolved.join(', ')}\`\n*(Peça para eles enviarem seus dados via \`/atualizar-char\`)*`,
-        inline: false
-      });
-    }
-
-    return interaction.reply({ embeds: [embed] });
+    return;
   }
 
   // 6. Modal Criar Leilão de Drop (Staff)

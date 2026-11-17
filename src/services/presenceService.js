@@ -1,3 +1,4 @@
+const { EmbedBuilder } = require('discord.js');
 const { getPresencas, savePresencas, getAusencias, saveAusencias, getConfig } = require('../database/db');
 const { getMember, getMemberDkp, addDkp, findMemberByNickOrId, resolveMembersBatch } = require('./memberService');
 const { calculateDkpReward } = require('./dkpCalculator');
@@ -288,10 +289,105 @@ function registerAbsence({ userId, userTag, startDate, endDate, eventOrDate, rea
   return record;
 }
 
+function formatPresenceMemberLine(m) {
+  const lastHitTag = m.isLastHit ? ' • 🎯 **[LAST HIT +10 DKP]**' : '';
+  const points = m.totalAwardedDkp || m.calc?.finalDkp || 0;
+  if (m.calc?.cutoffStatus?.isCut) {
+    return `🚫 <@${m.userId}> (${m.nick || m.userTag}): **0 DKP** *(Cortado: ${m.calc.cutoffStatus.details?.failedReason || 'Meta não atingida'})*${lastHitTag}`;
+  }
+  if (m.calc?.cutoffStatus?.inGracePeriod) {
+    return `⚠️ <@${m.userId}> (${m.nick || m.userTag}): **+${points} DKP** *(Aviso: meta vence em ${m.calc.cutoffStatus.details?.daysLeft || 0}d)*${lastHitTag}`;
+  }
+  return `• <@${m.userId}> (${m.nick || m.userTag}): **+${points} DKP** *(Mult: ${m.calc?.combinedMultiplier || '1.00'}x)*${lastHitTag}`;
+}
+
+function buildPresenceResultEmbeds({ rec, userId, unresolved = [], voiceChannelId = null, chunkSize = 20 }) {
+  const members = rec.members || [];
+  const totalPages = Math.max(1, Math.ceil(members.length / chunkSize));
+  const embeds = [];
+
+  for (let page = 1; page <= totalPages; page++) {
+    const start = (page - 1) * chunkSize;
+    const end = start + chunkSize;
+    const chunk = members.slice(start, end);
+    const chunkLines = chunk.map(m => formatPresenceMemberLine(m));
+
+    const isFirst = page === 1;
+    const isLast = page === totalPages;
+    const pageSuffix = totalPages > 1 ? ` (Parte ${page}/${totalPages})` : '';
+
+    const title = `⚔️ PRESENÇA REGISTRADA: ${rec.eventName}${pageSuffix}`;
+    const embed = new EmbedBuilder()
+      .setTitle(title)
+      .setColor('#2ECC71')
+      .setTimestamp();
+
+    if (isFirst) {
+      const originText = voiceChannelId
+        ? `Presença capturada via sala de voz <#${voiceChannelId}> para **${rec.totalMembers} membros**.\n`
+        : `Foram pontuados com sucesso **${rec.totalMembers} jogadores**!\n`;
+
+      const pageNote = totalPages > 1
+        ? `*(Listando jogadores ${start + 1} a ${Math.min(end, rec.totalMembers)} de ${rec.totalMembers})*\n\n`
+        : '\n';
+
+      embed.setDescription(originText + pageNote + chunkLines.join('\n'));
+
+      embed.addFields(
+        { name: '🎯 DKP Base', value: `\`${rec.baseDkp} pts\``, inline: true },
+        { name: '🛡️ Registrado por', value: `<@${userId}>`, inline: true }
+      );
+
+      if (rec.lastHits && rec.lastHits.length > 0) {
+        const lhList = rec.lastHits.map(lh => `<@${lh.userId}> \`(${lh.nick || lh.tag})\``).join(', ');
+        embed.addFields({
+          name: `🎯 Last Hit (+10 DKP Bônus Fixo${rec.lastHits.length > 1 ? ' cada' : ''})`,
+          value: lhList,
+          inline: true
+        });
+      } else if (rec.lastHit) {
+        const single = Array.isArray(rec.lastHit) ? rec.lastHit[0] : rec.lastHit;
+        if (single) {
+          embed.addFields({
+            name: '🎯 Last Hit (+10 DKP Bônus Fixo)',
+            value: `<@${single.userId}> \`(${single.nick || single.tag})\``,
+            inline: true
+          });
+        }
+      }
+    } else {
+      embed.setDescription(
+        `*(Continuação dos jogadores pontuados - ${start + 1} a ${Math.min(end, rec.totalMembers)} de ${rec.totalMembers})*\n\n` +
+        chunkLines.join('\n')
+      );
+    }
+
+    if (isLast && unresolved && unresolved.length > 0) {
+      embed.addFields({
+        name: '⚠️ Não Encontrados no Discord (Sem Cadastro)',
+        value: `\`${unresolved.join(', ')}\`\n*(Peça para eles enviarem seus dados via \`/atualizar-char\`)*`,
+        inline: false
+      });
+    }
+
+    embed.setFooter({
+      text: totalPages > 1
+        ? `Página ${page} de ${totalPages} • DKP ponderado por CP e Nível creditado!`
+        : 'DKP ponderado por CP e Nível creditado com sucesso!'
+    });
+
+    embeds.push(embed);
+  }
+
+  return embeds;
+}
+
 module.exports = {
   recordEventAttendance,
   submitPresenceDispute,
   approvePresenceDispute,
   rejectPresenceDispute,
-  registerAbsence
+  registerAbsence,
+  formatPresenceMemberLine,
+  buildPresenceResultEmbeds
 };

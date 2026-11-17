@@ -18,11 +18,8 @@ async function logAttendance({ client, eventName, baseDkp, registeredBy, awarded
   const validAwarded = (awardedList || []).filter(m => !m.noCpApproved && !m.calc?.cutoffStatus?.isCut);
   const cutAwarded = (awardedList || []).filter(m => m.noCpApproved || m.calc?.cutoffStatus?.isCut);
 
-  const lines = validAwarded.slice(0, 25).map(m => {
-    const lhText = m.isLastHit ? ' • 🎯 **Last Hit: +10 DKP**' : '';
-    const points = m.totalAwardedDkp || m.calc?.finalDkp || 0;
-    return `• <@${m.userId}> (\`${m.nick || m.userTag}\`): **+${points} DKP** *(Saldo: \`${m.newTotalDkp} DKP\`${lhText})*`;
-  });
+  const chunkSize = 20;
+  const totalPages = Math.max(1, Math.ceil(validAwarded.length / chunkSize));
 
   let lastHitSection = '';
   const lhList = Array.isArray(lastHit) ? lastHit : (lastHit ? [lastHit] : []);
@@ -31,32 +28,50 @@ async function logAttendance({ client, eventName, baseDkp, registeredBy, awarded
     lastHitSection = `🎯 **Last Hit (+10 DKP Bônus${lhList.length > 1 ? ' cada' : ''}):** ${names}\n`;
   }
 
-  const embed = new EmbedBuilder()
-    .setTitle(`⚔️ LOG DKP • PRESENÇA / ATTENDANCE • ${eventName.toUpperCase()}`)
-    .setColor('#2ECC71')
-    .setDescription(
-      `**Evento / Event:** \`${eventName}\`\n` +
-      `**DKP Base / Base DKP:** \`${baseDkp} DKP\`\n` +
-      lastHitSection +
-      `**Registrado por / Registered by:** ${registeredBy}\n\n` +
-      `**Pontuações Concedidas / Awarded Members (${validAwarded.length}):**\n` +
-      (lines.length > 0 ? lines.join('\n') : '*Nenhum membro pontuado.*') +
-      (validAwarded.length > 25 ? `\n*...e mais ${validAwarded.length - 25} membros.*` : '')
-    )
-    .setFooter({ text: 'NooMercy DKP Audit • Vlad, o Drácula da Shopee' })
-    .setTimestamp();
+  for (let page = 1; page <= totalPages; page++) {
+    const start = (page - 1) * chunkSize;
+    const end = start + chunkSize;
+    const chunk = validAwarded.slice(start, end);
 
-  if (cutAwarded.length > 0) {
-    const cutLines = cutAwarded.slice(0, 10).map(m =>
-      `🚫 <@${m.userId}>: **0 DKP** (${m.calc?.cutoffStatus?.details?.failedReason || 'Sem CP aprovado / No approved CP'})`
-    );
-    embed.addFields({
-      name: `⚠️ Membros Cortados / Blocked Members (${cutAwarded.length})`,
-      value: cutLines.join('\n')
+    const lines = chunk.map(m => {
+      const lhText = m.isLastHit ? ' • 🎯 **Last Hit: +10 DKP**' : '';
+      const points = m.totalAwardedDkp || m.calc?.finalDkp || 0;
+      return `• <@${m.userId}> (\`${m.nick || m.userTag}\`): **+${points} DKP** *(Saldo: \`${m.newTotalDkp} DKP\`${lhText})*`;
     });
-  }
 
-  await sendLog(client, embed);
+    const isFirst = page === 1;
+    const isLast = page === totalPages;
+    const pageSuffix = totalPages > 1 ? ` (Parte ${page}/${totalPages})` : '';
+
+    const embed = new EmbedBuilder()
+      .setTitle(`⚔️ LOG DKP • PRESENÇA / ATTENDANCE • ${eventName.toUpperCase()}${pageSuffix}`)
+      .setColor('#2ECC71')
+      .setDescription(
+        (isFirst
+          ? `**Evento / Event:** \`${eventName}\`\n` +
+            `**DKP Base / Base DKP:** \`${baseDkp} DKP\`\n` +
+            lastHitSection +
+            `**Registrado por / Registered by:** ${registeredBy}\n\n` +
+            `**Pontuações Concedidas / Awarded Members (${validAwarded.length} total${totalPages > 1 ? ` - Parte ${page}/${totalPages}` : ''}):**\n`
+          : `**Pontuações Concedidas (Continuação - Parte ${page}/${totalPages}):**\n`
+        ) +
+        (lines.length > 0 ? lines.join('\n') : '*Nenhum membro pontuado.*')
+      )
+      .setFooter({ text: totalPages > 1 ? `Página ${page}/${totalPages} • NooMercy DKP Audit` : 'NooMercy DKP Audit • Vlad, o Drácula da Shopee' })
+      .setTimestamp();
+
+    if (isLast && cutAwarded.length > 0) {
+      const cutLines = cutAwarded.map(m =>
+        `🚫 <@${m.userId}>: **0 DKP** (${m.calc?.cutoffStatus?.details?.failedReason || 'Sem CP aprovado / No approved CP'})`
+      );
+      embed.addFields({
+        name: `⚠️ Membros Cortados / Blocked Members (${cutAwarded.length})`,
+        value: cutLines.join('\n')
+      });
+    }
+
+    await sendLog(client, embed);
+  }
 }
 
 // 2. Log Contestação Aprovada
