@@ -192,24 +192,22 @@ async function updateAuctionDisplay(client, auction) {
 
       // Se recebeu lance (currentBid > 0), troca a tag do fórum: remove "Sem Lance", adiciona "Com Lance"
       if (auction.currentBid > 0) {
-        const parentForum = targetChannel.parent;
-        if (parentForum && parentForum.availableTags) {
-          const comLanceTag = parentForum.availableTags.find(t => t.name.includes('Com Lance'));
-          const semLanceTag = parentForum.availableTags.find(t => t.name.includes('Sem Lance'));
+        const parentForum = targetChannel.parent || (targetChannel.parentId ? await client.channels.fetch(targetChannel.parentId).catch(() => null) : null);
+        const comLanceTagId = parentForum?.availableTags?.find(t => t.name.includes('Com Lance'))?.id || '1572030359955050608';
+        const semLanceTagId = parentForum?.availableTags?.find(t => t.name.includes('Sem Lance'))?.id || '1572030359955050609';
 
-          let curTags = targetChannel.appliedTags || [];
-          let changed = false;
-          if (semLanceTag && curTags.includes(semLanceTag.id)) {
-            curTags = curTags.filter(id => id !== semLanceTag.id);
-            changed = true;
-          }
-          if (comLanceTag && !curTags.includes(comLanceTag.id)) {
-            curTags.push(comLanceTag.id);
-            changed = true;
-          }
-          if (changed) {
-            await targetChannel.setAppliedTags(curTags).catch(() => {});
-          }
+        let curTags = (targetChannel.appliedTags || []).slice();
+        let changed = false;
+        if (semLanceTagId && curTags.includes(semLanceTagId)) {
+          curTags = curTags.filter(id => id !== semLanceTagId);
+          changed = true;
+        }
+        if (comLanceTagId && !curTags.includes(comLanceTagId)) {
+          curTags.push(comLanceTagId);
+          changed = true;
+        }
+        if (changed) {
+          await targetChannel.setAppliedTags(curTags).catch(() => {});
         }
       }
     } else if (auction.messageId) {
@@ -262,18 +260,16 @@ async function closeAuctionThread(client, finished) {
       await targetChannel.send({ embeds: [winEmbed] }).catch(() => {});
 
       // 3. Atualiza tags do fórum: remove "Ativo", remove "Sem Lance", adiciona "Encerrado", preserva classe
-      const parentForum = targetChannel.parent;
-      if (parentForum && parentForum.availableTags) {
-        const closedTag = parentForum.availableTags.find(t => t.name.includes('Encerrado'));
-        const activeTag = parentForum.availableTags.find(t => t.name.includes('Ativo'));
-        const semLanceTag = parentForum.availableTags.find(t => t.name.includes('Sem Lance'));
+      const parentForum = targetChannel.parent || (targetChannel.parentId ? await client.channels.fetch(targetChannel.parentId).catch(() => null) : null);
+      const closedTagId = parentForum?.availableTags?.find(t => t.name.includes('Encerrado'))?.id || '1572020984838365236';
+      const activeTagId = parentForum?.availableTags?.find(t => t.name.includes('Ativo'))?.id || '1572020984838365235';
+      const semLanceTagId = parentForum?.availableTags?.find(t => t.name.includes('Sem Lance'))?.id || '1572030359955050609';
 
-        let newTags = (targetChannel.appliedTags || []).filter(tId => tId !== activeTag?.id && tId !== semLanceTag?.id);
-        if (closedTag && !newTags.includes(closedTag.id)) {
-          newTags.push(closedTag.id);
-        }
-        await targetChannel.setAppliedTags(newTags).catch(() => {});
+      let newTags = (targetChannel.appliedTags || []).filter(tId => tId !== activeTagId && tId !== semLanceTagId);
+      if (closedTagId && !newTags.includes(closedTagId)) {
+        newTags.push(closedTagId);
       }
+      await targetChannel.setAppliedTags(newTags).catch(() => {});
 
       // 4. Tranca e arquiva o tópico (Leilões finalizados = tópicos fechados)
       await targetChannel.setLocked(true).catch(() => {});
