@@ -3,7 +3,7 @@ const { submitCpUpdate, getMember, getMemberDkp, resolveMembersBatch } = require
 const { registerAbsence, submitPresenceDispute, recordEventAttendance, buildPresenceResultEmbeds } = require('../services/presenceService');
 const { placeBid, startAuction, renderAuctionEmbed, updateAuctionDisplay, createAuctionPost } = require('../services/auctionService');
 const { logAttendance, logAuctionBidLock, logAuctionBidUnlock } = require('../services/loggerService');
-const { getLeiloes, saveLeiloes } = require('../database/db');
+const { getLeiloes, saveLeiloes, getConfig } = require('../database/db');
 const { channels } = require('../config/channels');
 const { buildMemberDetailEmbed } = require('../services/staffMemberService');
 
@@ -290,10 +290,26 @@ async function handleModalSubmit(interaction) {
       });
     }
 
+    const config = getConfig();
+    let detectedKey = 'custom';
+    let baseDkpToUse = customBaseDkp;
+
+    const trimmedNome = eventoNome.trim().toLowerCase();
+    const matchedEvent = Object.values(config.events || {}).find(e => 
+      e.key.toLowerCase() === trimmedNome ||
+      e.name.toLowerCase() === trimmedNome ||
+      trimmedNome.includes(e.name.toLowerCase()) ||
+      e.name.toLowerCase().includes(trimmedNome)
+    );
+    if (matchedEvent) {
+      detectedKey = matchedEvent.key;
+      if (!baseDkpToUse) baseDkpToUse = matchedEvent.baseDkp;
+    }
+
     const rec = recordEventAttendance({
-      eventKey: 'custom',
+      eventKey: detectedKey,
       eventName: eventoNome,
-      customBaseDkp,
+      customBaseDkp: baseDkpToUse,
       membersList: resolved,
       registeredBy: user.tag || user.username,
       lastHitInput

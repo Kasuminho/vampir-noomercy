@@ -23,6 +23,11 @@
       "name": "Geena 23:00",
       "baseDkp": 30
     },
+    "geena_lv100": {
+      "key": "geena_lv100",
+      "name": "Geena Boss LV 100",
+      "baseDkp": 50
+    },
     "guerra_ocupacao": {
       "key": "guerra_ocupacao",
       "name": "Guerra de Ocupação (Sábado)",
