@@ -6,7 +6,7 @@ const { channels } = require('../config/channels');
 const { getLeiloes, saveLeiloes } = require('../database/db');
 const { startAuction, renderAuctionEmbed, createAuctionPost } = require('../services/auctionService');
 
-const PORT = parseInt(process.env.PORT || process.env.OVERLAY_PORT || '3000', 10);
+const PORT = parseInt(process.env.PORT || process.env.OVERLAY_PORT || '3001', 10);
 const PUBLIC_DIR = path.join(__dirname, '..', '..', 'public');
 
 function startWebServer(client) {

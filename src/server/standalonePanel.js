@@ -16,11 +16,12 @@ async function run() {
   await initDatabase();
 
   client.once('clientReady', () => {
+    const port = process.env.PORT || process.env.OVERLAY_PORT || '3001';
     console.log(`🤖 Vlad conectado ao Discord via API para envio de leilões!`);
     startWebServer(client);
     console.log('\n============================================================');
     console.log('🔥 PAINEL WEB DE LEILÕES EM LOTE ATIVO COM SUCESSO!');
-    console.log('👉 Acesse no seu navegador: http://localhost:3000');
+    console.log(`👉 Acesse no seu navegador: http://localhost:${port}`);
     console.log('📋 Dê CTRL+V em qualquer lugar da tela para colar os prints!');
     console.log('🚀 Clique em "Lançar Todos os Leilões" para postar no Discord.');
     console.log('============================================================\n');

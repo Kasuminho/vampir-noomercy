@@ -536,7 +536,7 @@ async function handleSlashCommand(interaction) {
     }
 
     if (sub === 'painel-web') {
-      const port = process.env.PORT || process.env.OVERLAY_PORT || '3000';
+      const port = process.env.PORT || process.env.OVERLAY_PORT || '3001';
       return interaction.reply({
         content:
           `🌐 **PAINEL WEB • CADASTRO DE LEILÕES EM LOTE**\n\n` +
