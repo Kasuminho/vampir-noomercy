@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const { AttachmentBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require('discord.js');
 const { channels } = require('../config/channels');
-const { getLeiloes, saveLeiloes } = require('../database/db');
+const { getLeiloes, saveLeiloes, syncActiveAuctions, getDeliveriesData, toggleAuctionDelivery } = require('../database/db');
 const { startAuction, renderAuctionEmbed, createAuctionPost } = require('../services/auctionService');
 
 const PORT = parseInt(process.env.PORT || process.env.OVERLAY_PORT || '3001', 10);
@@ -47,14 +47,73 @@ function startWebServer(client) {
       }));
     }
 
-    // 3. ROTA DE CONSULTA DE LEILÕES ATIVOS
+    // 3. ROTA DE CONSULTA DE LEILÕES ATIVOS (SINCRONIZADA COM BANCO)
     if (url.pathname === '/api/auctions/active' && req.method === 'GET') {
-      const leiloes = getLeiloes();
+      const active = await syncActiveAuctions();
       res.writeHead(200, { 'Content-Type': 'application/json' });
       return res.end(JSON.stringify({
         guildId: process.env.GUILD_ID || '1561462359124480042',
-        active: Object.values(leiloes.active || {})
+        active: Object.values(active || {})
       }));
+    }
+
+    // 3.1 ROTA DE GESTÃO DE ENTREGAS
+    if (url.pathname === '/api/deliveries' && req.method === 'GET') {
+      const deliveries = await getDeliveriesData();
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      return res.end(JSON.stringify({
+        success: true,
+        guildId: process.env.GUILD_ID || '1561462359124480042',
+        deliveries
+      }));
+    }
+
+    // 3.2 ROTA DE ALTERAR STATUS DE ENTREGA INDIVIDUAL
+    if (url.pathname === '/api/deliveries/toggle' && req.method === 'POST') {
+      let body = '';
+      req.on('data', chunk => body += chunk);
+      req.on('end', async () => {
+        try {
+          const payload = JSON.parse(body || '{}');
+          const { auctionId, delivered, deliveredBy } = payload;
+          if (!auctionId) {
+            res.writeHead(400, { 'Content-Type': 'application/json' });
+            return res.end(JSON.stringify({ success: false, error: 'auctionId é obrigatório' }));
+          }
+          const result = await toggleAuctionDelivery(auctionId, Boolean(delivered), deliveredBy || 'Staff');
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          return res.end(JSON.stringify(result));
+        } catch (err) {
+          res.writeHead(500, { 'Content-Type': 'application/json' });
+          return res.end(JSON.stringify({ success: false, error: err.message }));
+        }
+      });
+      return;
+    }
+
+    // 3.3 ROTA DE ALTERAR STATUS DE ENTREGA EM LOTE (POR JOGADOR)
+    if (url.pathname === '/api/deliveries/batch' && req.method === 'POST') {
+      let body = '';
+      req.on('data', chunk => body += chunk);
+      req.on('end', async () => {
+        try {
+          const payload = JSON.parse(body || '{}');
+          const { auctionIds, delivered, deliveredBy } = payload;
+          if (!Array.isArray(auctionIds) || auctionIds.length === 0) {
+            res.writeHead(400, { 'Content-Type': 'application/json' });
+            return res.end(JSON.stringify({ success: false, error: 'auctionIds deve ser um array não-vazio' }));
+          }
+          for (const aId of auctionIds) {
+            await toggleAuctionDelivery(aId, Boolean(delivered), deliveredBy || 'Staff');
+          }
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          return res.end(JSON.stringify({ success: true, count: auctionIds.length, delivered: Boolean(delivered) }));
+        } catch (err) {
+          res.writeHead(500, { 'Content-Type': 'application/json' });
+          return res.end(JSON.stringify({ success: false, error: err.message }));
+        }
+      });
+      return;
     }
 
     // 4. ROTA POST DE CRIAÇÃO DE LEILÕES EM LOTE

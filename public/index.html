@@ -468,6 +468,165 @@
       color: var(--text-muted);
     }
 
+    /* SISTEMA DE GESTÃO DE ENTREGAS */
+    .delivery-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      transition: transform 0.2s;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+      border-color: #4A4E68;
+    }
+
+    .stat-icon {
+      font-size: 28px;
+    }
+
+    .stat-val {
+      font-size: 22px;
+      font-weight: 800;
+      color: #FFF;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    /* PLAYER DELIVERY CARDS */
+    .player-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      transition: all 0.25s ease;
+    }
+
+    .player-card.all-delivered {
+      border-color: rgba(46, 204, 113, 0.4);
+      background: rgba(46, 204, 113, 0.03);
+    }
+
+    .player-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .player-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .player-nick {
+      font-size: 18px;
+      font-weight: 800;
+      color: #FFF;
+    }
+
+    .copy-nick-btn {
+      background: #171923;
+      border: 1px solid var(--border-color);
+      color: var(--gold);
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s;
+    }
+
+    .copy-nick-btn:hover {
+      background: var(--gold);
+      color: #000;
+      border-color: var(--gold);
+    }
+
+    .delivery-items-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 15px 0 0 0;
+    }
+
+    .delivery-item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 14px;
+      background: #12141C;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      gap: 12px;
+    }
+
+    .delivery-item-row.delivered {
+      opacity: 0.65;
+      border-color: rgba(46, 204, 113, 0.3);
+      background: rgba(46, 204, 113, 0.02);
+    }
+
+    .item-toggle-btn {
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .item-toggle-btn.btn-pending {
+      background: rgba(230, 126, 34, 0.15);
+      border-color: #E67E22;
+      color: #E67E22;
+    }
+
+    .item-toggle-btn.btn-pending:hover {
+      background: #E67E22;
+      color: #FFF;
+    }
+
+    .item-toggle-btn.btn-delivered {
+      background: rgba(46, 204, 113, 0.15);
+      border-color: #2ECC71;
+      color: #2ECC71;
+    }
+
+    .item-toggle-btn.btn-delivered:hover {
+      background: rgba(231, 76, 60, 0.2);
+      border-color: #E74C3C;
+      color: #E74C3C;
+    }
+
     /* ACTIVE CARDS */
     .active-card {
       background: var(--bg-card);
@@ -914,6 +1073,9 @@
     <button class="tab-btn" id="tabBtnActive" onclick="switchTab('active')">
       <span>🔥</span> Leilões Ativos <span class="tab-badge" id="activeBadgeCount">0</span>
     </button>
+    <button class="tab-btn" id="tabBtnDeliveries" onclick="switchTab('deliveries')">
+      <span>📦</span> Gestão de Entregas <span class="tab-badge" id="deliveriesBadgeCount">0</span>
+    </button>
   </div>
 
   <!-- CONTAINER -->
@@ -1017,6 +1179,81 @@
       <div class="pagination-bar" id="activePaginationBottom" style="display: none;"></div>
     </div>
 
+    <!-- TAB 3: GESTÃO DE ENTREGAS -->
+    <div id="deliveriesTabContent" style="display: none;">
+      <!-- CARDS DE MÉTRICAS -->
+      <div class="delivery-stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">📦</div>
+          <div>
+            <div class="stat-val" id="statTotalItems">0</div>
+            <div class="stat-label">Itens com Lance</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">⏳</div>
+          <div>
+            <div class="stat-val" style="color: #E67E22;" id="statPendingItems">0</div>
+            <div class="stat-label">Entregas Pendentes</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">✅</div>
+          <div>
+            <div class="stat-val" style="color: #2ECC71;" id="statDeliveredItems">0</div>
+            <div class="stat-label">Entregues</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">💰</div>
+          <div>
+            <div class="stat-val" style="color: #F1C40F;" id="statTotalDkp">0 DKP</div>
+            <div class="stat-label">DKP em Disputa</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BARRA DE FILTROS E MODO DE VISUALIZAÇÃO -->
+      <div class="active-filters-bar">
+        <div class="filter-options">
+          <input type="text" id="filterSearchDeliveries" class="filter-input" placeholder="🔍 Buscar por Nick, Discord ou Item..." oninput="renderDeliveries()">
+
+          <select id="filterDeliveryStatus" class="filter-select" onchange="renderDeliveries()">
+            <option value="pending" selected>⏳ Apenas Pendentes</option>
+            <option value="all">🌐 Todos os Status</option>
+            <option value="delivered">✅ Apenas Entregues</option>
+          </select>
+
+          <select id="filterDeliveryScope" class="filter-select" onchange="renderDeliveries()">
+            <option value="active" selected>🟢 Apenas Lote Atual (Ativos)</option>
+            <option value="all">📦 Todos (Ativos + Histórico)</option>
+          </select>
+
+          <select id="deliveryViewMode" class="filter-select" onchange="renderDeliveries()">
+            <option value="player" selected>👥 Agrupar por Jogador</option>
+            <option value="item">📜 Lista por Item</option>
+          </select>
+        </div>
+
+        <div>
+          <button type="button" class="btn btn-secondary" onclick="fetchDeliveries(true)" style="padding: 7px 14px; font-size: 13px;">
+            <span>🔄</span> Atualizar Entregas
+          </button>
+        </div>
+      </div>
+
+      <!-- CONTAINER DE ENTREGAS -->
+      <div id="deliveriesContainer">
+        <!-- Injetado via JS -->
+      </div>
+
+      <div id="deliveriesEmptyState" style="display: none; text-align: center; padding: 60px 20px; color: var(--text-muted);">
+        <div style="font-size: 40px; margin-bottom: 12px;">🎉</div>
+        <h3 style="color: #FFF; margin-bottom: 6px;">Nenhuma entrega pendente</h3>
+        <p>Todos os itens filtrados já foram entregues ou não há lances registrados com os filtros atuais.</p>
+      </div>
+    </div>
+
   </main>
 
   <!-- FOOTER -->
@@ -1061,6 +1298,7 @@
       addNewItemCard();
       setupGlobalPasteListener();
       checkBotStatus();
+      fetchDeliveries();
     });
 
     async function checkBotStatus() {
@@ -1417,6 +1655,7 @@
     // TABS SYSTEM & ACTIVE AUCTIONS WITH FILTERS, TIMER & PAGINATION
     let currentTab = 'batch';
     let activeAuctionsData = [];
+    let deliveriesData = [];
     let serverGuildId = '1561462359124480042';
 
     // Paginação
@@ -1433,24 +1672,300 @@
       currentTab = tab;
       const batchContent = document.getElementById('batchTabContent');
       const activeContent = document.getElementById('activeTabContent');
+      const deliveriesContent = document.getElementById('deliveriesTabContent');
       const tabBtnBatch = document.getElementById('tabBtnBatch');
       const tabBtnActive = document.getElementById('tabBtnActive');
+      const tabBtnDeliveries = document.getElementById('tabBtnDeliveries');
 
-      if (tab === 'batch') {
-        batchContent.style.display = 'block';
-        activeContent.style.display = 'none';
-        tabBtnBatch.classList.add('active');
-        tabBtnActive.classList.remove('active');
-      } else {
-        batchContent.style.display = 'none';
-        activeContent.style.display = 'block';
-        tabBtnBatch.classList.remove('active');
-        tabBtnActive.classList.add('active');
+      batchContent.style.display = tab === 'batch' ? 'block' : 'none';
+      activeContent.style.display = tab === 'active' ? 'block' : 'none';
+      deliveriesContent.style.display = tab === 'deliveries' ? 'block' : 'none';
 
-        // Ao abrir a aba de ativos, reseta timer e carrega dados
+      tabBtnBatch.classList.toggle('active', tab === 'batch');
+      tabBtnActive.classList.toggle('active', tab === 'active');
+      tabBtnDeliveries.classList.toggle('active', tab === 'deliveries');
+
+      if (tab === 'active') {
         secondsUntilRefresh = refreshIntervalSeconds;
         updateRefreshTimerBadge();
         fetchActiveAuctions();
+      } else if (tab === 'deliveries') {
+        fetchDeliveries();
+      }
+    }
+
+    function copyText(text, btn) {
+      if (!text) return;
+      navigator.clipboard.writeText(text).then(() => {
+        showToast(`Nick "${text}" copiado!`, '📋');
+        if (btn) {
+          const orig = btn.innerHTML;
+          btn.innerHTML = '✅ Copiado!';
+          setTimeout(() => btn.innerHTML = orig, 1800);
+        }
+      }).catch(() => {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        showToast(`Nick "${text}" copiado!`, '📋');
+      });
+    }
+
+    // --- GESTÃO DE ENTREGAS ---
+    async function fetchDeliveries(manual = false) {
+      try {
+        const res = await fetch('/api/deliveries');
+        const data = await res.json();
+        if (data.success) {
+          deliveriesData = data.deliveries || [];
+          renderDeliveries();
+          if (manual) showToast('Lista de entregas atualizada!', '🔄');
+        }
+      } catch (err) {
+        console.error('Erro ao buscar entregas:', err);
+        if (manual) showToast('Erro ao atualizar entregas', '❌');
+      }
+    }
+
+    async function toggleDelivery(auctionId, currentStatus) {
+      try {
+        const newStatus = !currentStatus;
+        const res = await fetch('/api/deliveries/toggle', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ auctionId, delivered: newStatus, deliveredBy: 'Staff Painel' })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast(newStatus ? 'Item marcado como ENTREGUE! ✅' : 'Item marcado como PENDENTE! ⏳', newStatus ? '✅' : '⏳');
+          const item = deliveriesData.find(d => d.id === auctionId);
+          if (item) {
+            item.delivered = newStatus;
+            item.deliveredAt = newStatus ? new Date().toISOString() : null;
+          }
+          renderDeliveries();
+          const activeItem = activeAuctionsData.find(a => a.id === auctionId);
+          if (activeItem) activeItem.delivered = newStatus;
+        } else {
+          showToast('Erro ao atualizar: ' + (data.error || 'Erro'), '❌');
+        }
+      } catch (err) {
+        showToast('Erro de comunicação com o servidor', '❌');
+      }
+    }
+
+    async function batchDeliverPlayer(auctionIds, deliverAll = true) {
+      try {
+        const res = await fetch('/api/deliveries/batch', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ auctionIds, delivered: deliverAll, deliveredBy: 'Staff Painel' })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast(deliverAll ? `Todos os ${auctionIds.length} itens marcados como ENTREGUES! ✅` : `Itens marcados como PENDENTES! ⏳`, deliverAll ? '✅' : '⏳');
+          auctionIds.forEach(id => {
+            const item = deliveriesData.find(d => d.id === id);
+            if (item) {
+              item.delivered = deliverAll;
+              item.deliveredAt = deliverAll ? new Date().toISOString() : null;
+            }
+          });
+          renderDeliveries();
+        } else {
+          showToast('Erro ao atualizar: ' + (data.error || 'Erro'), '❌');
+        }
+      } catch (err) {
+        showToast('Erro de comunicação com o servidor', '❌');
+      }
+    }
+
+    function renderDeliveries() {
+      const container = document.getElementById('deliveriesContainer');
+      const emptyState = document.getElementById('deliveriesEmptyState');
+      if (!container) return;
+
+      const search = (document.getElementById('filterSearchDeliveries')?.value || '').toLowerCase().trim();
+      const statusFilter = document.getElementById('filterDeliveryStatus')?.value || 'pending';
+      const scopeFilter = document.getElementById('filterDeliveryScope')?.value || 'active';
+      const viewMode = document.getElementById('deliveryViewMode')?.value || 'player';
+
+      // Filtra escopo (apenas lote atual / ativos vs todos)
+      let items = deliveriesData.filter(d => {
+        if (scopeFilter === 'active') return d.status === 'active';
+        return true;
+      });
+
+      // Atualiza métricas globais antes dos outros filtros
+      const totalItems = items.length;
+      const pendingItems = items.filter(d => !d.delivered).length;
+      const deliveredItems = items.filter(d => d.delivered).length;
+      const totalDkp = items.reduce((acc, d) => acc + (d.currentBid || 0), 0);
+
+      const elTotal = document.getElementById('statTotalItems');
+      const elPending = document.getElementById('statPendingItems');
+      const elDelivered = document.getElementById('statDeliveredItems');
+      const elDkp = document.getElementById('statTotalDkp');
+      const elBadge = document.getElementById('deliveriesBadgeCount');
+
+      if (elTotal) elTotal.textContent = totalItems;
+      if (elPending) elPending.textContent = pendingItems;
+      if (elDelivered) elDelivered.textContent = deliveredItems;
+      if (elDkp) elDkp.textContent = `${totalDkp} DKP`;
+      if (elBadge) elBadge.textContent = pendingItems;
+
+      // Filtro de status da entrega
+      if (statusFilter === 'pending') {
+        items = items.filter(d => !d.delivered);
+      } else if (statusFilter === 'delivered') {
+        items = items.filter(d => d.delivered);
+      }
+
+      // Filtro de busca (nick, tag, item)
+      if (search) {
+        items = items.filter(d =>
+          (d.itemName || '').toLowerCase().includes(search) ||
+          (d.highestBidderNick || '').toLowerCase().includes(search) ||
+          (d.highestBidderTag || '').toLowerCase().includes(search)
+        );
+      }
+
+      if (items.length === 0) {
+        container.innerHTML = '';
+        if (emptyState) emptyState.style.display = 'block';
+        return;
+      }
+      if (emptyState) emptyState.style.display = 'none';
+
+      if (viewMode === 'player') {
+        // AGRUPAR POR JOGADOR
+        const playerMap = {};
+        for (const item of items) {
+          const pid = item.highestBidderId || 'unknown';
+          if (!playerMap[pid]) {
+            playerMap[pid] = {
+              userId: pid,
+              userTag: item.highestBidderTag || 'Membro',
+              nick: item.highestBidderNick || item.highestBidderTag || 'Sem Nick',
+              classe: item.highestBidderClass || 'Livre',
+              items: []
+            };
+          }
+          playerMap[pid].items.push(item);
+        }
+
+        const players = Object.values(playerMap);
+        // Ordena por quantidade de itens pendentes
+        players.sort((a, b) => {
+          const aPending = a.items.filter(i => !i.delivered).length;
+          const bPending = b.items.filter(i => !i.delivered).length;
+          return bPending - aPending;
+        });
+
+        container.innerHTML = players.map(p => {
+          const pTotalDkp = p.items.reduce((acc, i) => acc + (i.currentBid || 0), 0);
+          const allDelivered = p.items.every(i => i.delivered);
+          const pPendingCount = p.items.filter(i => !i.delivered).length;
+          const classObj = CLASSES.find(c => c.value.toLowerCase() === p.classe.toLowerCase()) || CLASSES[0];
+          const itemIdsJson = JSON.stringify(p.items.map(i => i.id)).replace(/"/g, '&quot;');
+
+          return `
+            <div class="player-card ${allDelivered ? 'all-delivered' : ''}">
+              <div class="player-header">
+                <div class="player-info">
+                  <span style="font-size: 26px;">${classObj.icon}</span>
+                  <div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                      <span class="player-nick">${p.nick}</span>
+                      <button type="button" class="copy-nick-btn" onclick="copyText('${p.nick}', this)">
+                        <span>📋</span> Copiar Nick
+                      </button>
+                      <span class="badge" style="font-size: 11px;">${p.classe}</span>
+                    </div>
+                    <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">
+                      Discord: <strong>@${p.userTag}</strong> • ID: <code>${p.userId}</code>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 14px;">
+                  <div style="text-align: right;">
+                    <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Total DKP</div>
+                    <div style="font-size: 18px; font-weight: 800; color: #F1C40F;">${pTotalDkp} DKP</div>
+                  </div>
+
+                  ${allDelivered
+                    ? `<button type="button" class="item-toggle-btn btn-delivered" onclick="batchDeliverPlayer(${itemIdsJson}, false)" title="Desmarcar todas as entregas deste membro">
+                         ✅ Tudo Entregue (Reverter)
+                       </button>`
+                    : `<button type="button" class="item-toggle-btn btn-pending" onclick="batchDeliverPlayer(${itemIdsJson}, true)" style="font-size: 13px; padding: 8px 16px;">
+                         🚀 Entregar Todos (${pPendingCount})
+                       </button>`
+                  }
+                </div>
+              </div>
+
+              <div class="delivery-items-list">
+                ${p.items.map(item => `
+                  <div class="delivery-item-row ${item.delivered ? 'delivered' : ''}">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                      ${item.imageUrl ? `<img src="${item.imageUrl}" style="width: 36px; height: 36px; border-radius: 6px; object-fit: contain; background: #0B0D13; border: 1px solid rgba(255,255,255,0.08);" loading="lazy">` : `<span style="font-size: 20px;">🗡️</span>`}
+                      <div>
+                        <strong style="color: #FFF; font-size: 14px;">${item.itemName}</strong>
+                        <div style="font-size: 11px; color: var(--text-muted);">
+                          Lance Vencedor: <strong style="color: #F1C40F;">${item.currentBid} DKP</strong>
+                          ${item.status === 'active' ? '• <span style="color:#2ECC71;">🟢 Leilão Ativo</span>' : '• <span style="color:#8E9297;">🏁 Encerrado</span>'}
+                          ${item.delivered && item.deliveredAt ? `• Entregue em ${new Date(item.deliveredAt).toLocaleTimeString()}` : ''}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <button type="button" class="item-toggle-btn ${item.delivered ? 'btn-delivered' : 'btn-pending'}" onclick="toggleDelivery('${item.id}', ${item.delivered})">
+                        ${item.delivered ? '✅ Entregue' : '⏳ Marcar Entregue'}
+                      </button>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `;
+        }).join('');
+
+      } else {
+        // VISÃO EM LISTA DE ITENS
+        container.innerHTML = `
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            ${items.map(item => `
+              <div class="delivery-item-row ${item.delivered ? 'delivered' : ''}" style="padding: 14px 18px;">
+                <div style="display: flex; align-items: center; gap: 14px; flex: 1;">
+                  ${item.imageUrl ? `<img src="${item.imageUrl}" style="width: 44px; height: 44px; border-radius: 8px; object-fit: contain; background: #0B0D13; border: 1px solid rgba(255,255,255,0.08);" loading="lazy">` : `<span style="font-size: 24px;">🗡️</span>`}
+                  <div>
+                    <div style="font-size: 15px; font-weight: 700; color: #FFF;">${item.itemName}</div>
+                    <div style="font-size: 12px; color: var(--text-muted); margin-top: 3px;">
+                      Ganhador: <strong style="color:#FFF;">${item.highestBidderNick}</strong> (@${item.highestBidderTag}) •
+                      Classe: <strong>${item.highestBidderClass}</strong> •
+                      Lance: <strong style="color:#F1C40F;">${item.currentBid} DKP</strong>
+                      ${item.status === 'active' ? '• <span style="color:#2ECC71;">🟢 Ativo</span>' : '• <span style="color:#8E9297;">🏁 Encerrado</span>'}
+                    </div>
+                  </div>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <button type="button" class="copy-nick-btn" onclick="copyText('${item.highestBidderNick}', this)">
+                    <span>📋</span> Copiar Nick
+                  </button>
+                  <button type="button" class="item-toggle-btn ${item.delivered ? 'btn-delivered' : 'btn-pending'}" onclick="toggleDelivery('${item.id}', ${item.delivered})">
+                    ${item.delivered ? '✅ Entregue' : '⏳ Marcar Entregue'}
+                  </button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
       }
     }
 
@@ -1679,7 +2194,13 @@
               </div>
               <div style="text-align: right;">
                 ${hasBid
-                  ? `<div class="bid-highlight-user">por <strong>@${a.highestBidderTag || 'Membro'}</strong></div>`
+                  ? `<div class="bid-highlight-user">
+                       <div style="display: inline-flex; align-items: center; gap: 5px;">
+                         <strong style="color: #FFF;">${a.highestBidderNick || a.highestBidderTag || 'Membro'}</strong>
+                         <button type="button" class="copy-nick-btn" onclick="copyText('${a.highestBidderNick || a.highestBidderTag || ''}', this)" title="Copiar Nick In-game" style="padding: 2px 6px; font-size: 11px;">📋</button>
+                       </div>
+                       <div style="font-size: 11px; color: var(--text-muted); margin-top: 1px;">(@${a.highestBidderTag || 'Membro'})</div>
+                     </div>`
                   : `<span class="badge" style="background: rgba(255,255,255,0.06); font-size: 11px;">💤 Sem Lances</span>`
                 }
               </div>

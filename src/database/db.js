@@ -509,21 +509,33 @@ function getLeiloes() {
 
 async function syncActiveAuctions() {
   try {
-    const auctionsRes = await pool.query("SELECT * FROM auctions WHERE status = 'active';");
+    const auctionsRes = await pool.query(`
+      SELECT a.*, m.nick as member_nick, m.classe as member_classe, m.user_tag as member_tag
+      FROM auctions a
+      LEFT JOIN members m ON a.highest_bidder = m.user_id
+      WHERE a.status = 'active';
+    `);
     const activeAuctions = {};
     for (const r of auctionsRes.rows) {
+      const raw = r.raw_data || {};
       activeAuctions[r.id] = {
+        ...raw,
         id: r.id,
-        itemName: r.item_name,
-        description: r.description,
-        sellerId: r.seller_id,
-        currentBid: r.current_bid,
-        highestBidderId: r.highest_bidder,
+        itemName: r.item_name || raw.itemName,
+        description: r.description || raw.description,
+        sellerId: r.seller_id || raw.sellerId,
+        currentBid: (r.current_bid !== null && r.current_bid !== undefined) ? r.current_bid : (raw.currentBid || 0),
+        highestBidderId: r.highest_bidder || raw.highestBidderId || null,
+        highestBidderTag: r.member_tag || raw.highestBidderTag || null,
+        highestBidderNick: r.member_nick || raw.highestBidderNick || null,
+        highestBidderClass: r.member_classe || raw.highestBidderClass || null,
         status: r.status,
-        endsAt: r.ends_at ? r.ends_at.toISOString() : null,
-        endsAtTimestamp: r.ends_at ? new Date(r.ends_at).getTime() : null,
-        bids: r.bids || [],
-        ...(r.raw_data || {})
+        delivered: r.delivered || raw.delivered || false,
+        deliveredAt: r.delivered_at || raw.deliveredAt || null,
+        deliveredBy: r.delivered_by || raw.deliveredBy || null,
+        endsAt: r.ends_at ? r.ends_at.toISOString() : raw.endsAt,
+        endsAtTimestamp: r.ends_at ? new Date(r.ends_at).getTime() : raw.endsAtTimestamp,
+        bids: r.bids || raw.bids || []
       };
     }
     if (!memoryCache.leiloes) {
@@ -533,7 +545,66 @@ async function syncActiveAuctions() {
     }
     return activeAuctions;
   } catch (err) {
+    console.error('Erro em syncActiveAuctions:', err.message);
     return memoryCache.leiloes ? memoryCache.leiloes.active : {};
+  }
+}
+
+async function getDeliveriesData() {
+  try {
+    const res = await pool.query(`
+      SELECT a.*, m.nick as member_nick, m.classe as member_classe, m.user_tag as member_tag
+      FROM auctions a
+      LEFT JOIN members m ON a.highest_bidder = m.user_id
+      WHERE a.current_bid > 0 AND a.highest_bidder IS NOT NULL
+      ORDER BY a.ends_at DESC;
+    `);
+
+    return res.rows.map(r => {
+      const raw = r.raw_data || {};
+      return {
+        id: r.id,
+        itemName: r.item_name || raw.itemName,
+        currentBid: r.current_bid,
+        highestBidderId: r.highest_bidder,
+        highestBidderTag: r.member_tag || raw.highestBidderTag || 'Membro',
+        highestBidderNick: r.member_nick || raw.highestBidderNick || r.member_tag || 'Sem Nick',
+        highestBidderClass: r.member_classe || raw.highestBidderClass || raw.targetClass || 'Livre',
+        targetClass: raw.targetClass || 'Livre',
+        imageUrl: raw.imageUrl || null,
+        channelId: raw.channelId || null,
+        status: r.status,
+        delivered: r.delivered || raw.delivered || false,
+        deliveredAt: r.delivered_at || raw.deliveredAt || null,
+        deliveredBy: r.delivered_by || raw.deliveredBy || null,
+        endsAtTimestamp: r.ends_at ? new Date(r.ends_at).getTime() : raw.endsAtTimestamp
+      };
+    });
+  } catch (err) {
+    console.error('Erro em getDeliveriesData:', err.message);
+    return [];
+  }
+}
+
+async function toggleAuctionDelivery(auctionId, delivered, deliveredBy = 'Staff') {
+  try {
+    const now = delivered ? new Date() : null;
+    await pool.query(
+      `UPDATE auctions
+       SET delivered = $1, delivered_at = $2, delivered_by = $3,
+           raw_data = jsonb_set(raw_data, '{delivered}', $4::jsonb)
+       WHERE id = $5;`,
+      [delivered, now, delivered ? deliveredBy : null, JSON.stringify(delivered), auctionId]
+    );
+    if (memoryCache.leiloes?.active?.[auctionId]) {
+      memoryCache.leiloes.active[auctionId].delivered = delivered;
+      memoryCache.leiloes.active[auctionId].deliveredAt = now;
+      memoryCache.leiloes.active[auctionId].deliveredBy = delivered ? deliveredBy : null;
+    }
+    return { success: true, delivered, auctionId };
+  } catch (err) {
+    console.error('Erro ao alterar status de entrega:', err.message);
+    return { success: false, error: err.message };
   }
 }
 
@@ -637,5 +708,7 @@ module.exports = {
 
   getLeiloes,
   saveLeiloes,
-  syncActiveAuctions
+  syncActiveAuctions,
+  getDeliveriesData,
+  toggleAuctionDelivery
 };
