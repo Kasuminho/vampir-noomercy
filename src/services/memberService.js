@@ -1,4 +1,19 @@
-const { getMembers, saveMembers, getDkp, saveDkp } = require('../database/db');
+const { getMembers, saveMembers, getDkp, saveDkp, getLeiloes } = require('../database/db');
+
+function calculateActiveLockedDkp(userId) {
+  try {
+    const leiloes = getLeiloes();
+    let total = 0;
+    for (const auc of Object.values(leiloes.active || {})) {
+      if (auc.status === 'active' && auc.highestBidderId === userId && auc.currentBid > 0) {
+        total += auc.currentBid;
+      }
+    }
+    return total;
+  } catch {
+    return 0;
+  }
+}
 
 function getMember(userId) {
   const members = getMembers();
@@ -19,12 +34,16 @@ function getMemberDkp(userId) {
     saveDkp(dkpData);
   }
   const rec = dkpData.balances[userId];
-  rec.lockedDkp = rec.lockedDkp || 0;
+
+  // Auto-calibração: lockedDkp é sempre a soma real dos lances em leilões ativos
+  const realLocked = calculateActiveLockedDkp(userId);
+  rec.lockedDkp = realLocked;
+
   return {
     userId,
     totalDkp: rec.totalDkp || 0,
-    lockedDkp: rec.lockedDkp || 0,
-    availableDkp: Math.max(0, (rec.totalDkp || 0) - (rec.lockedDkp || 0)),
+    lockedDkp: realLocked,
+    availableDkp: Math.max(0, (rec.totalDkp || 0) - realLocked),
     eventsAttended: rec.eventsAttended || 0,
     lastEvent: rec.lastEvent || 'Nenhum',
     lastDate: rec.lastDate || null
@@ -341,6 +360,7 @@ function resolveMembersBatch(inputString, guildMembers = null) {
 module.exports = {
   getMember,
   getMemberDkp,
+  calculateActiveLockedDkp,
   submitCpUpdate,
   approveCpSubmission,
   rejectCpSubmission,

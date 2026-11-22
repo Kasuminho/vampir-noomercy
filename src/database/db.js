@@ -108,6 +108,23 @@ async function initDatabase() {
     }
 
     // 3. DKP Balances & History
+    // Auto-heal: calibra locked_dkp com base na soma real dos leilões ativos antes de carregar o cache
+    try {
+      await pool.query(`
+        UPDATE dkp_balances b
+        SET locked_dkp = COALESCE(a.real_locked, 0)
+        FROM (
+          SELECT b2.user_id, COALESCE(SUM(auc.current_bid), 0) as real_locked
+          FROM dkp_balances b2
+          LEFT JOIN auctions auc ON auc.highest_bidder = b2.user_id AND auc.status = 'active' AND auc.current_bid > 0
+          GROUP BY b2.user_id
+        ) a
+        WHERE b.user_id = a.user_id AND b.locked_dkp != COALESCE(a.real_locked, 0);
+      `);
+    } catch (err) {
+      console.warn('[DB AUTO-HEAL] Aviso ao calibrar locked_dkp na inicialização:', err.message);
+    }
+
     const balancesRes = await pool.query('SELECT * FROM dkp_balances;');
     const balancesMap = {};
     for (const r of balancesRes.rows) {
