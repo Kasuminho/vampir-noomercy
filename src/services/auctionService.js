@@ -1,7 +1,7 @@
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const fs = require('fs');
 const path = require('path');
-const { getLeiloes, saveLeiloes, getConfig } = require('../database/db');
+const { getLeiloes, saveLeiloes, getConfig, pool } = require('../database/db');
 const { getMember, getMemberDkp, lockDkp, unlockDkp, deductLockedDkp } = require('./memberService');
 const { logAuctionWon, logAuctionNoBids } = require('./loggerService');
 
@@ -178,7 +178,17 @@ async function createAuctionPost({ client, auction, files = [] }) {
  * Atualiza o embed do leilão em tempo real após um lance
  */
 async function updateAuctionDisplay(client, auction) {
-  if (!auction || !auction.channelId) return;
+  if (!auction) return;
+  if (!auction.channelId) {
+    try {
+      const dbRes = await pool.query("SELECT raw_data->>'channelId' as ch_id FROM auctions WHERE id = $1;", [auction.id]);
+      if (dbRes.rows[0]?.ch_id) {
+        auction.channelId = dbRes.rows[0].ch_id;
+        auction.messageId = dbRes.rows[0].ch_id;
+      }
+    } catch {}
+  }
+  if (!auction.channelId) return;
   try {
     const targetChannel = await client.channels.fetch(auction.channelId).catch(() => null);
     if (!targetChannel) return;

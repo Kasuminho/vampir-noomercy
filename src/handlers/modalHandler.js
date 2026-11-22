@@ -238,6 +238,13 @@ async function handleModalSubmit(interaction) {
     const itemId = customId.replace('modal_bid_', '');
     const amount = fields.getTextInputValue('input_bid_amount');
 
+    // Garante que o leilão em memória conheça o channelId da thread de onde veio a interação
+    const leiloes = getLeiloes();
+    if (leiloes.active[itemId] && !leiloes.active[itemId].channelId && interaction.channel?.isThread()) {
+      leiloes.active[itemId].channelId = interaction.channelId;
+      leiloes.active[itemId].messageId = interaction.channelId;
+    }
+
     const result = placeBid({
       itemId,
       userId: user.id,

@@ -622,12 +622,15 @@ function saveLeiloes(data) {
              status, ends_at, bids, raw_data, created_at, updated_at
            ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, NOW())
            ON CONFLICT (id) DO UPDATE SET
-             current_bid = EXCLUDED.current_bid,
-             highest_bidder = EXCLUDED.highest_bidder,
+             current_bid = CASE WHEN EXCLUDED.current_bid > 0 THEN EXCLUDED.current_bid ELSE auctions.current_bid END,
+             highest_bidder = COALESCE(EXCLUDED.highest_bidder, auctions.highest_bidder),
              status = EXCLUDED.status,
-             ends_at = EXCLUDED.ends_at,
-             bids = EXCLUDED.bids,
-             raw_data = EXCLUDED.raw_data,
+             ends_at = COALESCE(EXCLUDED.ends_at, auctions.ends_at),
+             bids = CASE WHEN jsonb_array_length(EXCLUDED.bids::jsonb) > 0 THEN EXCLUDED.bids ELSE auctions.bids END,
+             raw_data = auctions.raw_data || EXCLUDED.raw_data || jsonb_build_object(
+               'channelId', COALESCE(EXCLUDED.raw_data->>'channelId', auctions.raw_data->>'channelId'),
+               'messageId', COALESCE(EXCLUDED.raw_data->>'messageId', auctions.raw_data->>'messageId')
+             ),
              updated_at = NOW();`,
           [
             lId,
