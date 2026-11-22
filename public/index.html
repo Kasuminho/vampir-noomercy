@@ -363,6 +363,111 @@
       cursor: pointer;
     }
 
+    .filter-input {
+      background: #171923;
+      border: 1px solid var(--border-color);
+      color: #FFF;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.2s;
+      min-width: 180px;
+    }
+
+    .filter-input:focus {
+      border-color: #E67E22;
+    }
+
+    /* TIMER BADGE AUTO-REFRESH */
+    .timer-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(46, 204, 113, 0.12);
+      border: 1px solid rgba(46, 204, 113, 0.3);
+      color: #2ECC71;
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      user-select: none;
+    }
+
+    .timer-badge.paused {
+      background: rgba(142, 146, 151, 0.12);
+      border-color: rgba(142, 146, 151, 0.3);
+      color: var(--text-muted);
+    }
+
+    /* BARRA DE PAGINAÇÃO */
+    .pagination-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      padding: 12px 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      margin-bottom: 25px;
+    }
+
+    .pagination-info {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .pagination-info strong {
+      color: #FFF;
+    }
+
+    .pagination-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .page-btn {
+      background: #171923;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .page-btn:hover:not(:disabled) {
+      border-color: #E67E22;
+      background: #202330;
+      color: #FFF;
+    }
+
+    .page-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    .page-current-indicator {
+      font-size: 13px;
+      font-weight: 700;
+      color: #E67E22;
+      padding: 0 8px;
+    }
+
+    .page-size-selector {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
     /* ACTIVE CARDS */
     .active-card {
       background: var(--bg-card);
@@ -854,16 +959,19 @@
       </div>
     </div>
 
-    <!-- TAB 2: LEILÕES ATIVOS (MONITORAMENTO COM FILTRO) -->
+    <!-- TAB 2: LEILÕES ATIVOS (MONITORAMENTO COM FILTRO, TIMER E PAGINAÇÃO) -->
     <div id="activeTabContent" style="display: none;">
       <!-- BARRA DE FILTROS DOS ATIVOS -->
       <div class="active-filters-bar">
         <div class="filter-options">
+          <input type="text" id="filterSearchActive" class="filter-input" placeholder="🔍 Buscar por item..." oninput="onFilterChange()">
+
           <label class="filter-toggle-label">
-            <input type="checkbox" id="filterHideNoBids" onchange="renderActiveAuctions()">
-            <span>🔥 Ocultar leilões sem lances (Apenas com Bid)</span>
+            <input type="checkbox" id="filterHideNoBids" onchange="onFilterChange()">
+            <span>🔥 Apenas com Bid</span>
           </label>
-          <select id="filterClassActive" class="filter-select" onchange="renderActiveAuctions()">
+
+          <select id="filterClassActive" class="filter-select" onchange="onFilterChange()">
             <option value="all">🌐 Todas as Classes</option>
             <option value="Livre">🌐 Livre</option>
             <option value="Bloodstained">🩸 Bloodstained</option>
@@ -873,12 +981,27 @@
             <option value="Grim Reaper">💀 Grim Reaper</option>
           </select>
         </div>
-        <div>
-          <button type="button" class="btn btn-secondary" onclick="fetchActiveAuctions(true)" style="padding: 7px 14px; font-size: 13px;">
-            <span>🔄</span> Atualizar
+
+        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+          <div class="timer-badge" id="refreshTimerBadge" title="Tempo restante até a próxima atualização automática">
+            <span>⏱️</span> <span id="refreshTimerText">Atualiza em 15s</span>
+          </div>
+
+          <select id="autoRefreshIntervalSelect" class="filter-select" onchange="onRefreshIntervalChange()" title="Frequência do Auto-Refresh">
+            <option value="15" selected>⏱️ Intervalo: 15s</option>
+            <option value="30">⏱️ Intervalo: 30s</option>
+            <option value="60">⏱️ Intervalo: 60s</option>
+            <option value="0">⏸️ Pausado</option>
+          </select>
+
+          <button type="button" class="btn btn-secondary" id="btnManualRefresh" onclick="fetchActiveAuctions(true)" style="padding: 7px 14px; font-size: 13px;">
+            <span>🔄</span> Atualizar Agora
           </button>
         </div>
       </div>
+
+      <!-- BARRA DE PAGINAÇÃO SUPERIOR -->
+      <div class="pagination-bar" id="activePaginationTop" style="margin-top: 0; margin-bottom: 20px; display: none;"></div>
 
       <!-- GRID DE LEILÕES ATIVOS -->
       <div class="items-grid" id="activeItemsGrid">
@@ -887,8 +1010,11 @@
       <div id="activeEmptyState" style="display: none; text-align: center; padding: 60px 20px; color: var(--text-muted);">
         <div style="font-size: 40px; margin-bottom: 12px;">💤</div>
         <h3 style="color: #FFF; margin-bottom: 6px;">Nenhum leilão corresponde aos filtros</h3>
-        <p>Tente desmarcar a opção de ocultar itens sem lances ou aguarde a abertura de novos leilões.</p>
+        <p>Tente desmarcar opções de filtro ou aguarde a abertura de novos leilões.</p>
       </div>
+
+      <!-- BARRA DE PAGINAÇÃO INFERIOR -->
+      <div class="pagination-bar" id="activePaginationBottom" style="display: none;"></div>
     </div>
 
   </main>
@@ -1288,10 +1414,20 @@
       }
     }
 
-    // TABS SYSTEM & ACTIVE AUCTIONS WITH FILTERS
+    // TABS SYSTEM & ACTIVE AUCTIONS WITH FILTERS, TIMER & PAGINATION
     let currentTab = 'batch';
     let activeAuctionsData = [];
     let serverGuildId = '1561462359124480042';
+
+    // Paginação
+    let currentPage = 1;
+    let pageSize = 12;
+
+    // Timer e Auto-Refresh
+    let refreshIntervalSeconds = 15;
+    let secondsUntilRefresh = 15;
+    let isFetchingAuctions = false;
+    let lastRenderSignature = '';
 
     function switchTab(tab) {
       currentTab = tab;
@@ -1310,13 +1446,71 @@
         activeContent.style.display = 'block';
         tabBtnBatch.classList.remove('active');
         tabBtnActive.classList.add('active');
+
+        // Ao abrir a aba de ativos, reseta timer e carrega dados
+        secondsUntilRefresh = refreshIntervalSeconds;
+        updateRefreshTimerBadge();
         fetchActiveAuctions();
       }
     }
 
+    function onRefreshIntervalChange() {
+      const select = document.getElementById('autoRefreshIntervalSelect');
+      refreshIntervalSeconds = parseInt(select.value, 10);
+      secondsUntilRefresh = refreshIntervalSeconds;
+      updateRefreshTimerBadge();
+    }
+
+    function updateRefreshTimerBadge() {
+      const badge = document.getElementById('refreshTimerBadge');
+      const text = document.getElementById('refreshTimerText');
+      if (!badge || !text) return;
+
+      if (refreshIntervalSeconds === 0) {
+        badge.classList.add('paused');
+        text.textContent = 'Auto-Refresh Pausado';
+      } else {
+        badge.classList.remove('paused');
+        text.textContent = `Atualiza em ${secondsUntilRefresh}s`;
+      }
+    }
+
+    function onFilterChange() {
+      currentPage = 1;
+      lastRenderSignature = '';
+      renderActiveAuctions();
+    }
+
+    function onPageSizeChange(newSize) {
+      pageSize = parseInt(newSize, 10);
+      currentPage = 1;
+      lastRenderSignature = '';
+      renderActiveAuctions();
+    }
+
+    function goToPage(page) {
+      currentPage = page;
+      lastRenderSignature = '';
+      renderActiveAuctions();
+      const container = document.getElementById('activeTabContent');
+      if (container) {
+        container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
     async function fetchActiveAuctions(manual = false) {
+      if (isFetchingAuctions) return;
+      isFetchingAuctions = true;
+
+      const refreshBtn = document.getElementById('btnManualRefresh');
+      if (manual && refreshBtn) {
+        refreshBtn.disabled = true;
+        refreshBtn.innerHTML = '<span>⏳</span> Buscando...';
+      }
+
       try {
         const res = await fetch('/api/auctions/active');
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
         if (data.guildId) serverGuildId = data.guildId;
         activeAuctionsData = data.active || [];
@@ -1325,18 +1519,29 @@
         if (manual) showToast('Lista de leilões ativos atualizada!', '🔄');
       } catch (err) {
         console.error('Erro ao buscar leilões ativos:', err);
+        if (manual) showToast('Falha ao atualizar leilões', '❌');
+      } finally {
+        isFetchingAuctions = false;
+        secondsUntilRefresh = refreshIntervalSeconds;
+        updateRefreshTimerBadge();
+        if (manual && refreshBtn) {
+          refreshBtn.disabled = false;
+          refreshBtn.innerHTML = '<span>🔄</span> Atualizar Agora';
+        }
       }
     }
 
-    function renderActiveAuctions() {
-      const container = document.getElementById('activeItemsGrid');
-      const emptyState = document.getElementById('activeEmptyState');
-      if (!container) return;
-
+    function getFilteredActiveAuctions() {
       const hideNoBids = document.getElementById('filterHideNoBids')?.checked || false;
       const classFilter = document.getElementById('filterClassActive')?.value || 'all';
+      const searchText = (document.getElementById('filterSearchActive')?.value || '').toLowerCase().trim();
 
       let filtered = activeAuctionsData.slice();
+
+      // FILTRO: Busca por texto
+      if (searchText) {
+        filtered = filtered.filter(a => (a.itemName || '').toLowerCase().includes(searchText));
+      }
 
       // FILTRO: Ocultar sem lances
       if (hideNoBids) {
@@ -1353,34 +1558,114 @@
         });
       }
 
+      return filtered;
+    }
+
+    function renderPagination(totalItems) {
+      const topBar = document.getElementById('activePaginationTop');
+      const bottomBar = document.getElementById('activePaginationBottom');
+
+      if (totalItems <= 0) {
+        if (topBar) topBar.style.display = 'none';
+        if (bottomBar) bottomBar.style.display = 'none';
+        return;
+      }
+
+      const effectivePageSize = pageSize === 9999 ? totalItems : pageSize;
+      const totalPages = Math.max(1, Math.ceil(totalItems / effectivePageSize));
+      if (currentPage > totalPages) currentPage = totalPages;
+
+      const startIdx = (currentPage - 1) * effectivePageSize + 1;
+      const endIdx = Math.min(totalItems, currentPage * effectivePageSize);
+
+      const html = `
+        <div class="pagination-info">
+          Exibindo <strong>${startIdx}–${endIdx}</strong> de <strong>${totalItems}</strong> leilões ativos
+        </div>
+        <div class="pagination-controls">
+          <button type="button" class="page-btn" onclick="goToPage(1)" ${currentPage <= 1 ? 'disabled' : ''} title="Primeira Página">«</button>
+          <button type="button" class="page-btn" onclick="goToPage(${currentPage - 1})" ${currentPage <= 1 ? 'disabled' : ''} title="Página Anterior">‹ Ant</button>
+          <span class="page-current-indicator">Página ${currentPage} de ${totalPages}</span>
+          <button type="button" class="page-btn" onclick="goToPage(${currentPage + 1})" ${currentPage >= totalPages ? 'disabled' : ''} title="Próxima Página">Próx ›</button>
+          <button type="button" class="page-btn" onclick="goToPage(${totalPages})" ${currentPage >= totalPages ? 'disabled' : ''} title="Última Página">»</button>
+        </div>
+        <div class="page-size-selector">
+          <span>Itens por pág:</span>
+          <select class="filter-select" onchange="onPageSizeChange(this.value)" style="padding: 4px 8px; font-size: 12px;">
+            <option value="12" ${pageSize === 12 ? 'selected' : ''}>12</option>
+            <option value="24" ${pageSize === 24 ? 'selected' : ''}>24</option>
+            <option value="48" ${pageSize === 48 ? 'selected' : ''}>48</option>
+            <option value="9999" ${pageSize === 9999 ? 'selected' : ''}>Todos (${totalItems})</option>
+          </select>
+        </div>
+      `;
+
+      if (topBar) {
+        topBar.innerHTML = html;
+        topBar.style.display = 'flex';
+      }
+      if (bottomBar) {
+        bottomBar.innerHTML = html;
+        bottomBar.style.display = 'flex';
+      }
+    }
+
+    function renderActiveAuctions() {
+      const container = document.getElementById('activeItemsGrid');
+      const emptyState = document.getElementById('activeEmptyState');
+      if (!container) return;
+
+      const filtered = getFilteredActiveAuctions();
+      renderPagination(filtered.length);
+
       if (filtered.length === 0) {
         container.innerHTML = '';
+        lastRenderSignature = '';
         if (emptyState) emptyState.style.display = 'block';
         return;
       }
 
       if (emptyState) emptyState.style.display = 'none';
 
+      const effectivePageSize = pageSize === 9999 ? filtered.length : pageSize;
+      const totalPages = Math.max(1, Math.ceil(filtered.length / effectivePageSize));
+      if (currentPage > totalPages) currentPage = totalPages;
+
+      const startIdx = (currentPage - 1) * effectivePageSize;
+      const pageItems = filtered.slice(startIdx, startIdx + effectivePageSize);
+
+      // Assinatura da página atual para evitar recriar elementos DOM se nada relevante mudou
+      const newSignature = `${currentPage}_${pageSize}_` + pageItems.map(a => `${a.id}_${a.currentBid}_${a.highestBidderId}_${a.endsAtTimestamp}`).join('|');
+
+      if (newSignature === lastRenderSignature) {
+        // Apenas atualiza texto dos relógios locais
+        tickCountdowns();
+        return;
+      }
+
+      lastRenderSignature = newSignature;
       const now = Date.now();
-      container.innerHTML = filtered.map(a => {
+
+      container.innerHTML = pageItems.map(a => {
         const hasBid = a.currentBid > 0;
         const msRemaining = Math.max(0, a.endsAtTimestamp - now);
         const mins = Math.floor(msRemaining / 60000);
         const secs = Math.floor((msRemaining % 60000) / 1000);
-        const timeStr = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        const isEnded = msRemaining <= 0;
+        const timeStr = isEnded ? 'ENCERRADO' : `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
 
         const classInfo = CLASSES.find(c => c.value.toLowerCase() === (a.targetClass || 'Livre').toLowerCase()) || CLASSES[0];
         const threadUrl = a.channelId ? `https://discord.com/channels/${serverGuildId}/${a.channelId}` : '#';
 
         return `
-          <div class="active-card ${hasBid ? 'has-bid' : ''}">
+          <div class="active-card ${hasBid ? 'has-bid' : ''}" data-auction-id="${a.id}">
             <div class="active-card-top">
               <h3 class="active-title" title="${a.itemName}">${a.itemName}</h3>
               <span class="badge" style="font-size: 11px;">${classInfo.icon} ${a.targetClass || 'Livre'}</span>
             </div>
 
             <div class="active-preview-wrap">
-              ${a.imageUrl ? `<img src="${a.imageUrl}" alt="${a.itemName}">` : `<span style="color: var(--text-muted); font-size: 13px;">Sem imagem</span>`}
+              ${a.imageUrl ? `<img src="${a.imageUrl}" alt="${a.itemName}" loading="lazy">` : `<span style="color: var(--text-muted); font-size: 13px;">Sem imagem</span>`}
             </div>
 
             <div class="active-bid-status ${hasBid ? 'with-bid' : ''}">
@@ -1401,8 +1686,8 @@
             </div>
 
             <div class="active-card-footer">
-              <div class="active-countdown">
-                <span>⏱️</span> <strong>${timeStr}</strong> restante
+              <div class="active-countdown" data-ends="${a.endsAtTimestamp}" style="${isEnded ? 'color: var(--danger);' : ''}">
+                <span>⏱️</span> <strong class="active-countdown-val">${timeStr}</strong> <span class="active-countdown-suffix">${isEnded ? '' : 'restante'}</span>
               </div>
               <a href="${threadUrl}" target="_blank" class="btn-open-thread">
                 <span>💬</span> Tópico no Discord
@@ -1413,15 +1698,48 @@
       }).join('');
     }
 
-    // Polling contínuo dos leilões ativos a cada 4 segundos
-    setInterval(() => {
-      fetchActiveAuctions();
-    }, 4000);
+    // Atualiza contadores numéricos de tempo diretamente no DOM sem recriar elementos nem imagens
+    function tickCountdowns() {
+      const now = Date.now();
+      const elements = document.querySelectorAll('.active-countdown[data-ends]');
+      elements.forEach(el => {
+        const ends = parseInt(el.getAttribute('data-ends') || '0', 10);
+        const ms = Math.max(0, ends - now);
+        const valEl = el.querySelector('.active-countdown-val');
+        const suffixEl = el.querySelector('.active-countdown-suffix');
+        if (valEl) {
+          if (ms <= 0) {
+            valEl.textContent = 'ENCERRADO';
+            el.style.color = 'var(--danger)';
+            if (suffixEl) suffixEl.textContent = '';
+          } else {
+            const mins = Math.floor(ms / 60000);
+            const secs = Math.floor((ms % 60000) / 1000);
+            valEl.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+            if (suffixEl) suffixEl.textContent = 'restante';
+          }
+        }
+      });
+    }
 
-    // Atualiza contadores de tempo a cada 1 segundo se estiver na aba de ativos
+    // Ciclo único controlado por segundo:
+    // 1. Atualiza visualmente os relógios dos cards exibidos (sem reload de imagem)
+    // 2. Controla o timer de auto-refresh para buscar a API no tempo definido
     setInterval(() => {
-      if (currentTab === 'active') {
-        renderActiveAuctions();
+      if (currentTab !== 'active') return;
+
+      // Atualiza texto dos contadores regressivos na tela
+      tickCountdowns();
+
+      // Controla o timer de requisição da API
+      if (refreshIntervalSeconds > 0) {
+        secondsUntilRefresh--;
+        updateRefreshTimerBadge();
+
+        if (secondsUntilRefresh <= 0) {
+          secondsUntilRefresh = refreshIntervalSeconds;
+          fetchActiveAuctions();
+        }
       }
     }, 1000);
   </script>
