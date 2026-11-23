@@ -5,6 +5,7 @@ const { AttachmentBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBu
 const { channels } = require('../config/channels');
 const { getLeiloes, saveLeiloes, syncActiveAuctions, getDeliveriesData, toggleAuctionDelivery } = require('../database/db');
 const { startAuction, renderAuctionEmbed, createAuctionPost } = require('../services/auctionService');
+const { notifyItemDelivered } = require('../services/loggerService');
 
 const PORT = parseInt(process.env.PORT || process.env.OVERLAY_PORT || '3001', 10);
 const PUBLIC_DIR = path.join(__dirname, '..', '..', 'public');
@@ -81,6 +82,27 @@ function startWebServer(client) {
             return res.end(JSON.stringify({ success: false, error: 'auctionId é obrigatório' }));
           }
           const result = await toggleAuctionDelivery(auctionId, Boolean(delivered), deliveredBy || 'Staff');
+          if (Boolean(delivered) && client) {
+            try {
+              const deliveries = await getDeliveriesData();
+              const item = deliveries.find(d => String(d.id) === String(auctionId));
+              if (item && item.highestBidderId) {
+                await notifyItemDelivered({
+                  client,
+                  memberId: item.highestBidderId,
+                  nick: item.highestBidderNick,
+                  items: [{
+                    itemName: item.itemName,
+                    currentBid: item.currentBid,
+                    targetClass: item.targetClass
+                  }],
+                  deliveredBy: deliveredBy || 'Staff'
+                });
+              }
+            } catch (notifyErr) {
+              console.error('[DELIVERY NOTIFY ERROR]:', notifyErr.message);
+            }
+          }
           res.writeHead(200, { 'Content-Type': 'application/json' });
           return res.end(JSON.stringify(result));
         } catch (err) {
@@ -105,6 +127,38 @@ function startWebServer(client) {
           }
           for (const aId of auctionIds) {
             await toggleAuctionDelivery(aId, Boolean(delivered), deliveredBy || 'Staff');
+          }
+          if (Boolean(delivered) && client) {
+            try {
+              const deliveries = await getDeliveriesData();
+              const matchingItems = deliveries.filter(d => auctionIds.map(String).includes(String(d.id)));
+              const byUser = {};
+              for (const it of matchingItems) {
+                if (!it.highestBidderId) continue;
+                if (!byUser[it.highestBidderId]) {
+                  byUser[it.highestBidderId] = {
+                    nick: it.highestBidderNick,
+                    items: []
+                  };
+                }
+                byUser[it.highestBidderId].items.push({
+                  itemName: it.itemName,
+                  currentBid: it.currentBid,
+                  targetClass: it.targetClass
+                });
+              }
+              for (const [uid, uData] of Object.entries(byUser)) {
+                await notifyItemDelivered({
+                  client,
+                  memberId: uid,
+                  nick: uData.nick,
+                  items: uData.items,
+                  deliveredBy: deliveredBy || 'Staff'
+                });
+              }
+            } catch (notifyErr) {
+              console.error('[DELIVERY BATCH NOTIFY ERROR]:', notifyErr.message);
+            }
           }
           res.writeHead(200, { 'Content-Type': 'application/json' });
           return res.end(JSON.stringify({ success: true, count: auctionIds.length, delivered: Boolean(delivered) }));
@@ -135,6 +189,7 @@ function startWebServer(client) {
           const payload = JSON.parse(body);
           const auctionsList = payload.auctions || [];
           const startedBy = payload.startedBy || 'Staff Web (Painel)';
+          const cleanOld = Boolean(payload.cleanOld);
 
           if (!Array.isArray(auctionsList) || auctionsList.length === 0) {
             res.writeHead(400, { 'Content-Type': 'application/json' });
@@ -151,6 +206,47 @@ function startWebServer(client) {
           if (!ch) {
             res.writeHead(500, { 'Content-Type': 'application/json' });
             return res.end(JSON.stringify({ success: false, error: 'Não foi possível encontrar o canal #leilao-drops no Discord.' }));
+          }
+
+          // Se a opção de limpar tópicos antigos estiver marcada, limpa com controle de taxa
+          if (cleanOld) {
+            console.log('[LEILÃO BATCH] Iniciando limpeza de tópicos antigos no fórum #leilao-drops...');
+            try {
+              // 1. Threads ativas
+              const active = await ch.threads.fetchActive().catch(() => null);
+              if (active && active.threads) {
+                for (const [, thread] of active.threads) {
+                  await thread.delete('Limpeza de leilões antigos pelo Painel Web').catch(err => {
+                    console.warn(`[CLEAN OLD] Erro ao deletar thread ativa ${thread.id}:`, err.message);
+                  });
+                  await new Promise(r => setTimeout(r, 350));
+                }
+              }
+              // 2. Threads arquivadas (com paginação)
+              let hasMore = true;
+              let before = null;
+              while (hasMore) {
+                const options = { limit: 100 };
+                if (before) options.before = before;
+                const archived = await ch.threads.fetchArchived(options).catch(() => null);
+                if (!archived || !archived.threads || archived.threads.size === 0) {
+                  break;
+                }
+                for (const [, thread] of archived.threads) {
+                  await thread.delete('Limpeza de leilões antigos pelo Painel Web').catch(err => {
+                    console.warn(`[CLEAN OLD] Erro ao deletar thread arquivada ${thread.id}:`, err.message);
+                  });
+                  await new Promise(r => setTimeout(r, 350));
+                }
+                hasMore = archived.hasMore && archived.threads.size > 0;
+                if (archived.threads.size > 0) {
+                  before = archived.threads.last().id;
+                }
+              }
+              console.log('[LEILÃO BATCH] Limpeza de tópicos antigos concluída com sucesso!');
+            } catch (cleanErr) {
+              console.error('[LEILÃO BATCH] Erro durante limpeza de tópicos:', cleanErr.message);
+            }
           }
 
           const created = [];
@@ -210,6 +306,9 @@ function startWebServer(client) {
                 url: thread.url
               });
             }
+
+            // Delay anti-rate-limit entre posts de tópicos
+            await new Promise(r => setTimeout(r, 700));
           }
 
           // 5. Registra log de lote em #logs-dkp se houver canal configurado

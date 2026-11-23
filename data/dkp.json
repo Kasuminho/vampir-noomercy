@@ -1,148 +1,244 @@
 {
   "balances": {
-    "985483640232366121": {
-      "userId": "985483640232366121",
-      "totalDkp": 24,
+    "1536674265825542194": {
+      "userId": "1536674265825542194",
+      "totalDkp": 385,
       "lockedDkp": 0,
-      "eventsAttended": 1,
-      "lastEvent": "Geena 15:00",
-      "lastDate": "2026-11-11T18:09:53.621Z"
-    },
-    "570376636051095562": {
-      "userId": "570376636051095562",
-      "totalDkp": 241,
-      "lockedDkp": 0,
-      "eventsAttended": 9,
-      "lastEvent": "Geena 15:00",
-      "lastDate": "2026-11-14T18:59:23.121Z"
-    },
-    "458709154509488129": {
-      "userId": "458709154509488129",
-      "totalDkp": 312,
-      "lockedDkp": 0,
-      "eventsAttended": 8,
-      "lastEvent": "Geena 15:00",
-      "lastDate": "2026-11-14T18:59:23.120Z"
+      "eventsAttended": 11,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-22T16:26:58.576Z"
     },
     "1177008353927495710": {
       "userId": "1177008353927495710",
-      "totalDkp": 240,
+      "totalDkp": 759,
       "lockedDkp": 0,
-      "eventsAttended": 8,
-      "lastEvent": "Geena 15:00",
-      "lastDate": "2026-11-14T18:59:23.123Z"
-    },
-    "425370511749545984": {
-      "userId": "425370511749545984",
-      "totalDkp": 216,
-      "lockedDkp": 0,
-      "eventsAttended": 7,
-      "lastEvent": "Geena 15:00",
-      "lastDate": "2026-11-14T18:59:23.125Z"
-    },
-    "134688155839365120": {
-      "userId": "134688155839365120",
-      "totalDkp": 110,
-      "lockedDkp": 0,
-      "eventsAttended": 5,
-      "lastEvent": "Geena 15:00",
-      "lastDate": "2026-11-14T18:59:23.120Z"
-    },
-    "221320510087102464": {
-      "userId": "221320510087102464",
-      "totalDkp": 88,
-      "lockedDkp": 0,
-      "eventsAttended": 4,
-      "lastEvent": "Geena 23:00",
-      "lastDate": "2026-11-14T03:05:05.139Z"
-    },
-    "248940648563081226": {
-      "userId": "248940648563081226",
-      "totalDkp": 172,
-      "lockedDkp": 0,
-      "eventsAttended": 5,
-      "lastEvent": "Geena 15:00",
-      "lastDate": "2026-11-14T18:59:23.128Z"
-    },
-    "773250841607667773": {
-      "userId": "773250841607667773",
-      "totalDkp": 264,
-      "lockedDkp": 0,
-      "eventsAttended": 8,
-      "lastEvent": "Geena 15:00",
-      "lastDate": "2026-11-14T18:59:23.122Z"
-    },
-    "258777573733957633": {
-      "userId": "258777573733957633",
-      "totalDkp": 266,
-      "lockedDkp": 0,
-      "eventsAttended": 9,
-      "lastEvent": "Geena 15:00",
-      "lastDate": "2026-11-14T18:59:23.127Z"
-    },
-    "557331568318742529": {
-      "userId": "557331568318742529",
-      "totalDkp": 207,
-      "lockedDkp": 0,
-      "eventsAttended": 8,
-      "lastEvent": "Geena 23:00",
-      "lastDate": "2026-11-14T03:05:05.128Z"
-    },
-    "909786062602272802": {
-      "userId": "909786062602272802",
-      "totalDkp": 240,
-      "lockedDkp": 0,
-      "eventsAttended": 9,
-      "lastEvent": "Geena 15:00",
-      "lastDate": "2026-11-14T18:59:23.118Z"
-    },
-    "275130088834727938": {
-      "userId": "275130088834727938",
-      "totalDkp": 34,
-      "lockedDkp": 0,
-      "eventsAttended": 2,
+      "eventsAttended": 35,
       "lastEvent": "Geena 19:00",
-      "lastDate": "2026-11-13T22:03:42.389Z"
+      "lastDate": "2026-11-22T22:09:22.687Z"
     },
-    "299245685822455808": {
-      "userId": "299245685822455808",
-      "totalDkp": 82,
+    "895720565430714419": {
+      "userId": "895720565430714419",
+      "totalDkp": 101,
+      "lockedDkp": 0,
+      "eventsAttended": 3,
+      "lastEvent": "Defesa da Relíquia (Domingo)",
+      "lastDate": "2026-11-16T00:50:18.977Z"
+    },
+    "1451398017398603836": {
+      "userId": "1451398017398603836",
+      "totalDkp": 97,
       "lockedDkp": 0,
       "eventsAttended": 3,
       "lastEvent": "Geena 23:00",
-      "lastDate": "2026-11-14T03:05:05.137Z"
+      "lastDate": "2026-11-17T02:18:46.916Z"
     },
-    "341746889785344001": {
-      "userId": "341746889785344001",
-      "totalDkp": 312,
+    "1539332550261080106": {
+      "userId": "1539332550261080106",
+      "totalDkp": 1047,
       "lockedDkp": 0,
-      "eventsAttended": 6,
-      "lastEvent": "Geena 15:00",
-      "lastDate": "2026-11-14T18:59:23.122Z"
+      "eventsAttended": 39,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-23T02:47:09.883Z"
+    },
+    "453060092439298058": {
+      "userId": "453060092439298058",
+      "totalDkp": 339,
+      "lockedDkp": 0,
+      "eventsAttended": 12,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-23T02:47:09.884Z"
+    },
+    "380761383597506560": {
+      "userId": "380761383597506560",
+      "totalDkp": 320,
+      "lockedDkp": 0,
+      "eventsAttended": 11,
+      "lastEvent": "Defesa da Relíquia (Domingo)",
+      "lastDate": "2026-11-22T16:13:54.640Z"
+    },
+    "327499476489076748": {
+      "userId": "327499476489076748",
+      "totalDkp": 144,
+      "lockedDkp": 0,
+      "eventsAttended": 5,
+      "lastEvent": "Defesa da Relíquia (Domingo)",
+      "lastDate": "2026-11-22T16:13:54.645Z"
+    },
+    "285591759516336128": {
+      "userId": "285591759516336128",
+      "totalDkp": 1055,
+      "lockedDkp": 0,
+      "eventsAttended": 30,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-23T02:47:09.888Z"
+    },
+    "643496060706095104": {
+      "userId": "643496060706095104",
+      "totalDkp": 99,
+      "lockedDkp": 0,
+      "eventsAttended": 3,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-22T16:26:58.585Z"
+    },
+    "555928204884574218": {
+      "userId": "555928204884574218",
+      "totalDkp": 506,
+      "lockedDkp": 0,
+      "eventsAttended": 17,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-23T02:47:09.890Z"
+    },
+    "1184234338334822440": {
+      "userId": "1184234338334822440",
+      "totalDkp": 465,
+      "lockedDkp": 0,
+      "eventsAttended": 13,
+      "lastEvent": "Defesa da Relíquia (Domingo)",
+      "lastDate": "2026-11-22T16:13:54.636Z"
+    },
+    "570376636051095562": {
+      "userId": "570376636051095562",
+      "totalDkp": 543,
+      "lockedDkp": 0,
+      "eventsAttended": 37,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-23T02:47:09.881Z"
+    },
+    "728576112480878683": {
+      "userId": "728576112480878683",
+      "totalDkp": 539,
+      "lockedDkp": 0,
+      "eventsAttended": 21,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-23T02:47:09.880Z"
     },
     "273600843251712020": {
       "userId": "273600843251712020",
-      "totalDkp": 276,
+      "totalDkp": 0,
       "lockedDkp": 0,
-      "eventsAttended": 9,
-      "lastEvent": "Geena 15:00",
-      "lastDate": "2026-11-14T18:59:23.128Z"
-    },
-    "369263021589266433": {
-      "userId": "369263021589266433",
-      "totalDkp": 392,
-      "lockedDkp": 0,
-      "eventsAttended": 7,
+      "eventsAttended": 33,
       "lastEvent": "Geena 23:00",
-      "lastDate": "2026-11-14T03:05:05.139Z"
+      "lastDate": "2026-11-23T02:47:09.872Z"
     },
-    "714962181296226406": {
-      "userId": "714962181296226406",
+    "192804056236818432": {
+      "userId": "192804056236818432",
+      "totalDkp": 166,
+      "lockedDkp": 0,
+      "eventsAttended": 18,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-23T02:47:09.899Z"
+    },
+    "613413487942828043": {
+      "userId": "613413487942828043",
       "totalDkp": 0,
       "lockedDkp": 0,
       "eventsAttended": 0,
       "lastEvent": null,
       "lastDate": null
+    },
+    "431293855783059476": {
+      "userId": "431293855783059476",
+      "totalDkp": 262,
+      "lockedDkp": 0,
+      "eventsAttended": 8,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-22T16:26:58.578Z"
+    },
+    "1455647608696733778": {
+      "userId": "1455647608696733778",
+      "totalDkp": 45,
+      "lockedDkp": 0,
+      "eventsAttended": 36,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-23T02:47:09.894Z"
+    },
+    "341746889785344001": {
+      "userId": "341746889785344001",
+      "totalDkp": 211,
+      "lockedDkp": 0,
+      "eventsAttended": 31,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-23T02:47:09.895Z"
+    },
+    "425370511749545984": {
+      "userId": "425370511749545984",
+      "totalDkp": 39,
+      "lockedDkp": 0,
+      "eventsAttended": 32,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-23T02:47:09.886Z"
+    },
+    "221320510087102464": {
+      "userId": "221320510087102464",
+      "totalDkp": 532,
+      "lockedDkp": 0,
+      "eventsAttended": 17,
+      "lastEvent": "Geena 19:00",
+      "lastDate": "2026-11-22T22:09:22.712Z"
+    },
+    "773250841607667773": {
+      "userId": "773250841607667773",
+      "totalDkp": 498,
+      "lockedDkp": 0,
+      "eventsAttended": 34,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-23T02:47:09.874Z"
+    },
+    "114481570135408645": {
+      "userId": "114481570135408645",
+      "totalDkp": 419,
+      "lockedDkp": 0,
+      "eventsAttended": 14,
+      "lastEvent": "Geena 19:00",
+      "lastDate": "2026-11-22T22:09:22.713Z"
+    },
+    "985483640232366121": {
+      "userId": "985483640232366121",
+      "totalDkp": 214,
+      "lockedDkp": 0,
+      "eventsAttended": 7,
+      "lastEvent": "Defesa da Relíquia (Domingo)",
+      "lastDate": "2026-11-22T16:13:54.615Z"
+    },
+    "458709154509488129": {
+      "userId": "458709154509488129",
+      "totalDkp": 935,
+      "lockedDkp": 0,
+      "eventsAttended": 32,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-23T02:47:09.901Z"
+    },
+    "121982739640614916": {
+      "userId": "121982739640614916",
+      "totalDkp": 340,
+      "lockedDkp": 0,
+      "eventsAttended": 11,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-23T02:47:09.873Z"
+    },
+    "881682092411473991": {
+      "userId": "881682092411473991",
+      "totalDkp": 378,
+      "lockedDkp": 0,
+      "eventsAttended": 9,
+      "lastEvent": "Defesa da Relíquia (Domingo)",
+      "lastDate": "2026-11-22T16:13:54.620Z"
+    },
+    "909786062602272802": {
+      "userId": "909786062602272802",
+      "totalDkp": 776,
+      "lockedDkp": 0,
+      "eventsAttended": 26,
+      "lastEvent": "Geena 19:00",
+      "lastDate": "2026-11-19T22:18:07.670Z"
+    },
+    "258777573733957633": {
+      "userId": "258777573733957633",
+      "totalDkp": 941,
+      "lockedDkp": 0,
+      "eventsAttended": 28,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-23T02:47:09.893Z"
     },
     "293647077173493760": {
       "userId": "293647077173493760",
@@ -152,13 +248,117 @@
       "lastEvent": "Geena 19:00",
       "lastDate": "2026-11-13T22:03:42.387Z"
     },
-    "285591759516336128": {
-      "userId": "285591759516336128",
-      "totalDkp": 275,
+    "1404592668347994113": {
+      "userId": "1404592668347994113",
+      "totalDkp": 270,
       "lockedDkp": 0,
-      "eventsAttended": 9,
-      "lastEvent": "Geena 15:00",
-      "lastDate": "2026-11-14T18:59:23.127Z"
+      "eventsAttended": 8,
+      "lastEvent": "Defesa da Relíquia (Domingo)",
+      "lastDate": "2026-11-22T16:13:54.611Z"
+    },
+    "275130088834727938": {
+      "userId": "275130088834727938",
+      "totalDkp": 448,
+      "lockedDkp": 0,
+      "eventsAttended": 19,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-23T02:47:09.878Z"
+    },
+    "557331568318742529": {
+      "userId": "557331568318742529",
+      "totalDkp": 618,
+      "lockedDkp": 0,
+      "eventsAttended": 26,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-23T02:47:09.878Z"
+    },
+    "765022403495460874": {
+      "userId": "765022403495460874",
+      "totalDkp": 97,
+      "lockedDkp": 0,
+      "eventsAttended": 3,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-16T17:44:52.915Z"
+    },
+    "192801990554681346": {
+      "userId": "192801990554681346",
+      "totalDkp": 0,
+      "lockedDkp": 0,
+      "eventsAttended": 15,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-22T16:26:58.581Z"
+    },
+    "369263021589266433": {
+      "userId": "369263021589266433",
+      "totalDkp": 857,
+      "lockedDkp": 0,
+      "eventsAttended": 31,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-23T02:47:09.879Z"
+    },
+    "467938652299722752": {
+      "userId": "467938652299722752",
+      "totalDkp": 63,
+      "lockedDkp": 0,
+      "eventsAttended": 15,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-23T02:47:09.876Z"
+    },
+    "248940648563081226": {
+      "userId": "248940648563081226",
+      "totalDkp": 49,
+      "lockedDkp": 0,
+      "eventsAttended": 26,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-23T02:47:09.875Z"
+    },
+    "267147697088233474": {
+      "userId": "267147697088233474",
+      "totalDkp": 299,
+      "lockedDkp": 0,
+      "eventsAttended": 18,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-23T02:47:09.902Z"
+    },
+    "813906967990763600": {
+      "userId": "813906967990763600",
+      "totalDkp": 485,
+      "lockedDkp": 0,
+      "eventsAttended": 14,
+      "lastEvent": "Defesa da Relíquia (Domingo)",
+      "lastDate": "2026-11-22T16:13:54.619Z"
+    },
+    "309849117033627649": {
+      "userId": "309849117033627649",
+      "totalDkp": 581,
+      "lockedDkp": 0,
+      "eventsAttended": 16,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-23T02:47:09.900Z"
+    },
+    "1214706171605155912": {
+      "userId": "1214706171605155912",
+      "totalDkp": 363,
+      "lockedDkp": 0,
+      "eventsAttended": 13,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-22T16:26:58.588Z"
+    },
+    "494307072478019594": {
+      "userId": "494307072478019594",
+      "totalDkp": 309,
+      "lockedDkp": 0,
+      "eventsAttended": 12,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-23T02:47:09.896Z"
+    },
+    "226624755854213120": {
+      "userId": "226624755854213120",
+      "totalDkp": 143,
+      "lockedDkp": 0,
+      "eventsAttended": 4,
+      "lastEvent": "Defesa da Relíquia (Domingo)",
+      "lastDate": "2026-11-22T16:13:54.625Z"
     },
     "373246000288104452": {
       "userId": "373246000288104452",
@@ -168,72 +368,1995 @@
       "lastEvent": "Geena 15:00",
       "lastDate": "2026-11-13T18:36:46.913Z"
     },
-    "380761383597506560": {
-      "userId": "380761383597506560",
-      "totalDkp": 90,
+    "281111234785312775": {
+      "userId": "281111234785312775",
+      "totalDkp": 86,
+      "lockedDkp": 0,
+      "eventsAttended": 2,
+      "lastEvent": "Defesa da Relíquia (Domingo)",
+      "lastDate": "2026-11-22T16:13:54.616Z"
+    },
+    "1391747539124093039": {
+      "userId": "1391747539124093039",
+      "totalDkp": 256,
+      "lockedDkp": 0,
+      "eventsAttended": 15,
+      "lastEvent": "Geena 19:00",
+      "lastDate": "2026-11-22T22:09:22.721Z"
+    },
+    "299245685822455808": {
+      "userId": "299245685822455808",
+      "totalDkp": 345,
+      "lockedDkp": 0,
+      "eventsAttended": 17,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-23T02:47:09.892Z"
+    },
+    "134688155839365120": {
+      "userId": "134688155839365120",
+      "totalDkp": 604,
+      "lockedDkp": 0,
+      "eventsAttended": 22,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-23T02:47:09.897Z"
+    },
+    "900804654693224478": {
+      "userId": "900804654693224478",
+      "totalDkp": 127,
       "lockedDkp": 0,
       "eventsAttended": 3,
-      "lastEvent": "Geena 23:00",
-      "lastDate": "2026-11-14T03:05:05.140Z"
+      "lastEvent": "Defesa da Relíquia (Domingo)",
+      "lastDate": "2026-11-16T00:50:18.968Z"
     },
-    "1455647608696733778": {
-      "userId": "1455647608696733778",
-      "totalDkp": 302,
+    "714962181296226406": {
+      "userId": "714962181296226406",
+      "totalDkp": 75,
       "lockedDkp": 0,
-      "eventsAttended": 9,
-      "lastEvent": "Geena 15:00",
-      "lastDate": "2026-11-14T18:59:23.126Z"
+      "eventsAttended": 2,
+      "lastEvent": "Geena 23:00",
+      "lastDate": "2026-11-15T18:32:28.068Z"
     },
     "163034833965023232": {
       "userId": "163034833965023232",
       "totalDkp": 0,
       "lockedDkp": 0,
-      "eventsAttended": 0,
-      "lastEvent": null,
-      "lastDate": null
+      "eventsAttended": 4,
+      "lastEvent": "Defesa da Relíquia (Domingo)",
+      "lastDate": "2026-11-16T00:50:18.954Z"
     },
-    "728576112480878683": {
-      "userId": "728576112480878683",
-      "totalDkp": 45,
-      "lockedDkp": 0,
-      "eventsAttended": 2,
-      "lastEvent": "Geena 15:00",
-      "lastDate": "2026-11-14T18:59:23.119Z"
-    },
-    "1539332550261080106": {
-      "userId": "1539332550261080106",
-      "totalDkp": 343,
-      "lockedDkp": 0,
-      "eventsAttended": 10,
-      "lastEvent": "Geena 15:00",
-      "lastDate": "2026-11-14T18:59:23.117Z"
-    },
-    "900804654693224478": {
-      "userId": "900804654693224478",
-      "totalDkp": 38,
+    "416019756903301150": {
+      "userId": "416019756903301150",
+      "totalDkp": 18,
       "lockedDkp": 0,
       "eventsAttended": 1,
-      "lastEvent": "Geena 15:00",
-      "lastDate": "2026-11-13T18:36:46.909Z"
-    },
-    "813906967990763600": {
-      "userId": "813906967990763600",
-      "totalDkp": 44,
-      "lockedDkp": 0,
-      "eventsAttended": 2,
       "lastEvent": "Geena 19:00",
-      "lastDate": "2026-11-13T22:03:42.390Z"
-    },
-    "1184234338334822440": {
-      "userId": "1184234338334822440",
-      "totalDkp": 33,
-      "lockedDkp": 0,
-      "eventsAttended": 1,
-      "lastEvent": "Geena 23:00",
-      "lastDate": "2026-11-14T03:05:05.138Z"
+      "lastDate": "2026-11-16T01:07:06.687Z"
     }
   },
   "history": [
+    {
+      "id": "dkp_1795416422455_919",
+      "userId": "267147697088233474",
+      "amount": 30,
+      "newBalance": 299,
+      "reason": "Ajuste Staff (Compensação Leilão)",
+      "meta": {},
+      "date": "2026-11-23T06:47:02.456Z"
+    },
+    {
+      "id": "bid_won_1795414265697",
+      "userId": "1539332550261080106",
+      "amount": -192,
+      "newBalance": 1047,
+      "reason": "Vitória no Leilão: Todos os acessórios Azuis",
+      "meta": {
+        "itemId": "item_1795384260524"
+      },
+      "date": "2026-11-23T06:11:05.697Z"
+    },
+    {
+      "id": "bid_won_1795414215702",
+      "userId": "267147697088233474",
+      "amount": -38,
+      "newBalance": 269,
+      "reason": "Vitória no Leilão: Livro de Habilidade: Aumento de Dano contra Chefe I",
+      "meta": {
+        "itemId": "item_1795384135329"
+      },
+      "date": "2026-11-23T06:10:15.702Z"
+    },
+    {
+      "id": "bid_won_1795414207972",
+      "userId": "1455647608696733778",
+      "amount": -570,
+      "newBalance": 45,
+      "reason": "Vitória no Leilão: Pedra da Evolução",
+      "meta": {
+        "itemId": "item_1795383948331"
+      },
+      "date": "2026-11-23T06:10:07.972Z"
+    },
+    {
+      "id": "bid_won_1795414206697",
+      "userId": "458709154509488129",
+      "amount": -260,
+      "newBalance": 935,
+      "reason": "Vitória no Leilão: Barra de Ouro",
+      "meta": {
+        "itemId": "item_1795383946649"
+      },
+      "date": "2026-11-23T06:10:06.697Z"
+    },
+    {
+      "id": "bid_won_1795414205696",
+      "userId": "1539332550261080106",
+      "amount": -202,
+      "newBalance": 1239,
+      "reason": "Vitória no Leilão: Todas as armaduras Azuis",
+      "meta": {
+        "itemId": "item_1795384200481"
+      },
+      "date": "2026-11-23T06:10:05.696Z"
+    },
+    {
+      "id": "bid_won_1795414146626",
+      "userId": "458709154509488129",
+      "amount": -32,
+      "newBalance": 1195,
+      "reason": "Vitória no Leilão: Livro de Habilidade: Aumento de Dano contra Chefe I",
+      "meta": {
+        "itemId": "item_1795384137581"
+      },
+      "date": "2026-11-23T06:09:06.626Z"
+    },
+    {
+      "id": "bid_won_1795414145693",
+      "userId": "1539332550261080106",
+      "amount": -203,
+      "newBalance": 1441,
+      "reason": "Vitória no Leilão: Todas armas Azuis",
+      "meta": {
+        "itemId": "item_1795384140450"
+      },
+      "date": "2026-11-23T06:09:05.693Z"
+    },
+    {
+      "id": "bid_won_1795414045683",
+      "userId": "467938652299722752",
+      "amount": -109,
+      "newBalance": 63,
+      "reason": "Vitória no Leilão: 2000x Resquicio de Testamento Noturno",
+      "meta": {
+        "itemId": "item_1795383846845"
+      },
+      "date": "2026-11-23T06:07:25.683Z"
+    },
+    {
+      "id": "bid_won_1795414015691",
+      "userId": "467938652299722752",
+      "amount": -89,
+      "newBalance": 172,
+      "reason": "Vitória no Leilão: 1888x Resquicio de Testamento Noturno",
+      "meta": {
+        "itemId": "item_1795383853978"
+      },
+      "date": "2026-11-23T06:06:55.691Z"
+    },
+    {
+      "id": "bid_won_1795414005681",
+      "userId": "425370511749545984",
+      "amount": -200,
+      "newBalance": 39,
+      "reason": "Vitória no Leilão: 2000x Resquicio de Testamento Noturno",
+      "meta": {
+        "itemId": "item_1795383851280"
+      },
+      "date": "2026-11-23T06:06:45.681Z"
+    },
+    {
+      "id": "bid_won_1795413995683",
+      "userId": "1455647608696733778",
+      "amount": -35,
+      "newBalance": 615,
+      "reason": "Vitória no Leilão: 3x Página do Livro de Habilidade Incomum",
+      "meta": {
+        "itemId": "item_1795383895758"
+      },
+      "date": "2026-11-23T06:06:35.683Z"
+    },
+    {
+      "id": "bid_won_1795413986835",
+      "userId": "467938652299722752",
+      "amount": -30,
+      "newBalance": 261,
+      "reason": "Vitória no Leilão: Livro de Habilidade: Golpe Vital II",
+      "meta": {
+        "itemId": "item_1795383980474"
+      },
+      "date": "2026-11-23T06:06:26.835Z"
+    },
+    {
+      "id": "bid_won_1795413985695",
+      "userId": "425370511749545984",
+      "amount": -700,
+      "newBalance": 239,
+      "reason": "Vitória no Leilão: Livro de Habilidade: Aprimoramento de Habilidade: Aumento de Dano Contra Chefe I",
+      "meta": {
+        "itemId": "item_1795383978153"
+      },
+      "date": "2026-11-23T06:06:25.695Z"
+    },
+    {
+      "id": "bid_won_1795413977799",
+      "userId": "458709154509488129",
+      "amount": -52,
+      "newBalance": 1227,
+      "reason": "Vitória no Leilão: Livro de Habilidade: Aprimoramento de Dano Bônus I",
+      "meta": {
+        "itemId": "item_1795383972300"
+      },
+      "date": "2026-11-23T06:06:17.799Z"
+    },
+    {
+      "id": "bid_won_1795413976616",
+      "userId": "369263021589266433",
+      "amount": -1000,
+      "newBalance": 857,
+      "reason": "Vitória no Leilão: Livro de Habilidade: Aprimoramento de Arma I",
+      "meta": {
+        "itemId": "item_1795383970545"
+      },
+      "date": "2026-11-23T06:06:16.616Z"
+    },
+    {
+      "id": "bid_won_1795413975682",
+      "userId": "267147697088233474",
+      "amount": -31,
+      "newBalance": 307,
+      "reason": "Vitória no Leilão: Livro de Habilidade: Aumento de Dano contra Chefe I",
+      "meta": {
+        "itemId": "item_1795383966150"
+      },
+      "date": "2026-11-23T06:06:15.682Z"
+    },
+    {
+      "id": "bid_won_1795413969641",
+      "userId": "267147697088233474",
+      "amount": -30,
+      "newBalance": 338,
+      "reason": "Vitória no Leilão: Livro de Habilidade: Aumento de Dano contra Chefe I",
+      "meta": {
+        "itemId": "item_1795383965121"
+      },
+      "date": "2026-11-23T06:06:09.641Z"
+    },
+    {
+      "id": "bid_won_1795413968038",
+      "userId": "248940648563081226",
+      "amount": -890,
+      "newBalance": 49,
+      "reason": "Vitória no Leilão: Livro de Habilidade: Golpe Vital II",
+      "meta": {
+        "itemId": "item_1795383961542"
+      },
+      "date": "2026-11-23T06:06:08.038Z"
+    },
+    {
+      "id": "bid_won_1795413966824",
+      "userId": "467938652299722752",
+      "amount": -7,
+      "newBalance": 291,
+      "reason": "Vitória no Leilão: Fragmento de Armadura",
+      "meta": {
+        "itemId": "item_1795383956456"
+      },
+      "date": "2026-11-23T06:06:06.824Z"
+    },
+    {
+      "id": "bid_won_1795413965682",
+      "userId": "467938652299722752",
+      "amount": -10,
+      "newBalance": 298,
+      "reason": "Vitória no Leilão: Fragmento de Arma Superior",
+      "meta": {
+        "itemId": "item_1795383959668"
+      },
+      "date": "2026-11-23T06:06:05.682Z"
+    },
+    {
+      "id": "bid_won_1795413955684",
+      "userId": "557331568318742529",
+      "amount": -11,
+      "newBalance": 618,
+      "reason": "Vitória no Leilão: Peridoto",
+      "meta": {
+        "itemId": "item_1795383955221"
+      },
+      "date": "2026-11-23T06:05:55.684Z"
+    },
+    {
+      "id": "bid_won_1795413945680",
+      "userId": "458709154509488129",
+      "amount": -8,
+      "newBalance": 1279,
+      "reason": "Vitória no Leilão: Pergaminho de Armadura",
+      "meta": {
+        "itemId": "item_1795383937752"
+      },
+      "date": "2026-11-23T06:05:45.680Z"
+    },
+    {
+      "id": "bid_won_1795413938714",
+      "userId": "467938652299722752",
+      "amount": -10,
+      "newBalance": 308,
+      "reason": "Vitória no Leilão: 12x Página do Livro de Habilidade",
+      "meta": {
+        "itemId": "item_1795383930877"
+      },
+      "date": "2026-11-23T06:05:38.714Z"
+    },
+    {
+      "id": "bid_won_1795413937480",
+      "userId": "557331568318742529",
+      "amount": -41,
+      "newBalance": 629,
+      "reason": "Vitória no Leilão: 12x Página do Livro de Habilidade",
+      "meta": {
+        "itemId": "item_1795383928783"
+      },
+      "date": "2026-11-23T06:05:37.480Z"
+    },
+    {
+      "id": "bid_won_1795413935680",
+      "userId": "467938652299722752",
+      "amount": -12,
+      "newBalance": 318,
+      "reason": "Vitória no Leilão: 12x Página do Livro de Habilidade",
+      "meta": {
+        "itemId": "item_1795383927182"
+      },
+      "date": "2026-11-23T06:05:35.680Z"
+    },
+    {
+      "id": "bid_won_1795413930258",
+      "userId": "467938652299722752",
+      "amount": -10,
+      "newBalance": 330,
+      "reason": "Vitória no Leilão: 12x Página do Livro de Habilidade",
+      "meta": {
+        "itemId": "item_1795383918861"
+      },
+      "date": "2026-11-23T06:05:30.258Z"
+    },
+    {
+      "id": "bid_won_1795413928148",
+      "userId": "557331568318742529",
+      "amount": -47,
+      "newBalance": 670,
+      "reason": "Vitória no Leilão: 12x Página do Livro de Habilidade",
+      "meta": {
+        "itemId": "item_1795383922807"
+      },
+      "date": "2026-11-23T06:05:28.148Z"
+    },
+    {
+      "id": "bid_won_1795413927143",
+      "userId": "467938652299722752",
+      "amount": -15,
+      "newBalance": 340,
+      "reason": "Vitória no Leilão: 12x Página do Livro de Habilidade",
+      "meta": {
+        "itemId": "item_1795383920542"
+      },
+      "date": "2026-11-23T06:05:27.143Z"
+    },
+    {
+      "id": "bid_won_1795413925678",
+      "userId": "467938652299722752",
+      "amount": -12,
+      "newBalance": 355,
+      "reason": "Vitória no Leilão: 12x Página do Livro de Habilidade",
+      "meta": {
+        "itemId": "item_1795383925592"
+      },
+      "date": "2026-11-23T06:05:25.678Z"
+    },
+    {
+      "id": "bid_won_1795413919921",
+      "userId": "557331568318742529",
+      "amount": -7,
+      "newBalance": 717,
+      "reason": "Vitória no Leilão: 12x Página do Livro de Habilidade",
+      "meta": {
+        "itemId": "item_1795383912701"
+      },
+      "date": "2026-11-23T06:05:19.921Z"
+    },
+    {
+      "id": "bid_won_1795413918917",
+      "userId": "467938652299722752",
+      "amount": -14,
+      "newBalance": 367,
+      "reason": "Vitória no Leilão: 12x Página do Livro de Habilidade",
+      "meta": {
+        "itemId": "item_1795383914055"
+      },
+      "date": "2026-11-23T06:05:18.917Z"
+    },
+    {
+      "id": "bid_won_1795413917700",
+      "userId": "555928204884574218",
+      "amount": -10,
+      "newBalance": 506,
+      "reason": "Vitória no Leilão: 12x Página do Livro de Habilidade",
+      "meta": {
+        "itemId": "item_1795383908139"
+      },
+      "date": "2026-11-23T06:05:17.700Z"
+    },
+    {
+      "id": "bid_won_1795413915679",
+      "userId": "557331568318742529",
+      "amount": -32,
+      "newBalance": 724,
+      "reason": "Vitória no Leilão: 12x Página do Livro de Habilidade",
+      "meta": {
+        "itemId": "item_1795383910676"
+      },
+      "date": "2026-11-23T06:05:15.679Z"
+    },
+    {
+      "id": "bid_won_1795413907753",
+      "userId": "1391747539124093039",
+      "amount": -90,
+      "newBalance": 256,
+      "reason": "Vitória no Leilão: 3x Página do Livro de Habilidade Incomum",
+      "meta": {
+        "itemId": "item_1795383902691"
+      },
+      "date": "2026-11-23T06:05:07.753Z"
+    },
+    {
+      "id": "bid_won_1795413906792",
+      "userId": "467938652299722752",
+      "amount": -61,
+      "newBalance": 381,
+      "reason": "Vitória no Leilão: 3x Página do Livro de Habilidade Incomum",
+      "meta": {
+        "itemId": "item_1795383897093"
+      },
+      "date": "2026-11-23T06:05:06.792Z"
+    },
+    {
+      "id": "bid_won_1795413905681",
+      "userId": "1391747539124093039",
+      "amount": -76,
+      "newBalance": 346,
+      "reason": "Vitória no Leilão: 3x Página do Livro de Habilidade Incomum",
+      "meta": {
+        "itemId": "item_1795383900041"
+      },
+      "date": "2026-11-23T06:05:05.681Z"
+    },
+    {
+      "id": "bid_won_1795413895680",
+      "userId": "467938652299722752",
+      "amount": -13,
+      "newBalance": 442,
+      "reason": "Vitória no Leilão: 9x Página de Manual de Arma Heróico",
+      "meta": {
+        "itemId": "item_1795383889565"
+      },
+      "date": "2026-11-23T06:04:55.680Z"
+    },
+    {
+      "id": "bid_won_1795413888433",
+      "userId": "267147697088233474",
+      "amount": -212,
+      "newBalance": 368,
+      "reason": "Vitória no Leilão: Manual de Acessório Heroico - Anel",
+      "meta": {
+        "itemId": "item_1795383879037"
+      },
+      "date": "2026-11-23T06:04:48.433Z"
+    },
+    {
+      "id": "bid_won_1795413886763",
+      "userId": "341746889785344001",
+      "amount": -100,
+      "newBalance": 211,
+      "reason": "Vitória no Leilão: 3x Página do Manual de Acessório Heróico - Colar",
+      "meta": {
+        "itemId": "item_1795383884599"
+      },
+      "date": "2026-11-23T06:04:46.763Z"
+    },
+    {
+      "id": "bid_won_1795413885680",
+      "userId": "467938652299722752",
+      "amount": -28,
+      "newBalance": 455,
+      "reason": "Vitória no Leilão: 1x Página do Manual de Acessório Heróico - Brinco",
+      "meta": {
+        "itemId": "item_1795383883523"
+      },
+      "date": "2026-11-23T06:04:45.680Z"
+    },
+    {
+      "id": "bid_won_1795413880459",
+      "userId": "273600843251712020",
+      "amount": -30,
+      "newBalance": 0,
+      "reason": "Vitória no Leilão: Manual de Armadura Heroico",
+      "meta": {
+        "itemId": "item_1795383869736"
+      },
+      "date": "2026-11-23T06:04:40.459Z"
+    },
+    {
+      "id": "bid_won_1795413879467",
+      "userId": "557331568318742529",
+      "amount": -6,
+      "newBalance": 756,
+      "reason": "Vitória no Leilão: 12x Pagina do Manual de Armadura Heroico",
+      "meta": {
+        "itemId": "item_1795383866630"
+      },
+      "date": "2026-11-23T06:04:39.467Z"
+    },
+    {
+      "id": "bid_won_1795413878223",
+      "userId": "557331568318742529",
+      "amount": -7,
+      "newBalance": 762,
+      "reason": "Vitória no Leilão: 12x Pagina do Manual de Armadura Heroico",
+      "meta": {
+        "itemId": "item_1795383868017"
+      },
+      "date": "2026-11-23T06:04:38.223Z"
+    },
+    {
+      "id": "bid_won_1795413877340",
+      "userId": "467938652299722752",
+      "amount": -27,
+      "newBalance": 483,
+      "reason": "Vitória no Leilão: 3x Página de Manual de Acessório - Cinto",
+      "meta": {
+        "itemId": "item_1795383872787"
+      },
+      "date": "2026-11-23T06:04:37.340Z"
+    },
+    {
+      "id": "bid_won_1795413875678",
+      "userId": "309849117033627649",
+      "amount": -151,
+      "newBalance": 581,
+      "reason": "Vitória no Leilão: 2x Página de Manual de Acessório Heroico - Anel",
+      "meta": {
+        "itemId": "item_1795383875396"
+      },
+      "date": "2026-11-23T06:04:35.678Z"
+    },
+    {
+      "id": "bid_won_1795413869280",
+      "userId": "273600843251712020",
+      "amount": -30,
+      "newBalance": 30,
+      "reason": "Vitória no Leilão: Manual de Armadura Heroico",
+      "meta": {
+        "itemId": "item_1795383865304"
+      },
+      "date": "2026-11-23T06:04:29.280Z"
+    },
+    {
+      "id": "bid_won_1795413867941",
+      "userId": "341746889785344001",
+      "amount": -800,
+      "newBalance": 311,
+      "reason": "Vitória no Leilão: Elmo do Ceifador do Abismo",
+      "meta": {
+        "itemId": "item_1795383858195"
+      },
+      "date": "2026-11-23T06:04:27.941Z"
+    },
+    {
+      "id": "bid_won_1795413865680",
+      "userId": "273600843251712020",
+      "amount": -618,
+      "newBalance": 60,
+      "reason": "Vitória no Leilão: Botas do Ceifador do Abismo",
+      "meta": {
+        "itemId": "item_1795383860482"
+      },
+      "date": "2026-11-23T06:04:25.680Z"
+    },
+    {
+      "id": "bid_won_1795413855679",
+      "userId": "192804056236818432",
+      "amount": -453,
+      "newBalance": 166,
+      "reason": "Vitória no Leilão: 2000x Resquicio de Testamento Noturno",
+      "meta": {
+        "itemId": "item_1795383848944"
+      },
+      "date": "2026-11-23T06:04:15.679Z"
+    },
+    {
+      "id": "bid_won_1795413851950",
+      "userId": "1455647608696733778",
+      "amount": -100,
+      "newBalance": 650,
+      "reason": "Vitória no Leilão: 200x Orbe Mágico de GEena",
+      "meta": {
+        "itemId": "item_1795383837024"
+      },
+      "date": "2026-11-23T06:04:11.950Z"
+    },
+    {
+      "id": "bid_won_1795413847683",
+      "userId": "1455647608696733778",
+      "amount": -100,
+      "newBalance": 750,
+      "reason": "Vitória no Leilão: 200x Orbe Mágico de GEena",
+      "meta": {
+        "itemId": "item_1795383839926"
+      },
+      "date": "2026-11-23T06:04:07.683Z"
+    },
+    {
+      "id": "bid_won_1795413846660",
+      "userId": "773250841607667773",
+      "amount": -544,
+      "newBalance": 498,
+      "reason": "Vitória no Leilão: 43x Baú de Testamento da Noite",
+      "meta": {
+        "itemId": "item_1795383843222"
+      },
+      "date": "2026-11-23T06:04:06.660Z"
+    },
+    {
+      "id": "bid_won_1795413845677",
+      "userId": "192801990554681346",
+      "amount": -516,
+      "newBalance": 0,
+      "reason": "Vitória no Leilão: 43x Baú de Testamento da Noite",
+      "meta": {
+        "itemId": "item_1795383845281"
+      },
+      "date": "2026-11-23T06:04:05.677Z"
+    },
+    {
+      "id": "bid_won_1795413836778",
+      "userId": "299245685822455808",
+      "amount": -180,
+      "newBalance": 345,
+      "reason": "Vitória no Leilão: 200x Orbe Mágico de GEena",
+      "meta": {
+        "itemId": "item_1795383831677"
+      },
+      "date": "2026-11-23T06:03:56.778Z"
+    },
+    {
+      "id": "bid_won_1795413835682",
+      "userId": "728576112480878683",
+      "amount": -100,
+      "newBalance": 539,
+      "reason": "Vitória no Leilão: 200x Orbe Mágico de GEena",
+      "meta": {
+        "itemId": "item_1795383833564"
+      },
+      "date": "2026-11-23T06:03:55.682Z"
+    },
+    {
+      "id": "dkp_1795402029902_85",
+      "userId": "267147697088233474",
+      "amount": 33,
+      "newBalance": 580,
+      "reason": "Presença: Geena 23:00",
+      "meta": {
+        "cp": 355000,
+        "level": 74,
+        "multCp": 1.07,
+        "baseDkp": 30,
+        "eventId": "evt_1795402029871",
+        "isEvent": true,
+        "multLvl": 1.03,
+        "finalDkp": 33,
+        "eventName": "Geena 23:00",
+        "isLastHit": false,
+        "lastHitBonus": 0,
+        "registeredBy": "sololeveling5091"
+      },
+      "date": "2026-11-23T02:47:09.902Z"
+    },
+    {
+      "id": "dkp_1795385362721_561",
+      "userId": "1391747539124093039",
+      "amount": 22,
+      "newBalance": 422,
+      "reason": "Presença: Geena 19:00",
+      "meta": {
+        "cp": 357007,
+        "level": 74,
+        "multCp": 1.08,
+        "baseDkp": 20,
+        "eventId": "evt_1795385362687",
+        "isEvent": true,
+        "multLvl": 1.03,
+        "finalDkp": 22,
+        "eventName": "Geena 19:00",
+        "isLastHit": false,
+        "lastHitBonus": 0,
+        "registeredBy": "sololeveling5091"
+      },
+      "date": "2026-11-22T22:09:22.721Z"
+    },
+    {
+      "id": "dkp_1795364818619_547",
+      "userId": "728576112480878683",
+      "amount": 44,
+      "newBalance": 605,
+      "reason": "Presença (34 DKP) + Last Hit (+10 DKP): Geena 23:00",
+      "meta": {
+        "cp": 360158,
+        "level": 74,
+        "multCp": 1.09,
+        "baseDkp": 30,
+        "eventId": "evt_1795364818574",
+        "isEvent": true,
+        "multLvl": 1.03,
+        "finalDkp": 34,
+        "eventName": "Geena 23:00",
+        "isLastHit": true,
+        "lastHitBonus": 10,
+        "registeredBy": "jmacedx"
+      },
+      "date": "2026-11-22T16:26:58.619Z"
+    },
+    {
+      "id": "dkp_1795364034646_833",
+      "userId": "1214706171605155912",
+      "amount": 37,
+      "newBalance": 335,
+      "reason": "Presença: Defesa da Relíquia (Domingo)",
+      "meta": {
+        "cp": 311773,
+        "level": 70,
+        "multCp": 0.95,
+        "baseDkp": 40,
+        "eventId": "evt_1795364034598",
+        "isEvent": true,
+        "multLvl": 0.97,
+        "finalDkp": 37,
+        "eventName": "Defesa da Relíquia (Domingo)",
+        "isLastHit": false,
+        "lastHitBonus": 0,
+        "registeredBy": "jmacedx"
+      },
+      "date": "2026-11-22T16:13:54.646Z"
+    },
+    {
+      "id": "dkp_1795363518176_853",
+      "userId": "1214706171605155912",
+      "amount": 28,
+      "newBalance": 298,
+      "reason": "Presença: Missão da Guilda (Domingo)",
+      "meta": {
+        "cp": 311773,
+        "level": 70,
+        "multCp": 0.95,
+        "baseDkp": 30,
+        "eventId": "evt_1795363518122",
+        "isEvent": true,
+        "multLvl": 0.97,
+        "finalDkp": 28,
+        "eventName": "Missão da Guilda (Domingo)",
+        "isLastHit": false,
+        "lastHitBonus": 0,
+        "registeredBy": "jmacedx"
+      },
+      "date": "2026-11-22T16:05:18.176Z"
+    },
+    {
+      "id": "dkp_1795299334274_382",
+      "userId": "114481570135408645",
+      "amount": 20,
+      "newBalance": 284,
+      "reason": "Presença: Geena 19:00",
+      "meta": {
+        "cp": 328000,
+        "level": 73,
+        "multCp": 0.99,
+        "baseDkp": 20,
+        "eventId": "evt_1795299334223",
+        "isEvent": true,
+        "multLvl": 1.01,
+        "finalDkp": 20,
+        "eventName": "Geena 19:00",
+        "isLastHit": false,
+        "lastHitBonus": 0,
+        "registeredBy": "jmacedx"
+      },
+      "date": "2026-11-21T22:15:34.274Z"
+    },
+    {
+      "id": "dkp_1795299056223_146",
+      "userId": "285591759516336128",
+      "amount": 37,
+      "newBalance": 881,
+      "reason": "Presença: Geena 15:00",
+      "meta": {
+        "cp": 395797,
+        "level": 74,
+        "multCp": 1.19,
+        "baseDkp": 30,
+        "eventId": "evt_1795299056169",
+        "isEvent": true,
+        "multLvl": 1.03,
+        "finalDkp": 37,
+        "eventName": "Geena 15:00",
+        "isLastHit": false,
+        "lastHitBonus": 0,
+        "registeredBy": "jmacedx"
+      },
+      "date": "2026-11-21T22:10:56.223Z"
+    },
+    {
+      "id": "dkp_1795273676060_748",
+      "userId": "555928204884574218",
+      "amount": 33,
+      "newBalance": 296,
+      "reason": "Presença: Geena 23:00",
+      "meta": {
+        "cp": 361974,
+        "level": 72,
+        "multCp": 1.09,
+        "baseDkp": 30,
+        "eventId": "evt_1795273675986",
+        "isEvent": true,
+        "multLvl": 1,
+        "finalDkp": 33,
+        "eventName": "Geena 23:00",
+        "isLastHit": false,
+        "lastHitBonus": 0,
+        "registeredBy": "jmacedx"
+      },
+      "date": "2026-11-21T15:07:56.060Z"
+    },
+    {
+      "id": "dkp_1795212468715_474",
+      "userId": "1539332550261080106",
+      "amount": 44,
+      "newBalance": 1256,
+      "reason": "Presença (34 DKP) + Last Hit (+10 DKP): Geena 19:00",
+      "meta": {
+        "cp": 514152,
+        "level": 78,
+        "multCp": 1.54,
+        "baseDkp": 20,
+        "eventId": "evt_1795212468661",
+        "isEvent": true,
+        "multLvl": 1.09,
+        "finalDkp": 34,
+        "eventName": "Geena 19:00",
+        "isLastHit": true,
+        "lastHitBonus": 10,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-20T22:07:48.715Z"
+    },
+    {
+      "id": "dkp_1795202070761_670",
+      "userId": "341746889785344001",
+      "amount": 62,
+      "newBalance": 657,
+      "reason": "Presença: Geena 15:00",
+      "meta": {
+        "cp": 655000,
+        "level": 84,
+        "multCp": 1.8,
+        "baseDkp": 30,
+        "eventId": "evt_1795202070698",
+        "isEvent": true,
+        "multLvl": 1.15,
+        "finalDkp": 62,
+        "eventName": "Geena 15:00",
+        "isLastHit": false,
+        "lastHitBonus": 0,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-20T19:14:30.761Z"
+    },
+    {
+      "id": "dkp_1795145352290_823",
+      "userId": "555928204884574218",
+      "amount": 22,
+      "newBalance": 208,
+      "reason": "Presença: Geena 19:00",
+      "meta": {
+        "cp": 361974,
+        "level": 72,
+        "multCp": 1.09,
+        "baseDkp": 20,
+        "eventId": "evt_1795145352290",
+        "isEvent": true,
+        "multLvl": 1,
+        "finalDkp": 22,
+        "eventName": "Geena 19:00",
+        "isLastHit": false,
+        "lastHitBonus": 0,
+        "registeredBy": "dpizinnalt."
+      },
+      "date": "2026-11-20T03:29:12.290Z"
+    },
+    {
+      "id": "dkp_1795144019012_450",
+      "userId": "458709154509488129",
+      "amount": 48,
+      "newBalance": 903,
+      "reason": "Contestação Aprovada: Geena 23:00",
+      "meta": {
+        "cp": 500500,
+        "level": 77,
+        "baseDkp": 30,
+        "isEvent": true,
+        "eventKey": "geena_23",
+        "finalDkp": 48,
+        "disputeId": "disp_1795143261133_561",
+        "eventName": "Geena 23:00",
+        "approvedBy": "1539332550261080106"
+      },
+      "date": "2026-11-20T03:06:59.012Z"
+    },
+    {
+      "id": "dkp_1795143149636_556",
+      "userId": "1184234338334822440",
+      "amount": 36,
+      "newBalance": 382,
+      "reason": "Presença: Geena 23:00",
+      "meta": {
+        "cp": 381261,
+        "level": 74,
+        "multCp": 1.15,
+        "baseDkp": 30,
+        "eventId": "evt_1795143149577",
+        "isEvent": true,
+        "multLvl": 1.03,
+        "finalDkp": 36,
+        "eventName": "Geena 23:00",
+        "isLastHit": false,
+        "lastHitBonus": 0,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-20T02:52:29.636Z"
+    },
+    {
+      "id": "dkp_1795126687696_982",
+      "userId": "1184234338334822440",
+      "amount": 24,
+      "newBalance": 346,
+      "reason": "Presença: Geena 19:00",
+      "meta": {
+        "cp": 381261,
+        "level": 74,
+        "multCp": 1.15,
+        "baseDkp": 20,
+        "eventId": "evt_1795126687647",
+        "isEvent": true,
+        "multLvl": 1.03,
+        "finalDkp": 24,
+        "eventName": "Geena 19:00",
+        "isLastHit": false,
+        "lastHitBonus": 0,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-19T22:18:07.696Z"
+    },
+    {
+      "id": "dkp_1795114526750_175",
+      "userId": "285591759516336128",
+      "amount": 37,
+      "newBalance": 733,
+      "reason": "Presença: Geena 15:00",
+      "meta": {
+        "cp": 395797,
+        "level": 74,
+        "multCp": 1.19,
+        "baseDkp": 30,
+        "eventId": "evt_1795114526699",
+        "isEvent": true,
+        "multLvl": 1.03,
+        "finalDkp": 37,
+        "eventName": "Geena 15:00",
+        "isLastHit": false,
+        "lastHitBonus": 0,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-19T18:55:26.750Z"
+    },
+    {
+      "id": "dkp_1795057018397_228",
+      "userId": "121982739640614916",
+      "amount": 33,
+      "newBalance": 33,
+      "reason": "Presença: Geena 23:00",
+      "meta": {
+        "cp": 353000,
+        "level": 73,
+        "multCp": 1.07,
+        "baseDkp": 30,
+        "eventId": "evt_1795057018348",
+        "isEvent": true,
+        "multLvl": 1.01,
+        "finalDkp": 33,
+        "eventName": "Geena 23:00",
+        "isLastHit": false,
+        "lastHitBonus": 0,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-19T02:56:58.397Z"
+    },
+    {
+      "id": "dkp_1795040444080_911",
+      "userId": "309849117033627649",
+      "amount": 32,
+      "newBalance": 152,
+      "reason": "Presença: Geena 19:00",
+      "meta": {
+        "cp": 489858,
+        "level": 77,
+        "multCp": 1.47,
+        "baseDkp": 20,
+        "eventId": "evt_1795040444045",
+        "isEvent": true,
+        "multLvl": 1.07,
+        "finalDkp": 32,
+        "eventName": "Geena 19:00",
+        "isLastHit": false,
+        "lastHitBonus": 0,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-18T22:20:44.080Z"
+    },
+    {
+      "id": "dkp_1795036550188_778",
+      "userId": "909786062602272802",
+      "amount": 34,
+      "newBalance": 662,
+      "reason": "Contestação Aprovada: Geena 23:00",
+      "meta": {
+        "cp": 376172,
+        "level": 72,
+        "baseDkp": 30,
+        "isEvent": true,
+        "eventKey": "geena_23",
+        "finalDkp": 34,
+        "disputeId": "disp_1795036503071_21",
+        "eventName": "Geena 23:00",
+        "approvedBy": "1539332550261080106"
+      },
+      "date": "2026-11-18T21:15:50.188Z"
+    },
+    {
+      "id": "dkp_1795036344498_203",
+      "userId": "1455647608696733778",
+      "amount": 43,
+      "newBalance": 266,
+      "reason": "Contestação Aprovada: Geena 23:00",
+      "meta": {
+        "cp": 455000,
+        "level": 76,
+        "baseDkp": 30,
+        "isEvent": true,
+        "eventKey": "geena_23",
+        "finalDkp": 43,
+        "disputeId": "disp_1795034610649_512",
+        "eventName": "Geena 23:00",
+        "approvedBy": "1539332550261080106"
+      },
+      "date": "2026-11-18T21:12:24.498Z"
+    },
+    {
+      "id": "dkp_1795030692074_145",
+      "userId": "267147697088233474",
+      "amount": 33,
+      "newBalance": 99,
+      "reason": "Contestação Aprovada: Geena 23:00",
+      "meta": {
+        "cp": 355000,
+        "level": 74,
+        "baseDkp": 30,
+        "isEvent": true,
+        "eventKey": "geena_23",
+        "finalDkp": 33,
+        "disputeId": "disp_1795027721153_437",
+        "eventName": "Geena 23:00",
+        "approvedBy": "1539332550261080106"
+      },
+      "date": "2026-11-18T19:38:12.074Z"
+    },
+    {
+      "id": "dkp_1795026946130_297",
+      "userId": "570376636051095562",
+      "amount": 32,
+      "newBalance": 118,
+      "reason": "Contestação Aprovada: Geena 23:00",
+      "meta": {
+        "cp": 357000,
+        "level": 72,
+        "baseDkp": 30,
+        "isEvent": true,
+        "eventKey": "geena_23",
+        "finalDkp": 32,
+        "disputeId": "disp_1795024448518_638",
+        "eventName": "Geena 23:00",
+        "approvedBy": "273600843251712020"
+      },
+      "date": "2026-11-18T18:35:46.130Z"
+    },
+    {
+      "id": "dkp_1795026944219_496",
+      "userId": "273600843251712020",
+      "amount": 38,
+      "newBalance": 113,
+      "reason": "Contestação Aprovada: Geena 23:00",
+      "meta": {
+        "cp": 412300,
+        "level": 74,
+        "baseDkp": 30,
+        "isEvent": true,
+        "eventKey": "geena_23",
+        "finalDkp": 38,
+        "disputeId": "disp_1795024417774_653",
+        "eventName": "Geena 23:00",
+        "approvedBy": "273600843251712020"
+      },
+      "date": "2026-11-18T18:35:44.219Z"
+    },
+    {
+      "id": "dkp_1795026941052_64",
+      "userId": "458709154509488129",
+      "amount": 48,
+      "newBalance": 695,
+      "reason": "Contestação Aprovada: Geena 23:00",
+      "meta": {
+        "cp": 500500,
+        "level": 77,
+        "baseDkp": 30,
+        "isEvent": true,
+        "eventKey": "geena_23",
+        "finalDkp": 48,
+        "disputeId": "disp_1795024280619_532",
+        "eventName": "Geena 23:00",
+        "approvedBy": "273600843251712020"
+      },
+      "date": "2026-11-18T18:35:41.052Z"
+    },
+    {
+      "id": "dkp_1795026933486_207",
+      "userId": "1539332550261080106",
+      "amount": 44,
+      "newBalance": 940,
+      "reason": "Contestação Aprovada: Geena 23:00",
+      "meta": {
+        "cp": 463657,
+        "level": 76,
+        "baseDkp": 30,
+        "isEvent": true,
+        "eventKey": "geena_23",
+        "finalDkp": 44,
+        "disputeId": "disp_1795024077272_969",
+        "eventName": "Geena 23:00",
+        "approvedBy": "273600843251712020"
+      },
+      "date": "2026-11-18T18:35:33.486Z"
+    },
+    {
+      "id": "dkp_1795026906967_785",
+      "userId": "453060092439298058",
+      "amount": 30,
+      "newBalance": 30,
+      "reason": "Presença: Geena 15:00",
+      "meta": {
+        "cp": 324471,
+        "level": 72,
+        "multCp": 0.98,
+        "baseDkp": 30,
+        "eventId": "evt_1795026906967",
+        "isEvent": true,
+        "multLvl": 1,
+        "finalDkp": 30,
+        "eventName": "Geena 15:00",
+        "isLastHit": false,
+        "lastHitBonus": 0,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-18T18:35:06.967Z"
+    },
+    {
+      "id": "dkp_1795026840724_69",
+      "userId": "909786062602272802",
+      "amount": 34,
+      "newBalance": 628,
+      "reason": "Presença: Geena 15:00",
+      "meta": {
+        "cp": 376172,
+        "level": 72,
+        "multCp": 1.14,
+        "baseDkp": 30,
+        "eventId": "evt_1795026840685",
+        "isEvent": true,
+        "multLvl": 1,
+        "finalDkp": 34,
+        "eventName": "Geena 15:00",
+        "isLastHit": false,
+        "lastHitBonus": 0,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-18T18:34:00.724Z"
+    },
+    {
+      "id": "bid_won_1794943268558",
+      "userId": "114481570135408645",
+      "amount": -27,
+      "newBalance": 114,
+      "reason": "Vitória no Leilão: 394x Resquício do Testamento Noturno",
+      "meta": {
+        "itemId": "item_1794871168812"
+      },
+      "date": "2026-11-17T19:21:08.558Z"
+    },
+    {
+      "id": "bid_won_1794943188554",
+      "userId": "773250841607667773",
+      "amount": -5,
+      "newBalance": 426,
+      "reason": "Vitória no Leilão: 60x Pergaminho de Acessório",
+      "meta": {
+        "itemId": "item_1794871178943"
+      },
+      "date": "2026-11-17T19:19:48.554Z"
+    },
+    {
+      "id": "bid_won_1794943187056",
+      "userId": "1539332550261080106",
+      "amount": -10,
+      "newBalance": 852,
+      "reason": "Vitória no Leilão: 4x Página de Manual de Arma",
+      "meta": {
+        "itemId": "item_1794871170453"
+      },
+      "date": "2026-11-17T19:19:47.056Z"
+    },
+    {
+      "id": "bid_won_1794943181441",
+      "userId": "570376636051095562",
+      "amount": -535,
+      "newBalance": 54,
+      "reason": "Vitória no Leilão: 1000x Resquício do Testamento Noturno",
+      "meta": {
+        "itemId": "item_1794871167235"
+      },
+      "date": "2026-11-17T19:19:41.441Z"
+    },
+    {
+      "id": "bid_won_1794943180075",
+      "userId": "1455647608696733778",
+      "amount": -10,
+      "newBalance": 180,
+      "reason": "Vitória no Leilão: 2x Página de Manual de Acessório",
+      "meta": {
+        "itemId": "item_1794871171190"
+      },
+      "date": "2026-11-17T19:19:40.075Z"
+    },
+    {
+      "id": "bid_won_1794943178077",
+      "userId": "458709154509488129",
+      "amount": -5,
+      "newBalance": 599,
+      "reason": "Vitória no Leilão: Anel do Espinho Corrompido",
+      "meta": {
+        "itemId": "item_1794871165007"
+      },
+      "date": "2026-11-17T19:19:38.077Z"
+    },
+    {
+      "id": "bid_won_1794943170322",
+      "userId": "273600843251712020",
+      "amount": -146,
+      "newBalance": 37,
+      "reason": "Vitória no Leilão: 1000x Resquício do Testamento Noturno",
+      "meta": {
+        "itemId": "item_1794871166496"
+      },
+      "date": "2026-11-17T19:19:30.322Z"
+    },
+    {
+      "id": "bid_won_1794943168558",
+      "userId": "458709154509488129",
+      "amount": -150,
+      "newBalance": 604,
+      "reason": "Vitória no Leilão: Livro de Habilidade: Aprimoramento de Dano Bônus I",
+      "meta": {
+        "itemId": "item_1794871165708"
+      },
+      "date": "2026-11-17T19:19:28.558Z"
+    },
+    {
+      "id": "bid_won_1794943166445",
+      "userId": "773250841607667773",
+      "amount": -5,
+      "newBalance": 431,
+      "reason": "Vitória no Leilão: Elmo da Noite Carmesim",
+      "meta": {
+        "itemId": "item_1794871143758"
+      },
+      "date": "2026-11-17T19:19:26.445Z"
+    },
+    {
+      "id": "bid_won_1794943153870",
+      "userId": "1177008353927495710",
+      "amount": -5,
+      "newBalance": 191,
+      "reason": "Vitória no Leilão: Espada da Noite Carmesim",
+      "meta": {
+        "itemId": "item_1794871134620"
+      },
+      "date": "2026-11-17T19:19:13.870Z"
+    },
+    {
+      "id": "bid_won_1794943152620",
+      "userId": "1177008353927495710",
+      "amount": -5,
+      "newBalance": 196,
+      "reason": "Vitória no Leilão: Espada do Rastreador Noturno",
+      "meta": {
+        "itemId": "item_1794871131406"
+      },
+      "date": "2026-11-17T19:19:12.620Z"
+    },
+    {
+      "id": "bid_won_1794943150966",
+      "userId": "221320510087102464",
+      "amount": -5,
+      "newBalance": 311,
+      "reason": "Vitória no Leilão: Foice do Espreitador Noturno",
+      "meta": {
+        "itemId": "item_1794871136080"
+      },
+      "date": "2026-11-17T19:19:10.966Z"
+    },
+    {
+      "id": "bid_won_1794943149865",
+      "userId": "570376636051095562",
+      "amount": -10,
+      "newBalance": 589,
+      "reason": "Vitória no Leilão: Arma de Fogo do Magistrado",
+      "meta": {
+        "itemId": "item_1794871137377"
+      },
+      "date": "2026-11-17T19:19:09.865Z"
+    },
+    {
+      "id": "bid_won_1794943148525",
+      "userId": "1177008353927495710",
+      "amount": -5,
+      "newBalance": 201,
+      "reason": "Vitória no Leilão: Espada da Noite Carmesim",
+      "meta": {
+        "itemId": "item_1794871134620"
+      },
+      "date": "2026-11-17T19:19:08.525Z"
+    },
+    {
+      "id": "bid_won_1794943143611",
+      "userId": "1455647608696733778",
+      "amount": -6,
+      "newBalance": 190,
+      "reason": "Vitória no Leilão: Foice da Noite Carmesim",
+      "meta": {
+        "itemId": "item_1794871136585"
+      },
+      "date": "2026-11-17T19:19:03.611Z"
+    },
+    {
+      "id": "dkp_1794941121364_540",
+      "userId": "267147697088233474",
+      "amount": 33,
+      "newBalance": 33,
+      "reason": "Presença: Geena 15:00",
+      "meta": {
+        "cp": 355000,
+        "level": 74,
+        "multCp": 1.07,
+        "baseDkp": 30,
+        "eventId": "evt_1794941121364",
+        "isEvent": true,
+        "multLvl": 1.03,
+        "finalDkp": 33,
+        "eventName": "Geena 15:00",
+        "isLastHit": false,
+        "lastHitBonus": 0,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-17T18:45:21.364Z"
+    },
+    {
+      "id": "dkp_1794940808928_739",
+      "userId": "380761383597506560",
+      "amount": 30,
+      "newBalance": 200,
+      "reason": "Presença: Geena 15:00",
+      "meta": {
+        "cp": 338723,
+        "level": 71,
+        "multCp": 1.03,
+        "baseDkp": 30,
+        "eventId": "evt_1794940808902",
+        "isEvent": true,
+        "multLvl": 0.98,
+        "finalDkp": 30,
+        "eventName": "Geena 15:00",
+        "isLastHit": false,
+        "lastHitBonus": 0,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-17T18:40:08.928Z"
+    },
+    {
+      "id": "dkp_1794883389764_862",
+      "userId": "327499476489076748",
+      "amount": 27,
+      "newBalance": 27,
+      "reason": "Presença: Geena 23:00",
+      "meta": {
+        "cp": 301206,
+        "level": 70,
+        "multCp": 0.92,
+        "baseDkp": 30,
+        "eventId": "evt_1794883389764",
+        "isEvent": true,
+        "multLvl": 0.97,
+        "finalDkp": 27,
+        "eventName": "Geena 23:00",
+        "isLastHit": false,
+        "lastHitBonus": 0,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-17T02:43:09.764Z"
+    },
+    {
+      "id": "dkp_1794883107082_226",
+      "userId": "555928204884574218",
+      "amount": 30,
+      "newBalance": 30,
+      "reason": "Presença: Geena 23:00",
+      "meta": {
+        "cp": 334784,
+        "level": 72,
+        "multCp": 1.01,
+        "baseDkp": 30,
+        "eventId": "evt_1794883107081",
+        "isEvent": true,
+        "multLvl": 1,
+        "finalDkp": 30,
+        "eventName": "Geena 23:00",
+        "isLastHit": false,
+        "lastHitBonus": 0,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-17T02:38:27.082Z"
+    },
+    {
+      "id": "dkp_1794881926916_840",
+      "userId": "1451398017398603836",
+      "amount": 29,
+      "newBalance": 97,
+      "reason": "Presença: Geena 23:00",
+      "meta": {
+        "cp": 322461,
+        "level": 71,
+        "multCp": 0.98,
+        "baseDkp": 30,
+        "eventId": "evt_1794881926891",
+        "isEvent": true,
+        "multLvl": 0.98,
+        "finalDkp": 29,
+        "eventName": "Geena 23:00",
+        "isLastHit": false,
+        "lastHitBonus": 0,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-17T02:18:46.916Z"
+    },
+    {
+      "id": "dkp_1794868608319_103",
+      "userId": "570376636051095562",
+      "amount": 22,
+      "newBalance": 535,
+      "reason": "Presença: Geena 19:00",
+      "meta": {
+        "cp": 357000,
+        "level": 72,
+        "multCp": 1.08,
+        "baseDkp": 20,
+        "eventId": "evt_1794868608319",
+        "isEvent": true,
+        "multLvl": 1,
+        "finalDkp": 22,
+        "eventName": "Geena 19:00",
+        "isLastHit": false,
+        "lastHitBonus": 0,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-16T22:36:48.319Z"
+    },
+    {
+      "id": "dkp_1794868493320_388",
+      "userId": "1391747539124093039",
+      "amount": 20,
+      "newBalance": 50,
+      "reason": "Presença: Geena 19:00",
+      "meta": {
+        "cp": 326000,
+        "level": 73,
+        "multCp": 0.99,
+        "baseDkp": 20,
+        "eventId": "evt_1794868493320",
+        "isEvent": true,
+        "multLvl": 1.01,
+        "finalDkp": 20,
+        "eventName": "Geena 19:00",
+        "isLastHit": false,
+        "lastHitBonus": 0,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-16T22:34:53.320Z"
+    },
+    {
+      "id": "dkp_1794868487971_420",
+      "userId": "1391747539124093039",
+      "amount": 30,
+      "newBalance": 30,
+      "reason": "Presença: Geena 15:00",
+      "meta": {
+        "cp": 326000,
+        "level": 73,
+        "multCp": 0.99,
+        "baseDkp": 30,
+        "eventId": "evt_1794868487970",
+        "isEvent": true,
+        "multLvl": 1.01,
+        "finalDkp": 30,
+        "eventName": "Geena 15:00",
+        "isLastHit": false,
+        "lastHitBonus": 0,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-16T22:34:47.971Z"
+    },
+    {
+      "id": "dkp_1794867035337_767",
+      "userId": "285591759516336128",
+      "amount": 25,
+      "newBalance": 548,
+      "reason": "Presença: Geena 19:00",
+      "meta": {
+        "cp": 395797,
+        "level": 74,
+        "multCp": 1.19,
+        "baseDkp": 20,
+        "eventId": "evt_1794867035315",
+        "isEvent": true,
+        "multLvl": 1.03,
+        "finalDkp": 25,
+        "eventName": "Geena 19:00",
+        "isLastHit": false,
+        "lastHitBonus": 0,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-16T22:10:35.337Z"
+    },
+    {
+      "id": "dkp_1794855026425_238",
+      "userId": "1536674265825542194",
+      "amount": 34,
+      "newBalance": 34,
+      "reason": "Contestação Aprovada: Geena 15:00",
+      "meta": {
+        "cp": 366225,
+        "level": 73,
+        "baseDkp": 30,
+        "isEvent": true,
+        "eventKey": "geena_15",
+        "finalDkp": 34,
+        "disputeId": "disp_1794854875556_216",
+        "eventName": "Geena 15:00",
+        "approvedBy": "1177008353927495710"
+      },
+      "date": "2026-11-16T18:50:26.425Z"
+    },
+    {
+      "id": "dkp_1794854093292_563",
+      "userId": "881682092411473991",
+      "amount": 42,
+      "newBalance": 42,
+      "reason": "Presença: Geena 15:00",
+      "meta": {
+        "cp": 453038,
+        "level": 74,
+        "multCp": 1.36,
+        "baseDkp": 30,
+        "eventId": "evt_1794854093276",
+        "isEvent": true,
+        "multLvl": 1.03,
+        "finalDkp": 42,
+        "eventName": "Geena 15:00",
+        "isLastHit": false,
+        "lastHitBonus": 0,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-16T18:34:53.292Z"
+    },
+    {
+      "id": "dkp_1794851092916_721",
+      "userId": "1539332550261080106",
+      "amount": 44,
+      "newBalance": 700,
+      "reason": "Presença: Geena 23:00",
+      "meta": {
+        "cp": 456002,
+        "level": 76,
+        "multCp": 1.37,
+        "baseDkp": 30,
+        "eventId": "evt_1794851092901",
+        "isEvent": true,
+        "multLvl": 1.06,
+        "finalDkp": 44,
+        "eventName": "Geena 23:00",
+        "isLastHit": false,
+        "lastHitBonus": 0,
+        "registeredBy": "kasumo_"
+      },
+      "date": "2026-11-16T17:44:52.916Z"
+    },
+    {
+      "id": "bid_won_1794805164291",
+      "userId": "341746889785344001",
+      "amount": -35,
+      "newBalance": 6,
+      "reason": "Vitória no Leilão: Livro de Habilidade: Aprimoramento de Dano Bônus",
+      "meta": {
+        "itemId": "item_1794790754378"
+      },
+      "date": "2026-11-16T04:59:24.291Z"
+    },
+    {
+      "id": "bid_won_1794795783657",
+      "userId": "273600843251712020",
+      "amount": -190,
+      "newBalance": 47,
+      "reason": "Vitória no Leilão: 60x Orbe de Geena",
+      "meta": {
+        "itemId": "item_1794791973176"
+      },
+      "date": "2026-11-16T02:23:03.657Z"
+    },
+    {
+      "id": "bid_won_1794795673648",
+      "userId": "1455647608696733778",
+      "amount": -46,
+      "newBalance": 14,
+      "reason": "Vitória no Leilão: 20x Pagina de Livro de Habilidade Branca",
+      "meta": {
+        "itemId": "item_1794791975612"
+      },
+      "date": "2026-11-16T02:21:13.648Z"
+    },
+    {
+      "id": "bid_won_1794795663647",
+      "userId": "1455647608696733778",
+      "amount": -61,
+      "newBalance": 60,
+      "reason": "Vitória no Leilão: 20x Pagina de Livro de Habilidade Branca",
+      "meta": {
+        "itemId": "item_1794791974362"
+      },
+      "date": "2026-11-16T02:21:03.647Z"
+    },
+    {
+      "id": "bid_won_1794795643647",
+      "userId": "273600843251712020",
+      "amount": -160,
+      "newBalance": 237,
+      "reason": "Vitória no Leilão: 60x Orbe de Geena",
+      "meta": {
+        "itemId": "item_1794791973866"
+      },
+      "date": "2026-11-16T02:20:43.647Z"
+    },
+    {
+      "id": "bid_won_1794795583642",
+      "userId": "273600843251712020",
+      "amount": -50,
+      "newBalance": 397,
+      "reason": "Vitória no Leilão: Pagina de Livro de Habilidade Verde",
+      "meta": {
+        "itemId": "item_1794791976334"
+      },
+      "date": "2026-11-16T02:19:43.642Z"
+    },
+    {
+      "id": "bid_won_1794795573642",
+      "userId": "1455647608696733778",
+      "amount": -16,
+      "newBalance": 121,
+      "reason": "Vitória no Leilão: 46 Barras de Ouro",
+      "meta": {
+        "itemId": "item_1794791972232"
+      },
+      "date": "2026-11-16T02:19:33.642Z"
+    },
+    {
+      "id": "bid_won_1794791603519",
+      "userId": "163034833965023232",
+      "amount": -165,
+      "newBalance": 0,
+      "reason": "Vitória no Leilão: Livro: Aprimoramento de Poder Corpo a Corpo II",
+      "meta": {
+        "itemId": "item_1794790694742"
+      },
+      "date": "2026-11-16T01:13:23.519Z"
+    },
+    {
+      "id": "bid_won_1794791553515",
+      "userId": "425370511749545984",
+      "amount": -457,
+      "newBalance": 8,
+      "reason": "Vitória no Leilão: 1000x Resquício de Testamento Noturno",
+      "meta": {
+        "itemId": "item_1794790650678"
+      },
+      "date": "2026-11-16T01:12:33.515Z"
+    },
+    {
+      "id": "bid_won_1794791493511",
+      "userId": "773250841607667773",
+      "amount": -305,
+      "newBalance": 246,
+      "reason": "Vitória no Leilão: Manual de Acessório Heroico",
+      "meta": {
+        "itemId": "item_1794790593093"
+      },
+      "date": "2026-11-16T01:11:33.511Z"
+    },
+    {
+      "id": "bid_won_1794791463509",
+      "userId": "341746889785344001",
+      "amount": -670,
+      "newBalance": 41,
+      "reason": "Vitória no Leilão: Ira do Inferno",
+      "meta": {
+        "itemId": "item_1794790553893"
+      },
+      "date": "2026-11-16T01:11:03.509Z"
+    },
+    {
+      "id": "bid_won_1794791231737",
+      "userId": "1455647608696733778",
+      "amount": -452,
+      "newBalance": 137,
+      "reason": "Vitória no Leilão: Luvas do Ceifador do Abismo",
+      "meta": {
+        "itemId": "item_1794790322096"
+      },
+      "date": "2026-11-16T01:07:11.737Z"
+    },
+    {
+      "id": "dkp_1794791226699_369",
+      "userId": "285591759516336128",
+      "amount": 22,
+      "newBalance": 439,
+      "reason": "Presença: Geena 19:00",
+      "meta": {
+        "cp": 360168,
+        "level": 72,
+        "multCp": 1.09,
+        "baseDkp": 20,
+        "eventId": "evt_1794791226684",
+        "isEvent": true,
+        "multLvl": 1,
+        "finalDkp": 22,
+        "eventName": "Geena 19:00",
+        "isLastHit": false,
+        "lastHitBonus": 0,
+        "registeredBy": "jmacedx"
+      },
+      "date": "2026-11-16T01:07:06.699Z"
+    },
+    {
+      "id": "bid_won_1794791141729",
+      "userId": "1177008353927495710",
+      "amount": -452,
+      "newBalance": 15,
+      "reason": "Vitória no Leilão: Armadura Corporal do Ceifador do Abismo",
+      "meta": {
+        "itemId": "item_1794790240623"
+      },
+      "date": "2026-11-16T01:05:41.729Z"
+    },
+    {
+      "id": "dkp_1794790218982_771",
+      "userId": "765022403495460874",
+      "amount": 39,
+      "newBalance": 68,
+      "reason": "Presença: Defesa da Relíquia (Domingo)",
+      "meta": {
+        "cp": 320050,
+        "level": 72,
+        "multCp": 0.97,
+        "baseDkp": 40,
+        "eventId": "evt_1794790218943",
+        "isEvent": true,
+        "multLvl": 1,
+        "finalDkp": 39,
+        "eventName": "Defesa da Relíquia (Domingo)",
+        "isLastHit": false,
+        "lastHitBonus": 0,
+        "registeredBy": "jmacedx"
+      },
+      "date": "2026-11-16T00:50:18.982Z"
+    },
+    {
+      "id": "dkp_1794789621854_189",
+      "userId": "895720565430714419",
+      "amount": 25,
+      "newBalance": 67,
+      "reason": "Presença: Missão da Guilda (Domingo)",
+      "meta": {
+        "cp": 284302,
+        "level": 70,
+        "multCp": 0.87,
+        "baseDkp": 30,
+        "eventId": "evt_1794789621814",
+        "isEvent": true,
+        "multLvl": 0.97,
+        "finalDkp": 25,
+        "eventName": "Missão da Guilda (Domingo)",
+        "isLastHit": false,
+        "lastHitBonus": 0,
+        "registeredBy": "jmacedx"
+      },
+      "date": "2026-11-16T00:40:21.854Z"
+    },
+    {
+      "id": "dkp_1794769645613_572",
+      "userId": "570376636051095562",
+      "amount": 48,
+      "newBalance": 366,
+      "reason": "Contestação Aprovada: Guerra de Ocupação (Sábado)",
+      "meta": {
+        "cp": 322000,
+        "level": 71,
+        "baseDkp": 50,
+        "isEvent": true,
+        "eventKey": "guerra_ocupacao",
+        "finalDkp": 48,
+        "disputeId": "disp_1794769621841_9",
+        "eventName": "Guerra de Ocupação (Sábado)",
+        "approvedBy": "1177008353927495710"
+      },
+      "date": "2026-11-15T19:07:25.613Z"
+    },
+    {
+      "id": "dkp_1794769456627_629",
+      "userId": "1455647608696733778",
+      "amount": 63,
+      "newBalance": 476,
+      "reason": "Contestação Aprovada: Guerra de Ocupação (Sábado)",
+      "meta": {
+        "cp": 405000,
+        "level": 74,
+        "baseDkp": 50,
+        "isEvent": true,
+        "eventKey": "guerra_ocupacao",
+        "finalDkp": 63,
+        "disputeId": "disp_1794769409632_672",
+        "eventName": "Guerra de Ocupação (Sábado)",
+        "approvedBy": "1177008353927495710"
+      },
+      "date": "2026-11-15T19:04:16.627Z"
+    },
+    {
+      "id": "dkp_1794768729939_385",
+      "userId": "1455647608696733778",
+      "amount": 48,
+      "newBalance": 413,
+      "reason": "Presença (38 DKP) + Last Hit (+10 DKP): Geena 15:00",
+      "meta": {
+        "cp": 405000,
+        "level": 74,
+        "multCp": 1.22,
+        "baseDkp": 30,
+        "eventId": "evt_1794768729921",
+        "isEvent": true,
+        "multLvl": 1.03,
+        "finalDkp": 38,
+        "eventName": "Geena 15:00",
+        "isLastHit": true,
+        "lastHitBonus": 10,
+        "registeredBy": "jmacedx"
+      },
+      "date": "2026-11-15T18:52:09.939Z"
+    },
+    {
+      "id": "dkp_1794767548085_677",
+      "userId": "458709154509488129",
+      "amount": 46,
+      "newBalance": 463,
+      "reason": "Presença: Geena 23:00",
+      "meta": {
+        "cp": 477000,
+        "level": 76,
+        "multCp": 1.43,
+        "baseDkp": 30,
+        "eventId": "evt_1794767548064",
+        "isEvent": true,
+        "multLvl": 1.06,
+        "finalDkp": 46,
+        "eventName": "Geena 23:00",
+        "isLastHit": false,
+        "lastHitBonus": 0,
+        "registeredBy": "jmacedx"
+      },
+      "date": "2026-11-15T18:32:28.085Z"
+    },
+    {
+      "id": "dkp_1794766986347_551",
+      "userId": "458709154509488129",
+      "amount": 76,
+      "newBalance": 417,
+      "reason": "Presença: Guerra de Ocupação (Sábado)",
+      "meta": {
+        "cp": 477000,
+        "level": 76,
+        "multCp": 1.43,
+        "baseDkp": 50,
+        "eventId": "evt_1794766986329",
+        "isEvent": true,
+        "multLvl": 1.06,
+        "finalDkp": 76,
+        "eventName": "Guerra de Ocupação (Sábado)",
+        "isLastHit": false,
+        "lastHitBonus": 0,
+        "registeredBy": "jmacedx"
+      },
+      "date": "2026-11-15T18:23:06.347Z"
+    },
+    {
+      "id": "dkp_1794694055122_361",
+      "userId": "909786062602272802",
+      "amount": 20,
+      "newBalance": 260,
+      "reason": "Presença: Geena 19:00",
+      "meta": {
+        "cp": 330482,
+        "level": 71,
+        "multCp": 1,
+        "baseDkp": 20,
+        "eventId": "evt_1794694055113",
+        "isEvent": true,
+        "multLvl": 0.98,
+        "finalDkp": 20,
+        "eventName": "Geena 19:00",
+        "isLastHit": false,
+        "lastHitBonus": 0,
+        "registeredBy": "jmacedx"
+      },
+      "date": "2026-11-14T22:07:35.122Z"
+    },
     {
       "id": "dkp_1794682763128_996",
       "userId": "248940648563081226",

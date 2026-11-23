@@ -200,6 +200,43 @@ async function logAuctionNoBids({ client, itemName, targetClass, minBid, itemId,
   }
 }
 
+// 8. Notificação de Item Entregue via DM para o Vencedor
+async function notifyItemDelivered({ client, memberId, nick, items, deliveredBy }) {
+  if (!client || !memberId || !items || items.length === 0) return false;
+  try {
+    const user = await client.users.fetch(memberId).catch(() => null);
+    if (!user) {
+      console.warn(`[DELIVERY NOTIFY] Usuário Discord ${memberId} não encontrado.`);
+      return false;
+    }
+
+    const totalDkp = items.reduce((acc, it) => acc + (Number(it.currentBid) || 0), 0);
+    const isSingle = items.length === 1;
+
+    const embed = new EmbedBuilder()
+      .setTitle(`📦 ENTREGA DE ITEM DE LEILÃO • NOOMERCY`)
+      .setColor('#2ECC71')
+      .setDescription(
+        `Olá <@${memberId}> (${nick ? `\`${nick}\`` : 'Guerreiro'})! 🎉\n\n` +
+        `Seu${isSingle ? ' item arrematado' : 's itens arrematados'} no leilão ${isSingle ? 'foi marcado como **ENTREGUE**' : 'foram marcados como **ENTREGUES**'} no jogo!\n\n` +
+        `📋 **Detalhes da Entrega:**\n` +
+        items.map(it => `• 🗡️ **${it.itemName}** — \`${it.currentBid} DKP\` *(${it.targetClass || 'Livre'})*`).join('\n') +
+        `\n\n💰 **Total Investido:** \`${totalDkp} DKP\`\n` +
+        (deliveredBy ? `🛡️ **Entregue por:** \`${deliveredBy}\`\n\n` : '\n') +
+        `⚠️ *Por favor, confira seu inventário / correio in-game. Caso haja qualquer divergência ou não tenha recebido, procure a liderança.*`
+      )
+      .setFooter({ text: 'Sistema de Entregas NooMercy • Vlad, o Drácula da Shopee' })
+      .setTimestamp();
+
+    await user.send({ embeds: [embed] });
+    console.log(`[DELIVERY NOTIFY] DM enviada com sucesso para ${nick || memberId} (${items.length} itens).`);
+    return true;
+  } catch (err) {
+    console.warn(`[DELIVERY NOTIFY] Não foi possível enviar DM para ${memberId} (${nick}):`, err.message);
+    return false;
+  }
+}
+
 module.exports = {
   logAttendance,
   logDisputeApproved,
@@ -207,5 +244,6 @@ module.exports = {
   logAuctionBidUnlock,
   logAuctionWon,
   logAuctionNoBids,
-  logDecayExecuted
+  logDecayExecuted,
+  notifyItemDelivered
 };

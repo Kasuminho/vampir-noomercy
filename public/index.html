@@ -1103,6 +1103,12 @@
             <label>💰 Lance Mínimo:</label>
             <input type="number" id="defaultMinBid" value="30" min="1"> DKP
           </div>
+          <div class="setting-group">
+            <label class="filter-toggle-label" style="padding: 6px 12px; font-size: 13px; margin: 0; cursor: pointer; border-color: rgba(231, 76, 60, 0.4); background: rgba(231, 76, 60, 0.08);" title="Deleta os tópicos e leilões antigos do fórum #leilao-drops antes de postar os novos">
+              <input type="checkbox" id="cleanOldAuctionsCheckbox" checked style="accent-color: #E74C3C;">
+              <span style="color: #FFF;">🧹 Limpar tópicos antigos no Discord</span>
+            </label>
+          </div>
         </div>
 
         <div class="action-buttons">
@@ -1580,7 +1586,10 @@
         return;
       }
 
-      if (!confirm(`Deseja lançar ${items.length} leilão(ões) agora no canal #leilao-drops do Discord?`)) {
+      const cleanOld = document.getElementById('cleanOldAuctionsCheckbox') ? document.getElementById('cleanOldAuctionsCheckbox').checked : false;
+      const cleanMsg = cleanOld ? '\n\n🧹 ATENÇÃO: Os tópicos antigos do Discord serão limpos antes do envio!' : '';
+
+      if (!confirm(`Deseja lançar ${items.length} leilão(ões) agora no canal #leilao-drops do Discord?${cleanMsg}`)) {
         return;
       }
 
@@ -1593,14 +1602,17 @@
 
       modal.style.display = 'flex';
       modalIcon.textContent = '⏳';
-      modalTitle.textContent = 'Lançando Leilões no Discord...';
-      modalDesc.textContent = `Enviando ${items.length} itens com imagens e botões interativos para o servidor...`;
+      modalTitle.textContent = cleanOld ? 'Limpando e Lançando no Discord...' : 'Lançando Leilões no Discord...';
+      modalDesc.textContent = cleanOld 
+        ? `Limpando tópicos anteriores e postando ${items.length} itens com proteção contra rate limit...`
+        : `Enviando ${items.length} itens com imagens e botões interativos para o servidor...`;
       modalResults.style.display = 'none';
       modalCloseBtn.style.display = 'none';
 
       try {
         const payload = {
           startedBy: 'Staff Web (Painel)',
+          cleanOld: cleanOld,
           auctions: items.map(it => ({
             itemName: it.name.trim(),
             targetClass: it.targetClass,
