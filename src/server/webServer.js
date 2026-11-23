@@ -258,6 +258,7 @@ function startWebServer(client) {
             const targetClass = item.targetClass || 'Livre';
             const minBid = parseInt(item.minBid, 10) || 30;
             const durationMinutes = parseInt(item.durationMinutes, 10) || 15;
+            const endsAtTimestamp = item.endsAtTimestamp ? parseInt(item.endsAtTimestamp, 10) : null;
 
             // 1. Cria o leilão no banco/memória
             const auction = startAuction({
@@ -265,6 +266,7 @@ function startWebServer(client) {
               targetClass,
               minBid,
               durationMinutes,
+              endsAtTimestamp,
               startedBy
             });
 

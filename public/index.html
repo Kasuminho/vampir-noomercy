@@ -210,6 +210,84 @@
       text-align: center;
     }
 
+    /* CONTROLE DE HORÁRIO DE TÉRMINO */
+    .time-picker-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #171923;
+      border: 1px solid rgba(243, 156, 18, 0.4);
+      border-radius: 8px;
+      padding: 6px 12px;
+    }
+
+    .time-picker-box input[type="time"] {
+      width: 105px;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      color: #F1C40F;
+      font-weight: 700;
+      padding: 6px 8px;
+      border-radius: 6px;
+      font-size: 14px;
+      text-align: center;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .time-picker-box input[type="time"]:focus {
+      border-color: #F1C40F;
+    }
+
+    .time-picker-box select {
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      color: #FFF;
+      padding: 6px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .duration-preview-badge {
+      font-size: 12px;
+      font-weight: 700;
+      color: #2ECC71;
+      background: rgba(46, 204, 113, 0.12);
+      padding: 5px 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(46, 204, 113, 0.3);
+      white-space: nowrap;
+    }
+
+    .quick-time-pills {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .time-pill {
+      background: #252736;
+      border: 1px solid var(--border-color);
+      color: #E2E8F0;
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .time-pill:hover {
+      background: #E67E22;
+      color: #000;
+      border-color: #E67E22;
+      font-weight: 700;
+      transform: translateY(-1px);
+    }
+
     .action-buttons {
       display: flex;
       align-items: center;
@@ -1095,14 +1173,35 @@
       <!-- BARRA DE CONTROLES GLOBAIS -->
       <div class="controls-bar">
         <div class="quick-settings">
-          <div class="setting-group">
-            <label>⏱️ Duração Padrão:</label>
-            <input type="number" id="defaultDuration" value="15" min="1" max="1440"> min
+          <div class="time-picker-box">
+            <label style="color: #F1C40F; font-weight: 700; display: flex; align-items: center; gap: 5px; cursor: pointer;">
+              <span>🏁</span> Terminar às:
+            </label>
+            <input type="time" id="globalEndTime" onchange="onGlobalEndTimeChanged(this.value)">
+            <select id="globalEndDay" onchange="onGlobalEndDayChanged(this.value)" title="Dia de encerramento">
+              <option value="auto">Hoje (ou amanhã se passou)</option>
+              <option value="today">Hoje</option>
+              <option value="tomorrow">Amanhã (+24h)</option>
+            </select>
+            <span id="globalDurationBadge" class="duration-preview-badge">⏱️ Calculando...</span>
           </div>
+
+          <div class="quick-time-pills">
+            <span style="font-size: 11px; color: var(--text-muted); font-weight: 600;">Atalhos:</span>
+            <button type="button" class="time-pill" onclick="setQuickTimePreset('22:00')">22:00</button>
+            <button type="button" class="time-pill" onclick="setQuickTimePreset('23:00')">23:00</button>
+            <button type="button" class="time-pill" onclick="setQuickTimePreset('00:00')">00:00</button>
+            <button type="button" class="time-pill" onclick="setQuickTimePreset('03:00')">03:00</button>
+            <button type="button" class="time-pill" onclick="setQuickAddHours(2)">+2h</button>
+            <button type="button" class="time-pill" onclick="setQuickAddHours(4)">+4h</button>
+            <button type="button" class="time-pill" onclick="setQuickAddHours(8)">+8h</button>
+          </div>
+
           <div class="setting-group">
             <label>💰 Lance Mínimo:</label>
             <input type="number" id="defaultMinBid" value="30" min="1"> DKP
           </div>
+
           <div class="setting-group">
             <label class="filter-toggle-label" style="padding: 6px 12px; font-size: 13px; margin: 0; cursor: pointer; border-color: rgba(231, 76, 60, 0.4); background: rgba(231, 76, 60, 0.08);" title="Deleta os tópicos e leilões antigos do fórum #leilao-drops antes de postar os novos">
               <input type="checkbox" id="cleanOldAuctionsCheckbox" checked style="accent-color: #E74C3C;">
@@ -1300,8 +1399,127 @@
       { label: 'Grim Reaper', value: 'Grim Reaper', icon: '💀' }
     ];
 
+    // --- CONTROLE DE HORÁRIO DE TÉRMINO DOS LEILÕES ---
+    function calculateTargetTimestamp(timeStr, dayOpt = 'auto') {
+      const now = new Date();
+      if (!timeStr) {
+        // Padrão: 2 horas à frente
+        const def = new Date(now.getTime() + 2 * 60 * 60 * 1000);
+        timeStr = `${String(def.getHours()).padStart(2, '0')}:${String(def.getMinutes()).padStart(2, '0')}`;
+      }
+
+      const [h, m] = timeStr.split(':').map(Number);
+      const target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m, 0, 0);
+
+      if (dayOpt === 'tomorrow') {
+        target.setDate(target.getDate() + 1);
+      } else if (dayOpt === 'auto') {
+        // Se a hora escolhida for anterior ou dentro de 2 minutos do horário atual, assume amanhã!
+        if (target.getTime() <= now.getTime() + 2 * 60 * 1000) {
+          target.setDate(target.getDate() + 1);
+        }
+      }
+
+      const diffMs = target.getTime() - now.getTime();
+      const diffMinutes = Math.max(1, Math.round(diffMs / 60000));
+      const isToday = target.getDate() === now.getDate();
+      const dayName = isToday ? 'hoje' : 'amanhã';
+      const hours = Math.floor(diffMinutes / 60);
+      const mins = diffMinutes % 60;
+      const durHuman = hours > 0 ? (mins > 0 ? `${hours}h ${mins}m` : `${hours}h`) : `${mins} min`;
+
+      return {
+        timeStr,
+        timestamp: target.getTime(),
+        durationMinutes: diffMinutes,
+        durationHuman: durHuman,
+        dayName,
+        durationDesc: `⏱️ ~${durHuman} (${dayName} às ${timeStr})`
+      };
+    }
+
+    function initDefaultEndTime() {
+      const now = new Date();
+      // Padrão: 2 horas à frente, arredondado para :00 ou :30
+      const target = new Date(now.getTime() + 2 * 60 * 60 * 1000);
+      const m = target.getMinutes();
+      if (m < 15) target.setMinutes(0);
+      else if (m < 45) target.setMinutes(30);
+      else {
+        target.setHours(target.getHours() + 1);
+        target.setMinutes(0);
+      }
+      const hh = String(target.getHours()).padStart(2, '0');
+      const mm = String(target.getMinutes()).padStart(2, '0');
+      const timeStr = `${hh}:${mm}`;
+
+      const input = document.getElementById('globalEndTime');
+      if (input) input.value = timeStr;
+
+      const calc = calculateTargetTimestamp(timeStr, 'auto');
+      updateGlobalBadge(calc);
+      return calc;
+    }
+
+    function updateGlobalBadge(calc) {
+      const badge = document.getElementById('globalDurationBadge');
+      if (badge && calc) {
+        badge.textContent = `⏱️ ~${calc.durationHuman} (${calc.dayName} às ${calc.timeStr})`;
+      }
+    }
+
+    function onGlobalEndTimeChanged(timeVal) {
+      const dayOpt = document.getElementById('globalEndDay')?.value || 'auto';
+      const calc = calculateTargetTimestamp(timeVal, dayOpt);
+      updateGlobalBadge(calc);
+
+      // Sincroniza todos os cards com o novo horário padrão
+      items.forEach((it) => {
+        it.endTime = calc.timeStr;
+        it.duration = calc.durationMinutes;
+        it.endsAtTimestamp = calc.timestamp;
+        it.durationDesc = calc.durationDesc;
+      });
+      renderCards();
+      showToast(`Término definido: ${calc.dayName} às ${calc.timeStr} (~${calc.durationHuman})!`, '🏁');
+    }
+
+    function onGlobalEndDayChanged(dayVal) {
+      const timeVal = document.getElementById('globalEndTime')?.value;
+      onGlobalEndTimeChanged(timeVal);
+    }
+
+    function setQuickTimePreset(timeStr) {
+      const input = document.getElementById('globalEndTime');
+      if (input) input.value = timeStr;
+      onGlobalEndTimeChanged(timeStr);
+    }
+
+    function setQuickAddHours(hoursToAdd) {
+      const now = new Date();
+      const target = new Date(now.getTime() + hoursToAdd * 60 * 60 * 1000);
+      const hh = String(target.getHours()).padStart(2, '0');
+      const mm = String(target.getMinutes()).padStart(2, '0');
+      const timeStr = `${hh}:${mm}`;
+      const input = document.getElementById('globalEndTime');
+      if (input) input.value = timeStr;
+      onGlobalEndTimeChanged(timeStr);
+    }
+
+    function updateCardEndTime(index, timeVal) {
+      if (!items[index]) return;
+      const calc = calculateTargetTimestamp(timeVal, 'auto');
+      items[index].endTime = calc.timeStr;
+      items[index].duration = calc.durationMinutes;
+      items[index].endsAtTimestamp = calc.timestamp;
+      items[index].durationDesc = calc.durationDesc;
+      const hint = document.getElementById(`cardDurHint_${index}`);
+      if (hint) hint.textContent = calc.durationDesc;
+    }
+
     // Inicializa com 1 card vazio
     window.addEventListener('DOMContentLoaded', () => {
+      initDefaultEndTime();
       addNewItemCard();
       setupGlobalPasteListener();
       checkBotStatus();
@@ -1329,15 +1547,21 @@
     }
 
     function addNewItemCard(initialData = {}) {
-      const defaultDur = parseInt(document.getElementById('defaultDuration').value, 10) || 15;
-      const defaultBid = parseInt(document.getElementById('defaultMinBid').value, 10) || 30;
+      const globalTimeInput = document.getElementById('globalEndTime');
+      const globalTimeVal = globalTimeInput ? globalTimeInput.value : '';
+      const globalDayVal = document.getElementById('globalEndDay')?.value || 'auto';
+      const globalCalc = calculateTargetTimestamp(globalTimeVal, globalDayVal);
+      const defaultBid = parseInt(document.getElementById('defaultMinBid')?.value, 10) || 30;
 
       const item = {
         id: 'item_' + Date.now() + '_' + Math.floor(Math.random() * 1000),
         name: initialData.name || '',
         targetClass: initialData.targetClass || 'Livre',
         minBid: initialData.minBid || defaultBid,
-        duration: initialData.duration || defaultDur,
+        endTime: initialData.endTime || globalCalc.timeStr,
+        duration: initialData.duration || globalCalc.durationMinutes,
+        endsAtTimestamp: initialData.endsAtTimestamp || globalCalc.timestamp,
+        durationDesc: initialData.durationDesc || globalCalc.durationDesc,
         imageBase64: initialData.imageBase64 || null
       };
 
@@ -1367,7 +1591,10 @@
         name: source.name,
         targetClass: source.targetClass,
         minBid: source.minBid,
+        endTime: source.endTime,
         duration: source.duration,
+        endsAtTimestamp: source.endsAtTimestamp,
+        durationDesc: source.durationDesc,
         imageBase64: source.imageBase64
       });
       showToast('Item duplicado com sucesso!', '📑');
@@ -1426,9 +1653,12 @@
                      oninput="items[${idx}].minBid = parseInt(this.value, 10) || 1">
             </div>
             <div class="form-group">
-              <label>Duração (Minutos):</label>
-              <input type="number" class="form-control" min="1" max="1440" value="${item.duration}" 
-                     oninput="items[${idx}].duration = parseInt(this.value, 10) || 15">
+              <label>🏁 Terminar às (Hora):</label>
+              <input type="time" class="form-control" style="font-weight: 700; color: #F1C40F;" value="${item.endTime || ''}" 
+                     onchange="updateCardEndTime(${idx}, this.value)">
+              <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;" id="cardDurHint_${idx}">
+                ${item.durationDesc || '⏱️ Calculando...'}
+              </div>
             </div>
           </div>
 
@@ -1613,13 +1843,21 @@
         const payload = {
           startedBy: 'Staff Web (Painel)',
           cleanOld: cleanOld,
-          auctions: items.map(it => ({
-            itemName: it.name.trim(),
-            targetClass: it.targetClass,
-            minBid: it.minBid,
-            durationMinutes: it.duration,
-            imageBase64: it.imageBase64
-          }))
+          auctions: items.map(it => {
+            let itemCalc = null;
+            if (it.endTime) {
+              const dayOpt = document.getElementById('globalEndDay')?.value || 'auto';
+              itemCalc = calculateTargetTimestamp(it.endTime, dayOpt);
+            }
+            return {
+              itemName: it.name.trim(),
+              targetClass: it.targetClass,
+              minBid: it.minBid,
+              durationMinutes: itemCalc ? itemCalc.durationMinutes : it.duration,
+              endsAtTimestamp: itemCalc ? itemCalc.timestamp : (it.endsAtTimestamp || null),
+              imageBase64: it.imageBase64
+            };
+          })
         };
 
         const response = await fetch('/api/auctions/batch', {

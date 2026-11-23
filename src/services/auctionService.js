@@ -334,11 +334,16 @@ async function closeAuctionThread(client, finished) {
   }
 }
 
-function startAuction({ itemId, itemName, minBid = 10, durationMinutes = 15, imageUrl = null, targetClass = 'Livre', startedBy }) {
+function startAuction({ itemId, itemName, minBid = 10, durationMinutes = 15, endsAtTimestamp = null, imageUrl = null, targetClass = 'Livre', startedBy }) {
   const leiloes = getLeiloes();
   const id = itemId || `item_${Date.now()}`;
   const now = Date.now();
-  const endsAt = now + durationMinutes * 60 * 1000;
+  
+  let endsAt = endsAtTimestamp ? parseInt(endsAtTimestamp, 10) : (now + durationMinutes * 60 * 1000);
+  if (isNaN(endsAt) || endsAt <= now) {
+    endsAt = now + (parseInt(durationMinutes, 10) || 15) * 60 * 1000;
+  }
+  const calcDurationMinutes = Math.max(1, Math.round((endsAt - now) / 60000));
 
   const normalizedClass = (!targetClass || targetClass === 'all') ? 'Livre' : targetClass;
 
@@ -347,6 +352,7 @@ function startAuction({ itemId, itemName, minBid = 10, durationMinutes = 15, ima
     itemName,
     targetClass: normalizedClass,
     minBid: parseInt(minBid, 10),
+    durationMinutes: calcDurationMinutes,
     currentBid: 0,
     highestBidderId: null,
     highestBidderTag: null,
