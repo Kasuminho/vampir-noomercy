@@ -594,6 +594,8 @@ async function getDeliveriesData() {
         delivered: r.delivered || raw.delivered || false,
         deliveredAt: r.delivered_at || raw.deliveredAt || null,
         deliveredBy: r.delivered_by || raw.deliveredBy || null,
+        createdAt: r.created_at ? r.created_at.toISOString() : null,
+        isCurrentBatch: r.created_at ? new Date(r.created_at) >= new Date('2026-11-22T00:00:00.000Z') : false,
         endsAtTimestamp: r.ends_at ? new Date(r.ends_at).getTime() : raw.endsAtTimestamp
       };
     });

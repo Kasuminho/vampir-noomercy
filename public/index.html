@@ -1225,8 +1225,9 @@
           </select>
 
           <select id="filterDeliveryScope" class="filter-select" onchange="renderDeliveries()">
-            <option value="active" selected>🟢 Apenas Lote Atual (Ativos)</option>
-            <option value="all">📦 Todos (Ativos + Histórico)</option>
+            <option value="current" selected>🔥 Lote Atual (55 Itens)</option>
+            <option value="previous">📁 Lote Anterior (16/11 - Entregues)</option>
+            <option value="all">🌐 Todos os Lotes (113 Itens)</option>
           </select>
 
           <select id="deliveryViewMode" class="filter-select" onchange="renderDeliveries()">
@@ -1790,12 +1791,13 @@
 
       const search = (document.getElementById('filterSearchDeliveries')?.value || '').toLowerCase().trim();
       const statusFilter = document.getElementById('filterDeliveryStatus')?.value || 'pending';
-      const scopeFilter = document.getElementById('filterDeliveryScope')?.value || 'active';
+      const scopeFilter = document.getElementById('filterDeliveryScope')?.value || 'current';
       const viewMode = document.getElementById('deliveryViewMode')?.value || 'player';
 
-      // Filtra escopo (apenas lote atual / ativos vs todos)
+      // Filtra escopo (lote atual vs histórico anterior vs todos)
       let items = deliveriesData.filter(d => {
-        if (scopeFilter === 'active') return d.status === 'active';
+        if (scopeFilter === 'current') return d.isCurrentBatch;
+        if (scopeFilter === 'previous') return !d.isCurrentBatch;
         return true;
       });
 
